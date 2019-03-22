@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="action_bar">50dp</dimen>
+    <dimen name="minimal_length">48dp</dimen>
+
+    <dimen name="standard_margin">8dp</dimen>
+
+    <dimen name="text_size">14dp</dimen>
+    <dimen name="big_text_size">28dp</dimen>
+
+    <dimen name="minimal_game_icon_height">100dp</dimen>
+
+    <dimen name="separator_length">1dp</dimen>
+</resources>
