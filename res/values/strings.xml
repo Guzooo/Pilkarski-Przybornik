@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Piłkarski Przybornik</string>
     <string name="app_G">© Guzooo 2019</string>
-    
+
     <string name="game_king">Król</string>
     <string name="game_select_goalkeeper">Wybierz Bramkarza</string>
     <string name="game_red">Czerwone</string>

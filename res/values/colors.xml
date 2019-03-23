@@ -4,7 +4,8 @@
     <color name="colorSecondary">#025cc7</color>
     <color name="colorAccent">#198b87</color>
 
-    <color name="primaryText">#000000</color>
-    <color name="primaryIcon">#000000</color>
-    <color name="primarySeparator">#000000</color>
+    <color name="primaryText">#FFFFFF</color>
+    <color name="secondaryText">#c9c9c9</color>
+    <color name="primaryIcon">#FFFFFF</color>
+    <color name="primarySeparator">#FFFFFF</color>
 </resources>

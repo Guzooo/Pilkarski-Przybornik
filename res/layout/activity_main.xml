@@ -24,7 +24,7 @@
 
                <ImageView
                    android:src="@drawable/crown"
-                   style="@style/AppTheme.GameIcon"/>
+                   style="@style/AppTheme.Icon.Game"/>
 
             </LinearLayout>
 
@@ -38,7 +38,7 @@
 
                 <ImageView
                     android:src="@drawable/goalkeeper"
-                    style="@style/AppTheme.GameIcon"/>
+                    style="@style/AppTheme.Icon.Game"/>
 
             </LinearLayout>
 
@@ -49,7 +49,6 @@
                  android:layout_weight="1"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content">
-
 
              </LinearLayout>-->
         </LinearLayout>
@@ -64,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+            app:srcCompat="@android:drawable/ic_menu_myplaces"
+            android:onClick="ClickPlayersControl"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
