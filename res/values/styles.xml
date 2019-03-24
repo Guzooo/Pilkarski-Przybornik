@@ -47,6 +47,11 @@
         <item name="android:minWidth">@dimen/minimal_length</item>
     </style>
 
+    <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
     <style name="AppTheme.Separator">
         <item name="android:src">@color/primarySeparator</item>
         <item name="android:layout_margin">@dimen/standard_margin</item>

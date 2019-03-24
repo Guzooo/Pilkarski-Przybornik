@@ -20,6 +20,7 @@
         android:src="@drawable/add"
         android:tint="@color/primaryIcon"
         app:backgroundTint="@color/colorSecondary"
+        android:onClick="ClickAddPlayer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/floating_button_margin"

@@ -6,4 +6,12 @@
     <string name="game_select_goalkeeper">Wybierz Bramkarza</string>
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
+
+    <string name="error_database">Błąd bazy danych</string>
+    <string name="error_empty_name">Wpisz imię</string>
+    
+    <string name="enter_player_name">Wpisz imie gracza</string>
+    <string name="next_player">Następny</string>
+    <string name="cancel">Anuluj</string>
+    <string name="add">Dodaj</string>
 </resources>
