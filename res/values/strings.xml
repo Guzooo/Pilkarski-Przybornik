@@ -9,7 +9,9 @@
 
     <string name="error_database">Błąd bazy danych</string>
     <string name="error_empty_name">Wpisz imię</string>
-    
+
+    <string name="click_plus_to_add_player">Dotknij plusa, aby dodać gracza</string>
+
     <string name="enter_player_name">Wpisz imie gracza</string>
     <string name="next_player">Następny</string>
     <string name="cancel">Anuluj</string>

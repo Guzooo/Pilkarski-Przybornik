@@ -17,14 +17,17 @@ public class Player extends Model{
     private int winGameOfKing;
     private int lostGameOfKing;
 
+    public static final String databaseName = "PLAYERS";
+    public static final String[] onCursor = {"_id", "NAME", "ACTIVE", "SHOTS", "GOOD_SHOTS", "GOAL", "DEFENDED_GOAL", "UNDEFENDED_GOAL", "GAME_OF_KING", "WIN_GAME_OF_KING", "LOST_GAME_OF_KING"};
+
     @Override
     public String[] onCursor() {
-        return new String[] {"_id", "NAME", "ACTIVE", "SHOTS", "GOOD_SHOTS", "GOAL", "DEFENDED_GOAL", "UNDEFENDED_GOAL", "GAME_OF_KING", "WIN_GAME_OF_KING", "LOST_GAME_OF_KING"};
+        return onCursor;
     }
 
     @Override
     public String databaseName() {
-        return "PLAYERS";
+        return databaseName;
     }
 
     private void Template(int id, String name, int active, int shots, int goodShots, int goal, int defendedGoal, int undefendedGoal, int gameOfKing, int winGameOfKing, int lostGameOfKing){

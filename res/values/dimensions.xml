@@ -10,7 +10,6 @@
     <dimen name="big_text_size">28dp</dimen>
 
     <dimen name="minimal_game_icon_height">100dp</dimen>
-    <dimen name="max_floating_image_size">50dp</dimen>
 
     <dimen name="separator_length">1dp</dimen>
 </resources>

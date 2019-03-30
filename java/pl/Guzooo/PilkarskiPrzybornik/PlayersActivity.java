@@ -1,24 +1,120 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class PlayersActivity extends AppCompatActivity {
 
+    private SQLiteDatabase db;
+    private Cursor cursor;
+    private AdapterPlayers adapter;
+
+    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButtonMenuDel;
+    private FloatingActionButton floatingActionButtonAdd;
+    private FloatingActionButton floatingActionButtonShare;
+    private FloatingActionButton floatingActionButtonDel;
+
+    private boolean openMenu;
+    private boolean deleteMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players);
+
+        floatingActionButton = findViewById(R.id.floating_action_button);
+        floatingActionButtonAdd = findViewById(R.id.floating_action_button_add);
+        floatingActionButtonShare = findViewById(R.id.floating_action_button_share);
+        floatingActionButtonDel = findViewById(R.id.floating_action_button_del);
+        floatingActionButtonMenuDel = findViewById(R.id.floating_action_button_menu_del);
+
+        hideFloatMenu();
+
+        db = Database.getWrite(this);
+        refreshCursor();
+        setAdapter();
+        //TODO: padding do recycle żeby bottom był pod
     }
 
-    public void ClickAddPlayer(View v){
-        final EditText editText = CreateEditText();
+    private void refreshCursor(){
+        cursor = db.query(Player.databaseName,
+                Player.onCursor,
+                null, null, null, null,
+                "NAME");
+    }
 
+    private void setAdapter(){
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new AdapterPlayers(cursor);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setListener(new Adapter.Listener() {
+
+            @Override
+            public void onClick(Model model, Adapter.ViewHolder holder, int id) {
+                //TODO: poruszaj float buttonem
+                Log.d("ac", "clik");
+            }
+
+            @Override
+            public void onClickEmpty() {
+                AnimFloatingButtonSeeMe();
+            }
+        }, new AdapterPlayers.Listener() {
+
+            @Override
+            public void onClickActive(int id, boolean active, AdapterPlayers.ViewHolder holder) {
+                //TODO: poruszaj float buttonem
+                Log.d("ac", "act");
+            }
+        });
+    }
+
+    public void ClickMenu(View v){
+        if(cursor.getCount() == 0){
+            AddPlayerWindow();
+        } else {
+            AnimFloatingButtonRotate();
+        }
+    }
+
+    public void ClickMenuDel(View v){
+        hideDelMenu();
+    }
+
+    public void ClickAdd(View v){
+        AnimFloatingButtonRotate();
+        AddPlayerWindow();
+    }
+
+    public void ClickShare(View v){
+        AnimFloatingButtonRotate();
+    }
+
+    public void ClickDel(View v){
+        AnimFloatingButtonRotate();
+        showDelMenu();
+    }
+
+    private void AddPlayerWindow(){
+        final EditText editText = CreateEditText();
         new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog)
                 .setTitle(R.string.enter_player_name)
                 .setView(editText)
@@ -32,7 +128,7 @@ public class PlayersActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AddPlayer(FromEditText(editText));
-                        ClickAddPlayer(null);
+                        AddPlayerWindow();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -43,6 +139,10 @@ public class PlayersActivity extends AppCompatActivity {
         EditText editText = new EditText(this);
         editText.setTextColor(getResources().getColor(R.color.primaryText));
         return editText;
+    }
+
+    private String FromEditText(EditText editText){
+        return editText.getText().toString().trim();
     }
 
     private boolean AddPlayer(String name){
@@ -57,7 +157,64 @@ public class PlayersActivity extends AppCompatActivity {
         }
     }
 
-    private String FromEditText(EditText editText){
-        return editText.getText().toString().trim();
+    private void AnimFloatingButtonSeeMe(){
+        ObjectAnimator animY = ObjectAnimator.ofFloat(floatingActionButton, "scaleY", 1, 1.5f, 0.75f, 1.25f, 1);
+        ObjectAnimator animX = ObjectAnimator.ofFloat(floatingActionButton, "scaleX", 1, 1.5f, 0.75f, 1.25f, 1);
+        AnimatorSet animSetXY = new AnimatorSet();
+        animSetXY.playTogether(animY, animX);
+        animSetXY.setDuration(1000);
+        animSetXY.start();
+    }
+
+    private void AnimFloatingButtonRotate() {
+        int rotateTo;
+        if (floatingActionButton.getRotation() == 0) {
+            rotateTo = 135;
+            showFloatMenu();
+        } else {
+            rotateTo = 0;
+            hideFloatMenu();
+        }
+
+        ObjectAnimator
+                .ofFloat(floatingActionButton, "rotation", rotateTo)
+                .setDuration(250)
+                .start();
+    }
+
+    private void hideDelMenu(){
+        floatingActionButtonMenuDel.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                super.onHidden(fab);
+                floatingActionButton.show();
+            }
+        });
+        deleteMenu = false;
+    }
+
+    private void showDelMenu(){
+        floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                super.onHidden(fab);
+                floatingActionButtonMenuDel.show();
+            }
+        });
+        deleteMenu = true;
+    }
+
+    private void hideFloatMenu() {
+        floatingActionButtonAdd.hide();
+        floatingActionButtonShare.hide();
+        floatingActionButtonDel.hide();
+        openMenu = false;
+    }
+
+    private void showFloatMenu() {
+        floatingActionButtonAdd.show();
+        floatingActionButtonShare.show();
+        floatingActionButtonDel.show();
+        openMenu = true;
     }
 }

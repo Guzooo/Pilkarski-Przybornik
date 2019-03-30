@@ -4,6 +4,8 @@
     <color name="colorSecondary">#025cc7</color>
     <color name="colorAccent">#ffffff</color>
 
+    <color name="colorAlert">#ff0000</color>
+
     <color name="primaryText">#FFFFFF</color>
     <color name="secondaryText">#c9c9c9</color>
     <color name="primaryIcon">#FFFFFF</color>
