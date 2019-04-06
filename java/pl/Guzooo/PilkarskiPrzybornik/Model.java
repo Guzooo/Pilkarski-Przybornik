@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 public abstract class Model {
 
@@ -16,14 +15,12 @@ public abstract class Model {
     public abstract String databaseName();
 
     public Model(){
-        Log.d("Model", "zalążek Modelu");
         Empty();
     }
 
     public abstract void Empty();
 
     public void getOfId(int id, Context context){
-        Log.d("Model", databaseName() + " z tego czyta");
         SQLiteDatabase db = Database.getRead(context);
         Cursor cursor = db.query(databaseName(),
                 onCursor(),

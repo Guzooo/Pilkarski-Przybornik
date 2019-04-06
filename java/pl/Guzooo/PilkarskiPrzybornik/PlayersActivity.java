@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ public class PlayersActivity extends AppCompatActivity {
         db = Database.getWrite(this);
         refreshCursor();
         setAdapter();
-        //TODO: padding do recycle żeby bottom był pod
+        //TODO: padding do recycle żeby bottom był pod + żeby w skrolowaniu sie zamykało menu :)))
     }
 
     private void refreshCursor(){
@@ -55,6 +56,31 @@ public class PlayersActivity extends AppCompatActivity {
                 Player.onCursor,
                 null, null, null, null,
                 "NAME");
+        if(adapter != null)
+            adapter.ChangeCursor(cursor);
+    }
+
+    private int getIdOfLastPlayer(){
+        int id = 0;
+        Cursor cursor = db.query(Player.databaseName,
+                new String[]{"_id"},
+                null, null, null, null, null);
+        if(cursor.moveToLast()){
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        return id;
+    }
+
+    private int getPositionOfPlayerInCursor(int id){
+        if(cursor.moveToFirst()){
+            do{
+                if(cursor.getInt(0) == id){
+                    return cursor.getPosition();
+                }
+            }while (cursor.moveToNext());
+        }
+        return 0;
     }
 
     private void setAdapter(){
@@ -69,20 +95,33 @@ public class PlayersActivity extends AppCompatActivity {
 
             @Override
             public void onClick(Model model, Adapter.ViewHolder holder, int id) {
-                //TODO: poruszaj float buttonem
-                Log.d("ac", "clik");
+                if(deleteMenu){
+                    DelPlayer(holder, id);
+                } else if (!hideAllMenu()){
+                    AdapterPlayers.ViewHolder newHolder = new AdapterPlayers.ViewHolder(holder.itemView);
+                    newHolder.OpenClose();
+                    refreshCursor();
+                    adapter.notifyItemChanged(holder.getAdapterPosition(), holder);
+                }
             }
+
 
             @Override
             public void onClickEmpty() {
                 AnimFloatingButtonSeeMe();
             }
+
         }, new AdapterPlayers.Listener() {
 
             @Override
             public void onClickActive(int id, boolean active, AdapterPlayers.ViewHolder holder) {
-                //TODO: poruszaj float buttonem
-                Log.d("ac", "act");
+                hideAllMenu();
+                holder.setActive(active);
+                Player player = new Player();
+                player.getOfId(id, getApplicationContext());
+                player.setActive(active);
+                player.update(getApplicationContext());
+                refreshCursor();
             }
         });
     }
@@ -145,16 +184,38 @@ public class PlayersActivity extends AppCompatActivity {
         return editText.getText().toString().trim();
     }
 
-    private boolean AddPlayer(String name){
+    private void AddPlayer(String name){
         if(name.equals("")){
             Toast.makeText(this, R.string.error_empty_name, Toast.LENGTH_SHORT).show();
-            return false;
         } else {
             Player player = new Player();
             player.setName(name);
             player.insert(this);
-            return true;
+            if(adapter.isEmptyCursor()){
+                adapter.notifyItemRemoved(0);
+
+            }
+            refreshCursor();
+            adapter.notifyItemInserted(getPositionOfPlayerInCursor(getIdOfLastPlayer())); //TODO: na przyszłość jak nie bedzie imienia to weź nie chowaj się
         }
+    }
+
+    private void DelPlayer(Adapter.ViewHolder holder, int id){
+        Player player = new Player();
+        player.getOfId(id, getApplicationContext());
+        player.delete(getApplicationContext());
+        refreshCursor();
+        adapter.notifyItemRemoved(holder.getAdapterPosition());
+        if(cursor.getCount() == 0)
+            hideDelMenu();
+        Snackbar.make(holder.itemView, "Usunąłeś kogoś", Snackbar.LENGTH_LONG) //TODO: zacznie niech działać
+                .setAction("Cofnij", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), "wrócił", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
 
     private void AnimFloatingButtonSeeMe(){
@@ -180,6 +241,20 @@ public class PlayersActivity extends AppCompatActivity {
                 .ofFloat(floatingActionButton, "rotation", rotateTo)
                 .setDuration(250)
                 .start();
+    }
+
+    private boolean hideAllMenu(){
+        if(openMenu){
+            AnimFloatingButtonRotate();
+            return true;
+        }
+
+        if(deleteMenu){
+            hideDelMenu();
+            return true;
+        }
+
+        return false;
     }
 
     private void hideDelMenu(){

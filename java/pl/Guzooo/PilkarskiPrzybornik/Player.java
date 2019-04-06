@@ -1,9 +1,7 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 public class Player extends Model{
 
@@ -31,7 +29,6 @@ public class Player extends Model{
     }
 
     private void Template(int id, String name, int active, int shots, int goodShots, int goal, int defendedGoal, int undefendedGoal, int gameOfKing, int winGameOfKing, int lostGameOfKing){
-        Log.d("Player","ziarno");
         setId(id);
         setName(name);
         setActive(active);
@@ -47,13 +44,11 @@ public class Player extends Model{
 
     @Override
     public void Empty() {
-        Log.d("Player"," of empty");
         Template(0, "", 1, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
     @Override
     public void getOfCursor(Cursor cursor) {
-        Log.d("Player"," of cursor");
         Template(cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getInt(2),

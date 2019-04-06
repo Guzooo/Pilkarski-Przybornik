@@ -1,13 +1,10 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 
 public abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
@@ -34,9 +31,18 @@ public abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if(emptyCursor){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if(!emptyCursor) {
+        if(viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(getOneView(), parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(getEmptyView(), parent, false);
@@ -55,6 +61,11 @@ public abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     public Adapter(Cursor cursor){
+        this.cursor = cursor;
+    }
+
+    public void ChangeCursor(Cursor cursor){
+        this.cursor.close();
         this.cursor = cursor;
     }
 
