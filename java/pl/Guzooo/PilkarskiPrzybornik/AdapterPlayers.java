@@ -1,5 +1,6 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -77,7 +78,7 @@ public class AdapterPlayers extends Adapter {
             player.getOfCursor(getCursor());
 
             newHolder.name.setText(player.getName());
-            newHolder.description.setText("sasasa\ndsdsds\ndsdsd\ndsdsdds\nd\nf\ndgfgf\ndfd\nfd");
+            newHolder.description.setText(player.getDescription(getContext()));
             newHolder.active.setChecked(player.isActive());
             newHolder.setActive(player.isActive());
 
@@ -106,7 +107,7 @@ public class AdapterPlayers extends Adapter {
         this.listener = newListener;
     }
 
-    public AdapterPlayers(Cursor cursor) {
-        super(cursor);
+    public AdapterPlayers(Cursor cursor, Context context) {
+        super(cursor, context);
     }
 }

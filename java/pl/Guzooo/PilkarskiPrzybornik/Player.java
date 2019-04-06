@@ -1,6 +1,7 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 
 public class Player extends Model{
@@ -75,6 +76,19 @@ public class Player extends Model{
         contentValues.put("WIN_GAME_OF_KING", winGameOfKing);
         contentValues.put("LOST_GAME_OF_KING", lostGameOfKing);
         return contentValues;
+    }
+
+    public String getDescription(Context context){
+        String string;
+        string = context.getString(R.string.player_shots, getShots()) + "\n";
+        string += context.getString(R.string.player_good_shots, getGoodShots()) + "\n";
+        string += context.getString(R.string.player_goal, getGoal()) + "\n";
+        string += context.getString(R.string.player_defended_goal, getDefendedGoal()) + "\n";
+        string += context.getString(R.string.player_undefended_goal, getUndefendedGoal()) + "\n";
+        string += context.getString(R.string.player_game_of_king, getGameOfKing()) + "\n";
+        string += context.getString(R.string.player_win_game_of_king, getWinGameOfKing()) + "\n";
+        string += context.getString(R.string.player_lost_game_of_king, getLostGameOfKing());
+        return string;
     }
 
     public boolean isActive() {

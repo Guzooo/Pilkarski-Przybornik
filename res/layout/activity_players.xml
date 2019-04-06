@@ -10,7 +10,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/padding_behind_floating_button"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_action_button"
@@ -25,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/floating_button_margin"
         android:layout_marginRight="@dimen/floating_button_margin"
-        android:layout_marginBottom="@dimen/floating_button_margin" />
+        android:layout_marginBottom="@dimen/floating_button_margin_bottom" />
 
 
     <android.support.design.widget.FloatingActionButton

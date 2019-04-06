@@ -48,7 +48,6 @@ public class PlayersActivity extends AppCompatActivity {
         db = Database.getWrite(this);
         refreshCursor();
         setAdapter();
-        //TODO: padding do recycle żeby bottom był pod + żeby w skrolowaniu sie zamykało menu :)))
     }
 
     private void refreshCursor(){
@@ -88,7 +87,7 @@ public class PlayersActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterPlayers(cursor);
+        adapter = new AdapterPlayers(cursor, this);
         recyclerView.setAdapter(adapter);
 
         adapter.setListener(new Adapter.Listener() {
@@ -97,14 +96,13 @@ public class PlayersActivity extends AppCompatActivity {
             public void onClick(Model model, Adapter.ViewHolder holder, int id) {
                 if(deleteMenu){
                     DelPlayer(holder, id);
-                } else if (!hideAllMenu()){
+                } else {
+                    hideAllMenu();
                     AdapterPlayers.ViewHolder newHolder = new AdapterPlayers.ViewHolder(holder.itemView);
                     newHolder.OpenClose();
-                    refreshCursor();
                     adapter.notifyItemChanged(holder.getAdapterPosition(), holder);
                 }
             }
-
 
             @Override
             public void onClickEmpty() {
@@ -191,28 +189,32 @@ public class PlayersActivity extends AppCompatActivity {
             Player player = new Player();
             player.setName(name);
             player.insert(this);
-            if(adapter.isEmptyCursor()){
-                adapter.notifyItemRemoved(0);
-
-            }
-            refreshCursor();
-            adapter.notifyItemInserted(getPositionOfPlayerInCursor(getIdOfLastPlayer())); //TODO: na przyszłość jak nie bedzie imienia to weź nie chowaj się
+            notifyAdapterOnAddPlayer(); //TODO: na przyszłość jak nie bedzie imienia to weź nie chowaj się
         }
     }
 
+    private void notifyAdapterOnAddPlayer(){
+        if(adapter.isEmptyCursor())
+            adapter.notifyItemRemoved(0);
+        refreshCursor();
+        adapter.notifyItemInserted(getPositionOfPlayerInCursor(getIdOfLastPlayer()));
+    }
+
     private void DelPlayer(Adapter.ViewHolder holder, int id){
-        Player player = new Player();
+        final Player player = new Player();
         player.getOfId(id, getApplicationContext());
         player.delete(getApplicationContext());
         refreshCursor();
         adapter.notifyItemRemoved(holder.getAdapterPosition());
         if(cursor.getCount() == 0)
             hideDelMenu();
-        Snackbar.make(holder.itemView, "Usunąłeś kogoś", Snackbar.LENGTH_LONG) //TODO: zacznie niech działać
-                .setAction("Cofnij", new View.OnClickListener() {
+        Snackbar.make(holder.itemView, getString(R.string.del_this_player, player.getName()), Snackbar.LENGTH_LONG)
+                .setAction(R.string.back, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), "wrócił", Toast.LENGTH_SHORT).show();
+                        player.insert(getApplicationContext());
+                        notifyAdapterOnAddPlayer();
+                        Toast.makeText(getApplicationContext(), R.string.player_return, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .show();

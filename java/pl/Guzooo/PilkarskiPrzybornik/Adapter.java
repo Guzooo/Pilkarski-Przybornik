@@ -1,5 +1,6 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 public abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    private Context context;
     private Cursor cursor;
     private Listener listener;
     private boolean emptyCursor;
@@ -60,13 +62,18 @@ public abstract class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return cursor.getCount();
     }
 
-    public Adapter(Cursor cursor){
+    public Adapter(Cursor cursor, Context context){
+        this.context= context;
         this.cursor = cursor;
     }
 
     public void ChangeCursor(Cursor cursor){
         this.cursor.close();
         this.cursor = cursor;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public Cursor getCursor() {
