@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -143,6 +142,7 @@ public class PlayersActivity extends AppCompatActivity {
 
     public void ClickShare(View v){
         AnimFloatingButtonRotate();
+        LinksManagement.sharePlayers(cursor, this);
     }
 
     public void ClickDel(View v){
@@ -151,7 +151,7 @@ public class PlayersActivity extends AppCompatActivity {
     }
 
     private void AddPlayerWindow(){
-        final EditText editText = CreateEditText();
+        final EditText editText = CreateEditText(); //TODO jakieś marginesy, opcjonalnie zrobić layout i tu wstawić 🤷‍♂️
         new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog)
                 .setTitle(R.string.enter_player_name)
                 .setView(editText)

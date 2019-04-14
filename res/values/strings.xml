@@ -29,4 +29,6 @@
     <string name="player_game_of_king">Gry w Króla: %1$d</string>
     <string name="player_win_game_of_king">Wygrane w Króla: %1$d</string>
     <string name="player_lost_game_of_king">Przegrane w Króla: %1$d</string>
+
+    <string name="share">Udostępnij do:</string>
 </resources>
