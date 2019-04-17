@@ -168,7 +168,7 @@ public class PlayersActivity extends AppCompatActivity {
                         AddPlayerWindow();
                     }
                 })
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 

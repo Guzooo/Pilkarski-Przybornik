@@ -1,14 +1,20 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class LinksManagement {
+
+    public static String APP_PAGE = "https://play.google.com/store/apps/details?id=pl.Guzooo.PilkarskiPrzybornik";
 
     public static String START_LINK = "https://Guzooo-PiłkarskiPrzybornik/";
     public static int VERSION = 1;
@@ -16,99 +22,45 @@ public class LinksManagement {
 
     public static int NUMBER_SEGMENT_ON_PLAYER = 9;
 
-    public static ArrayList<Player> getPlayers (Uri link, Context context){
+    public static void getPlayers (Uri link, Activity activity, Context context){
+        if(link == null){
+            activity.finish();
+            return;
+        }
+
         String strLink = link.toString();
         strLink = strLink.replaceFirst(START_LINK, "");
-
-        if(!isGoodCode(strLink))
-            return null; //Błąd zły link
-
         String[] strings = strLink.split(SEPARATOR);
 
+        //decode count of players
         strings[1] = decodeV4(strings[1]);
-        if(!isGoodDecode(strings[1]))
-            return null; //Błąd zły link
-
+        if(!isGoodDecode(strings[1], activity, context))
+            return;
         int numberPlayers = Integer.valueOf(strings[1]);
 
-        if(numberPlayers%4 == 0) {
-            strings[0] = decodeV1(strings[0]);
-        } else if(numberPlayers%4 == 1){
-            strings[0] = decodeV2(strings[0]);
-        } else if(numberPlayers%4 == 2){
-            strings[0] = decodeV3(strings[0]);
-        } else {
-            strings[0] = decodeV4(strings[0]);
-        }
-        if(!isGoodDecode(strings[0]))
-            return null; //Błąd zły link
-
+        //decode version
+        strings[0] = decodeVersion(strings[0], numberPlayers);
+        if(!isGoodDecode(strings[0], activity, context))
+            return; //Bad URL
         int version = Integer.valueOf(strings[0]);
 
-        if(version > VERSION) {
-            new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
-                    .setTitle("Aktualizacja zalecana")
-                    .setPositiveButton("Aktualizuj", null)
-                    .setNeutralButton("Pomiń", null)
-                     .setNegativeButton(R.string.cancel, null)
-                    .show();    //TODO:literki ze stringa
+        String[] stringsOfPlayers = decode(numberPlayers, strings, activity, context);
+        if(stringsOfPlayers == null)
+            return; //Bad URL
 
-        }
+        if(NewVersion(version, activity, context, numberPlayers, stringsOfPlayers))
+            return; //Update
 
-        String[] stringsOfPlayers = new String[numberPlayers * NUMBER_SEGMENT_ON_PLAYER];
+        ArrayList<Player> players = getListPlayers(numberPlayers, stringsOfPlayers);
 
-        int j = 2;
-        for(int i = 0; i < stringsOfPlayers.length && i+2 < strings.length; i++, j++){
-            stringsOfPlayers[i] = strings[j];
-        }
-
-        String end = null;
-        for(int i = numberPlayers; i < stringsOfPlayers.length; i++) {
-            if(end != null && stringsOfPlayers[i] == null){
-                stringsOfPlayers[i] = end;
-            } else if (i % 3 == 0) {
-                stringsOfPlayers[i] = decodeV1(stringsOfPlayers[i]);
-            } else if (i % 3 == 1) {
-                stringsOfPlayers[i] = decodeV2(stringsOfPlayers[i]);
-            } else {
-                stringsOfPlayers[i] = decodeV3(stringsOfPlayers[i]);
-            }
-            if(!isGoodDecode(stringsOfPlayers[i]))
-                return null; //Błąd zły link
-            end = stringsOfPlayers[i];
-        }
-
-        for(int i = 0; i < numberPlayers; i++){
-            Player player = new Player();
-            player.setName(stringsOfPlayers[i]);
-            player.setShots(Integer.valueOf(stringsOfPlayers[i + numberPlayers]));
-            player.setGoodShots(Integer.valueOf(stringsOfPlayers[i + 2*numberPlayers]));
-            player.setGoal(Integer.valueOf(stringsOfPlayers[i + 3*numberPlayers]));
-            player.setDefendedGoal(Integer.valueOf(stringsOfPlayers[i + 4*numberPlayers]));
-            player.setUndefendedGoal(Integer.valueOf(stringsOfPlayers[i + 5*numberPlayers]));
-            player.setGameOfKing(Integer.valueOf(stringsOfPlayers[i + 6*numberPlayers]));
-            player.setWinGameOfKing(Integer.valueOf(stringsOfPlayers[i + 7*numberPlayers]));
-            player.setLostGameOfKing(Integer.valueOf(stringsOfPlayers[i + 8*numberPlayers]));
-            //Dialog czy chcesz dodać gracza jako nowy czy jako ktoś;
-        }
-
-        AlertDialog a = new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
-                .setTitle("Gracze")
-                //.setView(recyclerView)
-                .setPositiveButton("Potwierdź", null)
-                .setNeutralButton("Gracze", null)
-                .setNegativeButton(R.string.cancel, null)
-                .show();
-
-        return null;
+        ShowPlayers(players, activity, context);
     }
 
     public static void sharePlayers (Cursor cursor, Context context){
         ArrayList<Player> players = getList(cursor);
 
-        String link = START_LINK;
         String linkPlayers = getLink(players);
-        link += encode(linkPlayers);
+        String link = START_LINK + encode(linkPlayers) + " 🎮" + "\n\n" + APP_PAGE + " 📲";
 
         startIntent(link , context);
     }
@@ -212,6 +164,161 @@ public class LinksManagement {
             }
         }
         return encode;
+    }
+
+    private static AlertDialog ErrorLink(final Activity activity, Context context){
+        return new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
+                .setTitle(R.string.bad_url)
+                .setMessage(R.string.bad_url_description)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        activity.finish();
+                    }
+                })
+                .show();
+
+    }
+
+    private static String decodeVersion(String version, int numberPlayers){
+        if(numberPlayers%4 == 0) {
+            version = decodeV1(version);
+        } else if(numberPlayers%4 == 1){
+            version = decodeV2(version);
+        } else if(numberPlayers%4 == 2){
+            version = decodeV3(version);
+        } else {
+            version = decodeV4(version);
+        }
+        return version;
+    }
+
+    private static boolean NewVersion(int version, final Activity activity, final Context context, final int numberPlayers, final String[] stringsOfPlayers){
+        if(version > VERSION) {
+            new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
+                    .setTitle(R.string.update_recommended)
+                    .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            activity.finish();
+                            Uri uri = Uri.parse(APP_PAGE);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            context.startActivity(intent);
+                        }
+                    })
+                    .setNeutralButton(R.string.skip, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ArrayList<Player> players = getListPlayers(numberPlayers, stringsOfPlayers);
+
+                            ShowPlayers(players, activity, context);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            activity.finish();
+                        }
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
+                            activity.finish();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        return false;
+    }
+
+    private static String[] decode (int numberPlayers, String[] strings, Activity activity, Context context){
+        String[] stringsOfPlayers = new String[numberPlayers * NUMBER_SEGMENT_ON_PLAYER];
+
+        int j = 2;
+        for(int i = 0; i < stringsOfPlayers.length && i+2 < strings.length; i++, j++){
+            stringsOfPlayers[i] = strings[j];
+        }
+
+        String end = null;
+        for(int i = numberPlayers; i < stringsOfPlayers.length; i++) {
+            if(end != null && stringsOfPlayers[i] == null){
+                stringsOfPlayers[i] = end;
+            } else if (i % 3 == 0) {
+                stringsOfPlayers[i] = decodeV1(stringsOfPlayers[i]);
+            } else if (i % 3 == 1) {
+                stringsOfPlayers[i] = decodeV2(stringsOfPlayers[i]);
+            } else {
+                stringsOfPlayers[i] = decodeV3(stringsOfPlayers[i]);
+            }
+            if(!isGoodDecode(stringsOfPlayers[i], activity, context)) {
+                return null; //Bad URL
+            }
+            end = stringsOfPlayers[i];
+        }
+        return stringsOfPlayers;
+    }
+
+    private static ArrayList<Player> getListPlayers(int numberPlayers, String[] stringsOfPlayers){
+        ArrayList<Player> players = new ArrayList<>();
+        for(int i = 0; i < numberPlayers; i++){
+            Player player = new Player();
+            player.setName(stringsOfPlayers[i]);
+            player.setShots(Integer.valueOf(stringsOfPlayers[i + numberPlayers]));
+            player.setGoodShots(Integer.valueOf(stringsOfPlayers[i + 2*numberPlayers]));
+            player.setGoal(Integer.valueOf(stringsOfPlayers[i + 3*numberPlayers]));
+            player.setDefendedGoal(Integer.valueOf(stringsOfPlayers[i + 4*numberPlayers]));
+            player.setUndefendedGoal(Integer.valueOf(stringsOfPlayers[i + 5*numberPlayers]));
+            player.setGameOfKing(Integer.valueOf(stringsOfPlayers[i + 6*numberPlayers]));
+            player.setWinGameOfKing(Integer.valueOf(stringsOfPlayers[i + 7*numberPlayers]));
+            player.setLostGameOfKing(Integer.valueOf(stringsOfPlayers[i + 8*numberPlayers]));
+            players.add(player);
+        }
+        return players;
+    }
+
+    private static void ShowPlayers(ArrayList<Player> players, final Activity activity, final Context context){
+        RecyclerView recyclerView = new RecyclerView(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        final AdapterAddSharePlayers adapter = new AdapterAddSharePlayers(players, context);
+        recyclerView.setAdapter(adapter);
+
+        new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
+                .setView(recyclerView)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        adapter.SaveChanges(context);
+                    }
+                })
+                .setNeutralButton(R.string.player, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.finish();
+                        Intent intent = new Intent(context, PlayersActivity.class);
+                        context.startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        activity.finish();
+                    }
+                })
+                .show();
     }
 
     private static void startIntent(String link, Context context){
@@ -334,22 +441,7 @@ public class LinksManagement {
         return string;
     }
 
-    private static boolean isGoodCode(String string){
-        if      (string.contains("0")
-                || string.contains("1")
-                || string.contains("2")
-                || string.contains("3")
-                || string.contains("4")
-                || string.contains("5")
-                || string.contains("6")
-                || string.contains("7")
-                || string.contains("8")
-                || string.contains("9"))
-            return false;
-        return true;
-    }
-
-    private static boolean isGoodDecode(String string){
+    private static boolean isGoodDecode(String string, Activity activity, Context context){
         string = string.replaceAll("0", "");
         string = string.replaceAll("1", "");
         string = string.replaceAll("2", "");
@@ -362,6 +454,7 @@ public class LinksManagement {
         string = string.replaceAll("9", "");
         if(string.equals(""))
             return true;
+        ErrorLink(activity, context);
         return false;
     }
 }

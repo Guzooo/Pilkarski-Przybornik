@@ -14,7 +14,6 @@
 
     <string name="enter_player_name">Wpisz imie gracza</string>
     <string name="next_player">Następny</string>
-    <string name="cancel">Anuluj</string>
     <string name="add">Dodaj</string>
 
     <string name="del_this_player">Usuąłeś gracza %1$s</string>
@@ -31,4 +30,13 @@
     <string name="player_lost_game_of_king">Przegrane w Króla: %1$d</string>
 
     <string name="share">Udostępnij do:</string>
+    <string name="bad_url">Błędny link</string>
+    <string name="bad_url_description">Link został uszkodzony lub nieopowiednio zmodyfkowany</string>
+    <string name="new_player">Nowy Gracz</string>
+    <string name="skip">Pomiń</string>
+    <string name="player">Gracze</string>
+    <string name="confirm">Potwierdź</string>
+
+    <string name="update_recommended">Aktualizacja zalecana</string>
+    <string name="update">Aktualizuj</string>
 </resources>

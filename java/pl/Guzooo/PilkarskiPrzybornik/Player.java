@@ -3,6 +3,7 @@ package pl.Guzooo.PilkarskiPrzybornik;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
 
 public class Player extends Model{
 
@@ -63,6 +64,17 @@ public class Player extends Model{
                 cursor.getInt(10));
     }
 
+    public void getOfPlayer(Player player){
+        setShots(player.shots);
+        setGoodShots(player.goodShots);
+        setGoal(player.goal);
+        setDefendedGoal(player.defendedGoal);
+        setUndefendedGoal(player.undefendedGoal);
+        setGameOfKing(player.gameOfKing);
+        setWinGameOfKing(player.winGameOfKing);
+        setLostGameOfKing(player.lostGameOfKing);
+    }
+
     @Override
     public ContentValues getContentValues() {
         ContentValues contentValues = super.getContentValues();
@@ -95,7 +107,7 @@ public class Player extends Model{
         return active;
     }
 
-    public void setActive(boolean active){  //TODO: może zbędne 🤷‍♂️
+    public void setActive(boolean active){
         this.active = active;
     }
 
