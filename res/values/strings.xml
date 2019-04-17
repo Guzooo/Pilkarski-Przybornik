@@ -1,9 +1,42 @@
 <resources>
     <string name="app_name">Piłkarski Przybornik</string>
     <string name="app_G">© Guzooo 2019</string>
-    
+
     <string name="game_king">Król</string>
     <string name="game_select_goalkeeper">Wybierz Bramkarza</string>
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
+
+    <string name="error_database">Błąd bazy danych</string>
+    <string name="error_empty_name">Wpisz imię</string>
+
+    <string name="click_plus_to_add_player">Dotknij plusa, aby dodać gracza</string>
+
+    <string name="enter_player_name">Wpisz imie gracza</string>
+    <string name="next_player">Następny</string>
+    <string name="add">Dodaj</string>
+
+    <string name="del_this_player">Usuąłeś gracza %1$s</string>
+    <string name="back">Cofnij</string>
+    <string name="player_return">Cofnięto usunięcie gracza</string>
+
+    <string name="player_shots">Strzały: %1$d</string>
+    <string name="player_good_shots">Celne strzały: %1$d</string>
+    <string name="player_goal">Gole: %1$d</string>
+    <string name="player_defended_goal">Obronione gole: %1$d</string>
+    <string name="player_undefended_goal">Nieobronione gole: %1$d</string>
+    <string name="player_game_of_king">Gry w Króla: %1$d</string>
+    <string name="player_win_game_of_king">Wygrane w Króla: %1$d</string>
+    <string name="player_lost_game_of_king">Przegrane w Króla: %1$d</string>
+
+    <string name="share">Udostępnij do:</string>
+    <string name="bad_url">Błędny link</string>
+    <string name="bad_url_description">Link został uszkodzony lub nieopowiednio zmodyfkowany</string>
+    <string name="new_player">Nowy Gracz</string>
+    <string name="skip">Pomiń</string>
+    <string name="player">Gracze</string>
+    <string name="confirm">Potwierdź</string>
+
+    <string name="update_recommended">Aktualizacja zalecana</string>
+    <string name="update">Aktualizuj</string>
 </resources>

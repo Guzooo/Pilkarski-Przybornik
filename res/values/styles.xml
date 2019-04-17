@@ -1,5 +1,14 @@
 <resources>
 
+    <style name="AppTheme.Transparent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorSecondary</item>
@@ -9,7 +18,7 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
 
-        <item name="editTextColor">@color/primaryText</item>
+        <item name="android:textColor">@color/primaryText</item>
         <item name="android:textSize">@dimen/text_size</item>
     </style>
 
@@ -19,12 +28,37 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="AppTheme.GameIcon">
+    <style name="AppTheme.PlayerTitle">
+        <item name="android:textSize">@dimen/big_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="AppTheme.PlayerDescription">
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
+
+    <style name="AppTheme.Icon.Game">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:minHeight">@dimen/minimal_game_icon_height</item>
         <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="AppTheme.Icon">
+        <item name="android:minHeight">@dimen/minimal_length</item>
+        <item name="android:minWidth">@dimen/minimal_length</item>
         <item name="tint">@color/primaryIcon</item>
+    </style>
+
+    <style name="AppTheme.AllClickable">
+        <item name="android:minHeight">@dimen/minimal_length</item>
+        <item name="android:minWidth">@dimen/minimal_length</item>
+    </style>
+
+    <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style name="AppTheme.Separator">
