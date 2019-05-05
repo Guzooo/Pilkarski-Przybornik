@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteException;
 public abstract class Model {
 
     private int id;
-    private String name;
 
     public abstract String[] onCursor();
     public abstract String databaseName();
@@ -75,11 +74,7 @@ public abstract class Model {
         }
     }
 
-    public ContentValues getContentValues() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("NAME", name);
-        return contentValues;
-    }
+    public abstract ContentValues getContentValues();
 
     public int getId() {
         return id;
@@ -87,13 +82,5 @@ public abstract class Model {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

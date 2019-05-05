@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="action_bar">50dp</dimen>
+    <dimen name="action_bar">50dp</dimen> <!--nie używany na razie-->
     <dimen name="minimal_length">48dp</dimen>
 
     <dimen name="standard_margin">8dp</dimen>

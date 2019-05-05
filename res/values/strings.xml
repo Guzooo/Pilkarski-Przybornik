@@ -7,6 +7,8 @@
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
 
+    <string name="game_king_description">Król, łopis</string>
+
     <string name="error_database">Błąd bazy danych</string>
     <string name="error_empty_name">Wpisz imię</string>
 
@@ -39,4 +41,7 @@
 
     <string name="update_recommended">Aktualizacja zalecana</string>
     <string name="update">Aktualizuj</string>
+
+    <string name="manage_players">Zarządzaj graczami</string>
+    <string name="number_active_players">%1$d aktywnych graczy</string> <!--TODO:liczby zmieniają końcówki-->
 </resources>

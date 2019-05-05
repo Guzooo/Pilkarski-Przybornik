@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 
 public class Player extends Model{
 
+    private String name;
     private boolean active;
     private int shots;
     private int goodShots;
@@ -77,7 +78,8 @@ public class Player extends Model{
 
     @Override
     public ContentValues getContentValues() {
-        ContentValues contentValues = super.getContentValues();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
         contentValues.put("ACTIVE", active);
         contentValues.put("SHOTS", shots);
         contentValues.put("GOOD_SHOTS", goodShots);
@@ -101,6 +103,14 @@ public class Player extends Model{
         string += context.getString(R.string.player_win_game_of_king, getWinGameOfKing()) + "\n";
         string += context.getString(R.string.player_lost_game_of_king, getLostGameOfKing());
         return string;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isActive() {

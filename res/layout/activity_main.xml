@@ -28,7 +28,7 @@
 
             </LinearLayout>
 
-            <ImageView style="@style/AppTheme.Separator.Vertical" />
+<!--            <ImageView style="@style/AppTheme.Separator.Vertical" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -40,7 +40,7 @@
                     android:src="@drawable/goalkeeper"
                     style="@style/AppTheme.Icon.Game"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <!--<ImageView style="@style/AppTheme.Separator.Vertical" />-->
 
@@ -56,14 +56,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_myplaces"
-            android:onClick="ClickPlayersControl"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/group"
+                    android:onClick="ClickPlayersControl"
+                    style="@style/AppTheme.Icon"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/description_manage_players"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/manage_players"
+                android:onClick="ClickPlayersControl"/>
+        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

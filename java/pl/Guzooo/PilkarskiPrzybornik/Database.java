@@ -36,6 +36,10 @@ public class Database extends SQLiteOpenHelper {
                     + "GAME_OF_KING INTEGER,"
                     + "WIN_GAME_OF_KING INTEGER,"
                     + "LOST_GAME_OF_KING INTEGER)");
+
+            db.execSQL("CREATE TABLE GAMES (_id INTEGER PRIMARY KEY,"
+                    + "NUMBER_GAME INTEGER,"
+                    + "LAST_GAME TEXT)");
         }
     }
 
