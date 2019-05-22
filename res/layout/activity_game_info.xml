@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="@dimen/standard_margin"
-            android:src="@drawable/crown"
             android:layout_gravity="center_vertical"
             style="@style/AppTheme.Icon.Game"/>
 
@@ -34,15 +33,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
                 android:layout_gravity="end"
-                android:visibility="gone"
-                android:src="@android:drawable/ic_menu_set_as"/>
+                android:visibility="gone"/><!--Ustawienia-->
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
-                android:text="Krół"
                 android:gravity="end"
                 style="@style/AppTheme.Title"/>
         </LinearLayout>
@@ -51,7 +48,6 @@
     <ImageView
         android:id="@+id/title_separator"
         style="@style/AppTheme.Separator.Horizontal"
-        android:layout_marginTop="432dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar" />
@@ -70,19 +66,20 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
-                android:layout_weight="1"
-                android:text="Gracze losują numery od 1 do X, każdy ma Y życ. Gracz który wylosował z numerem X staje na bramce, za każdego puszczonego gola traci życie. Pierwszy strzela gracz z numerem 1. Aplikacja poprowadzi was przez rozgrywkę." />
+                android:layout_weight="1"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/colorSecondary"
-                android:text="wejdź do gry"/>
+                android:text="@string/play"
+                android:onClick="ClickPlay"
+                style="@style/AppTheme.Button"/>
         </LinearLayout>
     </ScrollView>
 

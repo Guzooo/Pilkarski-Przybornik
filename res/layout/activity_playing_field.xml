@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayingFieldActivity">
+
+    <TextView
+        android:id="@+id/goalkeeper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/AppTheme.Title"/>
+
+    <Button
+        android:id="@+id/bad_shot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        android:text="@string/bad_shot"
+        android:onClick="ClickBadShot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_mishit"
+        app:layout_constraintBottom_toTopOf="@+id/goalkeeper"
+        style="@style/AppTheme.Button"/>
+
+    <Button
+        android:id="@+id/button_mishit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        android:text="@string/mishit"
+        android:onClick="ClickMishit"
+        app:layout_constraintStart_toEndOf="@id/bad_shot"
+        app:layout_constraintEnd_toStartOf="@id/button_goal"
+        app:layout_constraintBottom_toTopOf="@id/goalkeeper"
+        style="@style/AppTheme.Button" />
+
+    <Button
+        android:id="@+id/button_goal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        android:text="@string/goal"
+        android:onClick="ClickGoal"
+        app:layout_constraintStart_toEndOf="@id/button_mishit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/goalkeeper"
+        style="@style/AppTheme.Button" />
+
+    <TextView
+        android:id="@+id/shooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        app:layout_constraintBottom_toTopOf="@id/bad_shot"
+        style="@style/AppTheme.Title"/>
+
+    <TextView
+        android:id="@+id/heart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/order"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/shooter"/>
+
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/heart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/shooter"/>
+
+</android.support.constraint.ConstraintLayout>

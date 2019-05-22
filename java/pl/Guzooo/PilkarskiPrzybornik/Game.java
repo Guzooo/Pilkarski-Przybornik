@@ -1,7 +1,10 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+
+import java.util.ArrayList;
 
 public class Game extends Model{
 
@@ -11,8 +14,14 @@ public class Game extends Model{
     private int numberGame;
     private String lastGame;
 
+    private Listener listener;
+
     public static final String databaseName = "GAMES";
     public static final String[] onCursor = {"_id", "NUMBER_GAME", "LAST_GAME"};
+
+    public interface Listener{
+        void ClickPlay(int id, Context context);
+    }
 
     @Override
     public String[] onCursor() {
@@ -24,24 +33,33 @@ public class Game extends Model{
         return databaseName;
     }
 
+    private void Template(int id, int numberGame, String lastGame){
+        setId(id);
+        setNumberGame(numberGame);
+        setLastGame(lastGame);
+    }
+
     @Override
     public void Empty() {
-        //W chwili obecnej niemożliwe jest utworzenie gry bez parametrów;
+        Template(0, 0, "");
     }
 
     @Override
     public void getOfCursor(Cursor cursor) {
-        setId(cursor.getInt(0));
-        setNumberGame(cursor.getInt(1));
-        setLastGame(cursor.getString(2));
+        Template(cursor.getInt(0),
+                cursor.getInt(1),
+                cursor.getString(2));
+        Games.setCurrentGame(this);
         setName(Games.getName(getId()));
         setImage(Games.getImage(getId()));
         setDescription(Games.getDescription(getId()));
+        setListener(Games.getListenerGeneral(getId()));
     }
 
     @Override
     public ContentValues getContentValues() {
         ContentValues contentValues = new ContentValues();
+        contentValues.put("_id", getId());
         contentValues.put("NUMBER_GAME", numberGame);
         contentValues.put("LAST_GAME", lastGame);
         return contentValues;
@@ -53,7 +71,6 @@ public class Game extends Model{
 
     private void setName(int name){
         this.name = name;
-        Player player = new Player();
     }
 
     public int getImage() {
@@ -86,5 +103,13 @@ public class Game extends Model{
 
     private void setLastGame(String lastGame) {
         this.lastGame = lastGame;
+    }
+
+    private void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public Listener getListener(){
+        return listener;
     }
 }

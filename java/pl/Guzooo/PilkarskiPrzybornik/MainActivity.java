@@ -7,18 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView descriptionManagePlayers;
+    int activePlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Intent intent = new Intent(this, GameInfoActivity.class);
-        startActivity(intent);
 
         descriptionManagePlayers = findViewById(R.id.description_manage_players);
         setNumberActivePlayers();
@@ -29,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         setNumberActivePlayers();
+    }
+
+    public void ClickCrow(View v){
+        if(activePlayers > 1) {
+            Intent intent = new Intent(this, GameInfoActivity.class);
+            intent.putExtra(GameInfoActivity.EXTRA_ID, 0);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "MIN 2 PLAYERS", Toast.LENGTH_SHORT).show(); //TODO:string
+        }
     }
 
     public void ClickPlayersControl(View v){
@@ -43,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 "ACTIVE = ?",
                 new String[]{Integer.toString(1)},
                 null, null, null);
-        int count = cursor.getCount();
+        activePlayers = cursor.getCount();
         cursor.close();
         db.close();
 
-        if (count == 0){
+        if (activePlayers == 0){
             descriptionManagePlayers.setText(R.string.manage_players);
         } else {
-            descriptionManagePlayers.setText(getString(R.string.number_active_players, count));
+            descriptionManagePlayers.setText(getString(R.string.number_active_players, activePlayers));
         }
     }
 }

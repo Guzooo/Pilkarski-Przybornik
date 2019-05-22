@@ -40,6 +40,8 @@ public class Database extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE GAMES (_id INTEGER PRIMARY KEY,"
                     + "NUMBER_GAME INTEGER,"
                     + "LAST_GAME TEXT)");
+
+            Games.createGamesInDatabase(db, oldVersion);
         }
     }
 

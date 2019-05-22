@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content">
 
                <ImageView
+                   android:onClick="ClickCrow"
                    android:src="@drawable/crown"
                    style="@style/AppTheme.Icon.Game"/>
 

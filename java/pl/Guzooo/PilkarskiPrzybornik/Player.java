@@ -127,10 +127,14 @@ public class Player extends Model{
 
     public int getShots() {
         return shots;
-    }
+    } //TODO:mozna to usunąć
 
     public void setShots(int shots) {
         this.shots = shots;
+    }
+
+    public void addShots(){
+        shots++;
     }
 
     public int getGoodShots() {
@@ -141,12 +145,20 @@ public class Player extends Model{
         this.goodShots = goodShots;
     }
 
+    public void addGoodShots(){
+        goodShots++;
+    }
+
     public int getGoal() {
         return goal;
     }
 
     public void setGoal(int goal) {
         this.goal = goal;
+    }
+
+    public void addGoal(){
+        goal++;
     }
 
     public int getDefendedGoal() {
@@ -157,12 +169,20 @@ public class Player extends Model{
         this.defendedGoal = defendedGoal;
     }
 
+    public void addDefendedGoal(){
+        defendedGoal++;
+    }
+
     public int getUndefendedGoal() {
         return undefendedGoal;
     }
 
     public void setUndefendedGoal(int undefendedGoal) {
         this.undefendedGoal = undefendedGoal;
+    }
+
+    public void addUndefendedGoal(){
+        undefendedGoal++;
     }
 
     public int getGameOfKing() {

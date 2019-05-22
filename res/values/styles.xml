@@ -51,6 +51,13 @@
         <item name="tint">@color/primaryIcon</item>
     </style>
 
+    <style name="AppTheme.Button">
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+    
     <style name="AppTheme.AllClickable">
         <item name="android:minHeight">@dimen/minimal_length</item>
         <item name="android:minWidth">@dimen/minimal_length</item>
