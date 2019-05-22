@@ -73,6 +73,7 @@ public class LotteryActivity extends AppCompatActivity {
                 HideLottery();
                 setButtonText(R.string.random);
             } else {
+                v.setClickable(false);
                 int id = getIntent().getIntExtra(EXTRA_ID, 0);
                 listener.ClickEnd(id, this);
                 finish();

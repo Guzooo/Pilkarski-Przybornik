@@ -21,6 +21,8 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
     private static int shooter = -1;
     private static int goalkeeper = -1;
 
+    private static boolean firstDeath = false;
+
     private static ArrayList<Integer> order = new ArrayList<>();
     private static ArrayList<Player> players = new ArrayList<>();
     private static ArrayList<Integer> lives = new ArrayList<>();
@@ -112,6 +114,8 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
         goalkeeper = -1;
         shooter = -1;
 
+        firstDeath = false;
+
         order.clear();
         players.clear();
         lives.clear();
@@ -156,10 +160,19 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
         if(lives.get(goalkeeper) == 0){
-            Toast.makeText(context, players.get(goalkeeper).getName() + " został skończony 🥅⚽", Toast.LENGTH_SHORT).show();//TODO: stringi
+            Toast.makeText(context, players.get(goalkeeper).getName() + "został skończony 🥅⚽", Toast.LENGTH_SHORT).show();//TODO: stringi
+            if(!firstDeath){
+                players.get(goalkeeper).addLostGameOfKing();
+                firstDeath = true;
+            }
             goalkeeper = shooter;
             if(numberAlivePlayers() == 1){
-                Toast.makeText(context, players.get(shooter).getName() + " wygrał 🏆\nCofnij, aby wyjść z gry", Toast.LENGTH_LONG).show();
+                players.get(shooter).addWinGameOfKing();
+                Toast.makeText(context, players.get(shooter).getName() + "wygrał 🏆\nCofnij, aby wyjść z gry", Toast.LENGTH_LONG).show();
+                for(Player player : players){
+                    player.addGameOfKing();
+                    player.update(context);
+                }
             }
         }
         setShooter();

@@ -127,7 +127,7 @@ public class Player extends Model{
 
     public int getShots() {
         return shots;
-    } //TODO:mozna to usunąć
+    }
 
     public void setShots(int shots) {
         this.shots = shots;
@@ -193,6 +193,10 @@ public class Player extends Model{
         this.gameOfKing = gameOfKing;
     }
 
+    public void addGameOfKing(){
+        gameOfKing++;
+    }
+
     public int getWinGameOfKing() {
         return winGameOfKing;
     }
@@ -201,11 +205,19 @@ public class Player extends Model{
         this.winGameOfKing = winGameOfKing;
     }
 
+    public void addWinGameOfKing(){
+        winGameOfKing++;
+    }
+
     public int getLostGameOfKing() {
         return lostGameOfKing;
     }
 
     public void setLostGameOfKing(int lostGameOfKing) {
         this.lostGameOfKing = lostGameOfKing;
+    }
+
+    public void addLostGameOfKing(){
+        lostGameOfKing++;
     }
 }
