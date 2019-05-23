@@ -295,6 +295,7 @@ public class LinksManagement {
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.finish();
                         adapter.SaveChanges(context);
                     }
                 })

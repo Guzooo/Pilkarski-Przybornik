@@ -14,48 +14,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/AppTheme.Title"/>
 
-    <Button
-        android:id="@+id/bad_shot"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:text="@string/bad_shot"
-        android:onClick="ClickBadShot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_mishit"
-        app:layout_constraintBottom_toTopOf="@+id/goalkeeper"
-        style="@style/AppTheme.Button"/>
+        app:layout_constraintBottom_toTopOf="@id/goalkeeper">
 
-    <Button
-        android:id="@+id/button_mishit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:text="@string/mishit"
-        android:onClick="ClickMishit"
-        app:layout_constraintStart_toEndOf="@id/bad_shot"
-        app:layout_constraintEnd_toStartOf="@id/button_goal"
-        app:layout_constraintBottom_toTopOf="@id/goalkeeper"
-        style="@style/AppTheme.Button" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/standard_margin"
+            android:text="@string/bad_shot"
+            android:onClick="ClickBadShot"
+            style="@style/AppTheme.Button"/>
 
-    <Button
-        android:id="@+id/button_goal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:text="@string/goal"
-        android:onClick="ClickGoal"
-        app:layout_constraintStart_toEndOf="@id/button_mishit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/goalkeeper"
-        style="@style/AppTheme.Button" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/standard_margin"
+            android:text="@string/mishit"
+            android:onClick="ClickMishit"
+            style="@style/AppTheme.Button" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/standard_margin"
+            android:text="@string/goal"
+            android:onClick="ClickGoal"
+            style="@style/AppTheme.Button" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/shooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
-        app:layout_constraintBottom_toTopOf="@id/bad_shot"
+        app:layout_constraintBottom_toTopOf="@id/buttons"
         style="@style/AppTheme.Title"/>
 
     <TextView

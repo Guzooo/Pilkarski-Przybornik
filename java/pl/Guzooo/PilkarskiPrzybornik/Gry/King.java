@@ -160,7 +160,7 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
         if(lives.get(goalkeeper) == 0){
-            Toast.makeText(context, players.get(goalkeeper).getName() + "został skończony 🥅⚽", Toast.LENGTH_SHORT).show();//TODO: stringi
+            Toast.makeText(context, players.get(goalkeeper).getName() + " został skończony 🥅⚽", Toast.LENGTH_SHORT).show();//TODO: stringi
             if(!firstDeath){
                 players.get(goalkeeper).addLostGameOfKing();
                 firstDeath = true;
@@ -168,7 +168,7 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
             goalkeeper = shooter;
             if(numberAlivePlayers() == 1){
                 players.get(shooter).addWinGameOfKing();
-                Toast.makeText(context, players.get(shooter).getName() + "wygrał 🏆\nCofnij, aby wyjść z gry", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, players.get(shooter).getName() + " wygrał 🏆\nCofnij, aby wyjść z gry", Toast.LENGTH_LONG).show();//TODO: stringi
                 for(Player player : players){
                     player.addGameOfKing();
                     player.update(context);
