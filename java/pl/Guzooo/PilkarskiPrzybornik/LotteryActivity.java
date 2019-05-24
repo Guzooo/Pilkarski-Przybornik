@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -76,6 +75,9 @@ public class LotteryActivity extends AppCompatActivity {
                 v.setClickable(false);
                 int id = getIntent().getIntExtra(EXTRA_ID, 0);
                 listener.ClickEnd(id, this);
+                Games.currentGame.addNumberGame();
+                Games.currentGame.setLastGame();
+                Games.currentGame.update(this);
                 finish();
             }
         }

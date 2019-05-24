@@ -219,14 +219,28 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
     @Override
     public String getPlayersSegregatedByOrder() {
         String string = "Kolejność\n"; //TODO: kolejność
-        for(int i = shooter + 1; i < players.size(); i++) {
-            if (i != goalkeeper && lives.get(i) > 0) {
-                string += "\n" + players.get(i).getName() + " ⬆";
+        for(int i = shooter; i < players.size(); i++) {
+            if (lives.get(i) > 0) {
+                string += "\n" + players.get(i).getName();
+
+                if(i == shooter)
+                    string += " ⚽";
+                else if (i == goalkeeper)
+                    string += " 🥅";
+                else
+                    string += " ⬆";
             }
         }
         for(int i = 0; i < shooter; i++) {
-            if (i != goalkeeper && lives.get(i) > 0) {
-                string += "\n" + players.get(i).getName() + " ⬆";
+            if (lives.get(i) > 0) {
+                string += "\n" + players.get(i).getName();
+
+                if(i == shooter)
+                    string += " ⚽";
+                else if (i == goalkeeper)
+                    string += " 🥅";
+                else
+                    string += " ⬆";
             }
         }
         return string;

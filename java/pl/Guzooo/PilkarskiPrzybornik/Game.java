@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Game extends Model{
 
@@ -97,12 +97,32 @@ public class Game extends Model{
         this.numberGame = numberGame;
     }
 
+    public void addNumberGame(){
+        numberGame++;
+    }
+
     public String getLastGame() {
         return lastGame;
     }
 
     private void setLastGame(String lastGame) {
         this.lastGame = lastGame;
+    }
+
+    public void setLastGame() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        String data = hour + ":";
+        if(minute < 10)
+            data += "0" + minute;
+        else
+            data += minute;
+        data += " " + day + "/" + month + "/" + year;
+        lastGame = data;
     }
 
     private void setListener(Listener listener) {

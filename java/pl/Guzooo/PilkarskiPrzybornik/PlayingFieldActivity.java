@@ -50,12 +50,12 @@ public class PlayingFieldActivity extends AppCompatActivity {
 
     private void setGoalkeeper(){
         TextView textView = findViewById(R.id.goalkeeper);
-        textView.setText("Bramkarz: " + listener.getGoalkeeper());
+        textView.setText(getString(R.string.goalkeeper, listener.getGoalkeeper()));
     }
 
     private void setShooter(){
         TextView textView = findViewById(R.id.shooter);
-        textView.setText("Strzelec: " + listener.getShooter());
+        textView.setText(getString(R.string.shooter, listener.getShooter()));
     }
 
     public void ClickBadShot(View v){

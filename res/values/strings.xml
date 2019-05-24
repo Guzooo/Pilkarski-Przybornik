@@ -50,6 +50,8 @@
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
 
+    <string name="goalkeeper">🥅 %1$s 🥅</string>
+    <string name="shooter">⚽ %1$s ⚽</string>
     <string name="goal">Gol</string>
     <string name="mishit">Pudło</string>
     <string name="bad_shot">Poza bramke</string>
