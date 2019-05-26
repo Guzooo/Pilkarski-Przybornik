@@ -43,6 +43,16 @@ public class Database extends SQLiteOpenHelper {
 
             Games.createGamesInDatabase(db, oldVersion);
         }
+
+        /*if(oldVersion < 2) {
+            db.execSQL("CREATE TABLE KING (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "NAME TEXT,"
+                    + "SHOOTER INTEGER,"
+                    + "GOALKEEPER INTEGER,"
+                    + "PLAYERS TEXT,"
+                    + "STATS TEXT,"
+                    + "DATA TEXT)");
+        }*/
     }
 
     public static SQLiteDatabase getWrite(Context context){

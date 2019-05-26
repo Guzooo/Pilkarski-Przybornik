@@ -1,4 +1,4 @@
-package pl.Guzooo.PilkarskiPrzybornik.Gry;
+package pl.Guzooo.PilkarskiPrzybornik.Gry.Krol;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +25,7 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
 
     private static ArrayList<Integer> order = new ArrayList<>();
     private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Player> playersOrganic = new ArrayList<>();
     private static ArrayList<Integer> lives = new ArrayList<>();
 
     //GENERAL
@@ -102,6 +103,7 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
                 }
             }
         }
+        playersOrganic.addAll(players);
 
         Intent intent = new Intent(context, PlayingFieldActivity.class);
         intent.putExtra(PlayingFieldActivity.EXTRA_ID, id);
@@ -221,30 +223,23 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
         String string = "Kolejność\n"; //TODO: kolejność
         for(int i = shooter; i < players.size(); i++) {
             if (lives.get(i) > 0) {
-                string += "\n" + players.get(i).getName();
-
-                if(i == shooter)
-                    string += " ⚽";
-                else if (i == goalkeeper)
-                    string += " 🥅";
-                else
-                    string += " ⬆";
+                string += "\n" + players.get(i).getName() + MarkOfOrder(i);
             }
         }
         for(int i = 0; i < shooter; i++) {
             if (lives.get(i) > 0) {
-                string += "\n" + players.get(i).getName();
-
-                if(i == shooter)
-                    string += " ⚽";
-                else if (i == goalkeeper)
-                    string += " 🥅";
-                else
-                    string += " ⬆";
+                string += "\n" + players.get(i).getName() + MarkOfOrder(i);
             }
         }
         return string;
     }
 
-
+    private String MarkOfOrder(int player){
+        if(player == shooter)
+            return " ⚽";
+        else if (player == goalkeeper)
+            return " 🥅";
+        else
+            return " ⬆";
+    }
 }

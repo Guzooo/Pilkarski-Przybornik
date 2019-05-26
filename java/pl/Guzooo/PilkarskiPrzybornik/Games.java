@@ -2,7 +2,7 @@ package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import pl.Guzooo.PilkarskiPrzybornik.Gry.King;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Krol.King;
 
 public class Games {
 
