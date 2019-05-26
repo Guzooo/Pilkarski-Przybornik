@@ -40,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void ClickSelectGoalkeeper(View v){
+        if(activePlayers > 2){
+            Intent intent = new Intent(this, GameInfoActivity.class);
+            intent.putExtra(GameInfoActivity.EXTRA_ID, 1);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "MIN 2 PLAYERS", Toast.LENGTH_SHORT).show(); //TODO:string
+        }
+    }
+
     public void ClickPlayersControl(View v){
         Intent intent = new Intent(this, PlayersActivity.class);
         startActivity(intent);

@@ -68,6 +68,9 @@ public class LotteryActivity extends AppCompatActivity {
         } else {
             if(listener.ClickNextPlayer(currentPlayer, titles.size())){
                 currentPlayer++;
+                if(currentPlayer == titles.size()){
+                    currentPlayer = 0;
+                }
                 setTitle();
                 HideLottery();
                 setButtonText(R.string.random);

@@ -16,12 +16,12 @@ import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
-public class King implements LotteryActivity.Listener, Game.Listener, PlayingFieldActivity.Listener {
+public class King implements Game.Listener, LotteryActivity.Listener, PlayingFieldActivity.Listener {
 
     private static int shooter = -1;
     private static int goalkeeper = -1;
 
-    private static boolean firstDeath = false;
+    private static boolean firstDeath;
 
     private static ArrayList<Integer> order = new ArrayList<>();
     private static ArrayList<Player> players = new ArrayList<>();
@@ -74,18 +74,16 @@ public class King implements LotteryActivity.Listener, Game.Listener, PlayingFie
 
     @Override
     public boolean ClickNextPlayer(int currentPlayer, int allPlayers) {
-        if(currentPlayer+1 < allPlayers){
+        if(currentPlayer+1 < allPlayers)
             return true;
-        } else {
+        else
             return false;
-        }
     }
 
     @Override
     public int setButtonText(int allPlayer) {
-        if(allPlayer == order.size()){
+        if(allPlayer == order.size())
             return R.string.start_game;
-        }
         return R.string.next_player;
     }
 

@@ -8,6 +8,7 @@
     <string name="game_select_players">Wybierz Graczy</string>
 
     <string name="game_king_description">Gracze losują numery od 1 do X, każdy ma Y żyć. Gracze strzelają karne, do momentu, aż X-1 straci Y żyć. Aplikacja przeprowadzi was przez rozgrywkę.</string>
+    <string name="game_select_goalkeeper_description">Każdy z graczy losuje liczbe, ten który wysoluje 1 zostaje bramkarzem</string>
 
     <string name="play">Graj</string>
 
@@ -49,6 +50,7 @@
 
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
+    <string name="back_to_menu">Wróć do menu</string>
 
     <string name="goalkeeper">🥅 %1$s 🥅</string>
     <string name="shooter">⚽ %1$s ⚽</string>
