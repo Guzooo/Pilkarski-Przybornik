@@ -29,7 +29,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
         setContentView(R.layout.activity_playing_field);
 
         int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        setListener(Games.getListenerPlayingField(id));
+        //setListener(Games.getListenerPlayingField(id));
 
         RefreshInfo();
     }

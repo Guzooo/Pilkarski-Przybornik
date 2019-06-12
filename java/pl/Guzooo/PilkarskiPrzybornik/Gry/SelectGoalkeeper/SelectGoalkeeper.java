@@ -1,4 +1,4 @@
-package pl.Guzooo.PilkarskiPrzybornik.Gry;
+package pl.Guzooo.PilkarskiPrzybornik.Gry.SelectGoalkeeper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,18 +15,18 @@ import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
-public class SelectGoalkeeper implements Game.Listener, LotteryActivity.Listener {
+public class SelectGoalkeeper implements LotteryActivity.Listener {
 
     private static boolean goalkeeper;
 
-    //GENERAL
+    /*//GENERAL
     @Override
     public void ClickPlay(int id, Context context) {
         Log.d("tu jest", "bramkarz " + goalkeeper);
         Intent intent = new Intent(context, LotteryActivity.class);
         intent.putExtra(LotteryActivity.EXTRA_ID, id);
         context.startActivity(intent);
-    }
+    }*/
 
     //LOTTERY
     @Override
@@ -42,7 +42,7 @@ public class SelectGoalkeeper implements Game.Listener, LotteryActivity.Listener
         if(cursor.moveToFirst()){
             do {
                 Player player = new Player();
-                player.getOfCursor(cursor);
+                player.getOfCursor(cursor, context);
                 titles.add(player.getName());
             } while (cursor.moveToNext());
         }

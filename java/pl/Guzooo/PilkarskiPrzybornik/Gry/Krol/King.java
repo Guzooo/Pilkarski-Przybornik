@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
-import pl.Guzooo.PilkarskiPrzybornik.Game;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
-public class King implements Game.Listener, LotteryActivity.Listener, PlayingFieldActivity.Listener {
+public class King extends GameInfo implements LotteryActivity.Listener, PlayingFieldActivity.Listener {
 
     private static int shooter = -1;
     private static int goalkeeper = -1;
@@ -30,11 +30,41 @@ public class King implements Game.Listener, LotteryActivity.Listener, PlayingFie
 
     //GENERAL
     @Override
+    public String getName(Context context) {
+        return context.getString(R.string.game_king);
+    }
+
+    @Override
+    public int getIcon(Context context) {
+        return R.drawable.crown;
+    }
+
+    @Override
+    public String getDescription(Context context) {
+        return context.getString(R.string.game_king_description); //TODO: zmienne
+    }
+
+    @Override
+    public ArrayList<String> getButtons(Context context) {
+        ArrayList<String> buttons = new ArrayList<>();
+        buttons.add(context.getString(R.string.play));
+        buttons.add("dwa");
+        buttons.add("trzy");
+        return buttons;
+    }
+
+    @Override
+    public void restartGame() {
+
+
+    }
+   /*
+    @Override
     public void ClickPlay(int id, Context context) {
         Intent intent = new Intent(context, LotteryActivity.class);
         intent.putExtra(LotteryActivity.EXTRA_ID, id);
         context.startActivity(intent);
-    }
+    }*/
 
     //LOTTERY
     @Override
@@ -50,7 +80,7 @@ public class King implements Game.Listener, LotteryActivity.Listener, PlayingFie
         if(cursor.moveToFirst()){
             do {
                 Player player = new Player();
-                player.getOfCursor(cursor);
+                player.getOfCursor(cursor, context);
                 titles.add(player.getName());
                 players.add(player);
             } while (cursor.moveToNext());

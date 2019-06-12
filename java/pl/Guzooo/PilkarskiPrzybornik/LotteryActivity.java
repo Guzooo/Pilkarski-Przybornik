@@ -36,7 +36,7 @@ public class LotteryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lottery);
 
         int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        setListener(Games.getListenerLottery(id));
+        //setListener(Games.getListenerLottery(id));
         HideLottery();
 
         titles = listener.setTitles(this);

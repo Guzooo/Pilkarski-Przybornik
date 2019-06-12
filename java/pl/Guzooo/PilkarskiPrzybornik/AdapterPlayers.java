@@ -75,7 +75,7 @@ public class AdapterPlayers extends Adapter {
             });
         } else if (getCursor().moveToPosition(position)) {
             final Player player = new Player();
-            player.getOfCursor(getCursor());
+            player.getOfCursor(getCursor(), getContext());
 
             newHolder.name.setText(player.getName());
             newHolder.description.setText(player.getDescription(getContext()));

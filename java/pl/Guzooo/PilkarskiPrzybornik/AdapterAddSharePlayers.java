@@ -84,7 +84,7 @@ public class AdapterAddSharePlayers extends RecyclerView.Adapter<AdapterAddShare
         if(cursor.moveToFirst()){
             do{
                 Player player = new Player();
-                player.getOfCursor(cursor);
+                player.getOfCursor(cursor, context);
                 adapterSpinner.add(player.getName());
             } while (cursor.moveToNext());
         }
@@ -103,7 +103,7 @@ public class AdapterAddSharePlayers extends RecyclerView.Adapter<AdapterAddShare
             } else if (position > -1){
                 if(cursor.moveToPosition(position)){
                     Player player = new Player();
-                    player.getOfCursor(cursor);
+                    player.getOfCursor(cursor, context);
                     player.getOfPlayer(players.get(i));
                     player.update(context);
                 }

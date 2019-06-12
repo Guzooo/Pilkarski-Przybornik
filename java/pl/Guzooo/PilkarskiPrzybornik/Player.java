@@ -51,7 +51,7 @@ public class Player extends Model{
     }
 
     @Override
-    public void getOfCursor(Cursor cursor) {
+    public void getOfCursor(Cursor cursor, Context context) {
         Template(cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getInt(2),

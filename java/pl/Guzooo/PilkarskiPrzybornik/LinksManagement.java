@@ -57,7 +57,7 @@ public class LinksManagement {
     }
 
     public static void sharePlayers (Cursor cursor, Context context){
-        ArrayList<Player> players = getList(cursor);
+        ArrayList<Player> players = getList(cursor, context);
 
         String linkPlayers = getLink(players);
         String link = START_LINK + encode(linkPlayers) + " 🎮" + "\n\n" + APP_PAGE + " 📲";
@@ -65,13 +65,13 @@ public class LinksManagement {
         startIntent(link , context);
     }
 
-    private static ArrayList<Player> getList(Cursor cursor){
+    private static ArrayList<Player> getList(Cursor cursor, Context context){
         ArrayList<Player> players = new ArrayList<>();
 
         if(cursor.moveToFirst()) { //TODO: Jeśli w nazwie będzie separator pomiń;
             do {
                 Player player = new Player();
-                player.getOfCursor(cursor);
+                player.getOfCursor(cursor, context);
                 players.add(player);
             }while (cursor.moveToNext());
         }

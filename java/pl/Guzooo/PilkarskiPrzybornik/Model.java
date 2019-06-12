@@ -28,7 +28,7 @@ public abstract class Model {
                 null, null, null);
 
         if(cursor.moveToFirst()) {
-            getOfCursor(cursor);
+            getOfCursor(cursor, context);
         } else {
             Empty();
         }
@@ -37,7 +37,7 @@ public abstract class Model {
         db.close();
     }
 
-    public abstract void getOfCursor(Cursor cursor);
+    public abstract void getOfCursor(Cursor cursor, Context context);
 
     public void insert (Context context){
         try{

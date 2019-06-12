@@ -44,6 +44,13 @@ public class Database extends SQLiteOpenHelper {
             Games.createGamesInDatabase(db, oldVersion);
         }
 
+        if(oldVersion < 2){
+            db.execSQL("ALTER TABLE GAMES ADD COLUMN BUTTONS TEXT");
+            //Dodać zmienną do GAMES z kolejnością przycisków
+
+            Games.createGamesInDatabase(db, oldVersion);
+        }
+
         /*if(oldVersion < 2) {
             db.execSQL("CREATE TABLE KING (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "NAME TEXT,"

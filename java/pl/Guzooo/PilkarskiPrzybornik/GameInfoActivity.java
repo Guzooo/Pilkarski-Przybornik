@@ -30,6 +30,6 @@ public class GameInfoActivity extends AppCompatActivity {
 
     public void ClickPlay(View v){ //TODO: listener żeby dało się więcej przycisków w zależności od gry
         int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        Games.currentGame.getListener().ClickPlay(id,this);
+        //Games.currentGame.getListener().ClickPlay(id,this);
     }
 }

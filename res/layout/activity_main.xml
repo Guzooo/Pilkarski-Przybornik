@@ -6,74 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/action_bar"
-        android:clipToPadding="false">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/action_bar">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-               <ImageView
-                   android:onClick="ClickCrow"
-                   android:src="@drawable/crown"
-                   style="@style/AppTheme.Icon.Game"/>
-
-            </LinearLayout>
-
-           <ImageView style="@style/AppTheme.Separator.Vertical" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:onClick="ClickSelectGoalkeeper"
-                    android:src="@drawable/goalkeeper"
-                    style="@style/AppTheme.Icon.Game"/>
-
-            </LinearLayout>
-
-            <!--<ImageView style="@style/AppTheme.Separator.Vertical" />-->
-
-            <!-- <LinearLayout
-                 android:orientation="vertical"
-                 android:layout_weight="1"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content">
-
-        </LinearLayout>-->
-        </LinearLayout>
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <ImageView
+            android:layout_margin="0dp"
+            android:layout_marginBottom="@dimen/standard_margin"
+            style="@style/AppTheme.Separator.Horizontal" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/group"
-                    android:onClick="ClickPlayersControl"
-                    style="@style/AppTheme.Icon"/>
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/group"
+                android:onClick="ClickPlayersControl"
+                style="@style/AppTheme.Icon"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
