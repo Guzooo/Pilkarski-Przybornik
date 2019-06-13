@@ -55,7 +55,6 @@ public class Game extends Model{
                 cursor.getString(2),
                 cursor.getString(3),
                 context);
-        //Games.setCurrentGame(this);//TODO: jak kliknie pley
         setName(gameInfo.getName(context));
         setDescription(gameInfo.getDescription(context));
         setImage(gameInfo.getIcon(context));
@@ -149,7 +148,7 @@ public class Game extends Model{
         this.buttonsName = buttonsName;
     }
 
-    public ArrayList<Integer> getButtonsOrder(Context context) {
+    public ArrayList<Integer> getButtonsOrder() {
         String[] buttonsS = buttonsOrder.split(";");
         ArrayList<Integer> buttonsI = new ArrayList<>();
         for(String string : buttonsS)
@@ -182,21 +181,16 @@ public class Game extends Model{
             Log.d("GAME", "tu sprawdzamy powiekszyło się");
         } else if (count < buttons.length){
             for (int i = count; i < buttons.length; i++) {
-                buttonsOrder.replace(i + ";", "");
+                buttonsOrder = buttonsOrder.replace(i + ";", "");
             }
             Log.d("GAME", "tu sprawdzamy zmniejszyło się");
         }
         Log.d("GAME", "tu sprawdzamy: " + buttonsOrder);
     }
 
-    public void LastButton(int i){
-        String[] buttons = buttonsOrder.split(";");
-        buttonsOrder = i + ";";
-        for(String string : buttons){
-            if(!string.equals(i)){
-                buttonsOrder += string + ";";
-            }
-        }
+    public void setLastButton(int i){
+        buttonsOrder = buttonsOrder.replace(i + ";", "");
+        buttonsOrder = i + ";" + buttonsOrder;
         Log.d("GAME", "a tu robie takie cyk cyk z ostatnim: " + buttonsOrder);
     }
 }

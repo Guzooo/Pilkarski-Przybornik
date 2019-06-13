@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
+import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
@@ -18,8 +19,8 @@ import pl.Guzooo.PilkarskiPrzybornik.R;
 
 public class King extends GameInfo implements LotteryActivity.Listener, PlayingFieldActivity.Listener {
 
-    private static int shooter = -1;
-    private static int goalkeeper = -1;
+    private static int shooter;
+    private static int goalkeeper;
 
     private static boolean firstDeath;
 
@@ -48,24 +49,40 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     public ArrayList<String> getButtons(Context context) {
         ArrayList<String> buttons = new ArrayList<>();
         buttons.add(context.getString(R.string.play));
-        buttons.add("dwa");
-        buttons.add("trzy");;
-        buttons.add("elo bencz");
+        buttons.add("NEW MOOD");
+        buttons.add("NEW MOOD");
         return buttons;
     }
 
     @Override
-    public void restartGame() {
-
-
+    public void Play(int buttonId, Context context) {
+        Reset();
+        switch (buttonId){
+            case 0:
+                Intent intent = new Intent(context, LotteryActivity.class);
+                context.startActivity(intent);
+                Games.currentGame.setLastButton(buttonId);
+                break;
+            case 1:
+                Toast.makeText(context, "COMING SOON", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Toast.makeText(context, "COMING SOON", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
-   /*
+
     @Override
-    public void ClickPlay(int id, Context context) {
-        Intent intent = new Intent(context, LotteryActivity.class);
-        intent.putExtra(LotteryActivity.EXTRA_ID, id);
-        context.startActivity(intent);
-    }*/
+    public void Reset() {
+        goalkeeper = -1;
+        shooter = -1;
+
+        firstDeath = false;
+
+        order.clear();
+        players.clear();
+        lives.clear();
+    }
 
     //LOTTERY
     @Override
@@ -119,7 +136,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public void ClickEnd(int id, Context context) {
+    public void ClickEnd(Context context) {
         ArrayList<Player> playersNoOrder = new ArrayList<>();
         playersNoOrder.addAll(players);
         players.removeAll(players);
@@ -135,21 +152,13 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         playersOrganic.addAll(players);
 
         Intent intent = new Intent(context, PlayingFieldActivity.class);
-        intent.putExtra(PlayingFieldActivity.EXTRA_ID, id);
         context.startActivity(intent);
     }
 
     //TO IDZIE NA DWA NA RAZIE
     @Override
     public boolean onBackPressed() {
-        goalkeeper = -1;
-        shooter = -1;
-
-        firstDeath = false;
-
-        order.clear();
-        players.clear();
-        lives.clear();
+//TODO: wyskakujące oknoooooooooo z pytaniem czy wychodzimy czy zostajemy
         return true;
     }
 

@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 public class PlayingFieldActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ID = "id";
-
     private Listener listener;
 
     public interface Listener{
@@ -28,8 +26,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playing_field);
 
-        int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        //setListener(Games.getListenerPlayingField(id));
+        setListener((Listener) Games.currentGame.getGameInfo());
 
         RefreshInfo();
     }

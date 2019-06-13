@@ -9,5 +9,6 @@ public abstract class GameInfo {
     public abstract int getIcon(Context context);
     public abstract String getDescription(Context context);
     public abstract ArrayList<String> getButtons(Context context);
-    public abstract void restartGame();
+    public abstract void Play(int buttonId, Context context);
+    public abstract void Reset();
 }

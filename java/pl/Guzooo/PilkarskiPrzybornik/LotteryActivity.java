@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class LotteryActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ID = "id";
-
     private int currentPlayer;
     private boolean buttonLotteryText = true;
     private ArrayList<String> titles;
@@ -27,7 +25,7 @@ public class LotteryActivity extends AppCompatActivity {
         String ClickRandom(int allPlayers);
         boolean ClickNextPlayer(int currentPlayer, int allPlayers);
         int setButtonText(int allPlayer);
-        void ClickEnd(int id, Context context);
+        void ClickEnd(Context context);
     }
 
     @Override
@@ -35,8 +33,7 @@ public class LotteryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery);
 
-        int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        //setListener(Games.getListenerLottery(id));
+        setListener((Listener) Games.currentGame.getGameInfo());
         HideLottery();
 
         titles = listener.setTitles(this);
@@ -76,8 +73,7 @@ public class LotteryActivity extends AppCompatActivity {
                 setButtonText(R.string.random);
             } else {
                 v.setClickable(false);
-                int id = getIntent().getIntExtra(EXTRA_ID, 0);
-                listener.ClickEnd(id, this);
+                listener.ClickEnd(this);
                 Games.currentGame.addNumberGame();
                 Games.currentGame.setLastGame();
                 Games.currentGame.update(this);

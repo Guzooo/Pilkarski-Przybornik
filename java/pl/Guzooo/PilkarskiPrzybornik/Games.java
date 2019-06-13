@@ -1,6 +1,5 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
@@ -17,7 +16,7 @@ public class Games {
     }
 
     public static GameInfo getGameInfo(int id){
-        id = 0;//TODO:del
+        id = 0; //TODO:DEL
         return gamesInfo[id];
     }
 

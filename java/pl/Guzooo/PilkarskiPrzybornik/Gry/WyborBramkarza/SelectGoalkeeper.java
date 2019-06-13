@@ -1,16 +1,13 @@
-package pl.Guzooo.PilkarskiPrzybornik.Gry.SelectGoalkeeper;
+package pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
-import pl.Guzooo.PilkarskiPrzybornik.Game;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.R;
@@ -77,7 +74,7 @@ public class SelectGoalkeeper implements LotteryActivity.Listener {
     }
 
     @Override
-    public void ClickEnd(int id, Context context) {
+    public void ClickEnd(Context context) {
         goalkeeper = false;
     }
 

@@ -40,15 +40,16 @@ public class GameInfoActivity extends AppCompatActivity {
         for (int i = 0; i < game.getButtonsName().size(); i++) {
             //TODO: Button z view taki gotowy ze stylem i go damy tu zmieniajac tylko tekst
             Button button = new Button(this);
-            button.setText(game.getButtonsName().get(game.getButtonsOrder(this).get(i)));
+            button.setText(game.getButtonsName().get(game.getButtonsOrder().get(i)));
             button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
             button.setId(i);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Games.currentGame.getGameInfo().Play(view.getId(), getApplicationContext());
+                }
+            });
             linearLayout.addView(button);
         }
-    }
-
-    public void ClickPlay(View v){ //TODO: listener żeby dało się więcej przycisków w zależności od gry
-        int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        //Games.currentGame.getListener().ClickPlay(id,this);
     }
 }

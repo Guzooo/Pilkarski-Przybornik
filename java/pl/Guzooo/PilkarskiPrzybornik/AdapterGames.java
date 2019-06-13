@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class AdapterGames extends Adapter{
         private TextView title;
         private ImageView icon;
         private TextView description;
+        private Button button;
         private TextView localInfo;
 
         public ViewHolder(View v) {
@@ -31,6 +33,7 @@ public class AdapterGames extends Adapter{
             title = v.findViewById(R.id.title);
             icon = v.findViewById(R.id.icon);
             description = v.findViewById(R.id.description);
+            button = v.findViewById(R.id.button);
             localInfo = v.findViewById(R.id.local_info);
         }
     }
@@ -46,10 +49,20 @@ public class AdapterGames extends Adapter{
             newHolder.title.setText(game.getName());
             newHolder.icon.setImageResource(game.getImage());
             newHolder.description.setText(game.getDescription());
+            newHolder.button.setText(game.getButtonsName().get(game.getButtonsOrder().get(0)));
+
+            newHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Games.setCurrentGame(game);
+                    game.getGameInfo().Play(game.getButtonsOrder().get(0), getContext());
+                }
+            });
 
             newHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Games.setCurrentGame(game);
                     Intent intent = new Intent(getContext(), GameInfoActivity.class);
                     intent.putExtra(GameInfoActivity.EXTRA_ID, game.getId());
                     getContext().startActivity(intent);
@@ -62,7 +75,7 @@ public class AdapterGames extends Adapter{
     @Override
     public int getItemCount() {
         //TODO:Usuń
-        return 1;
+        return 2;
     }
 
     public AdapterGames(Cursor cursor, Context context){
