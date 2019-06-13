@@ -59,6 +59,12 @@ public class AdapterGames extends Adapter{
 
     }
 
+    @Override
+    public int getItemCount() {
+        //TODO:Usuń
+        return 1;
+    }
+
     public AdapterGames(Cursor cursor, Context context){
         super(cursor, context);
     }

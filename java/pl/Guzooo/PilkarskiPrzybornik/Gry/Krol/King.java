@@ -49,7 +49,8 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         ArrayList<String> buttons = new ArrayList<>();
         buttons.add(context.getString(R.string.play));
         buttons.add("dwa");
-        buttons.add("trzy");
+        buttons.add("trzy");;
+        buttons.add("elo bencz");
         return buttons;
     }
 

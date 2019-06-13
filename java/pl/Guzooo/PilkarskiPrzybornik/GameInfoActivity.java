@@ -1,9 +1,15 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameInfoActivity extends AppCompatActivity {
@@ -26,6 +32,19 @@ public class GameInfoActivity extends AppCompatActivity {
         title.setText(game.getName());
         description.setText(game.getDescription());
         image.setImageResource(game.getImage());
+        CreateButtons(game);
+    }
+
+    private void CreateButtons(Game game) {
+        LinearLayout linearLayout = findViewById(R.id.buttons_box);
+        for (int i = 0; i < game.getButtonsName().size(); i++) {
+            //TODO: Button z view taki gotowy ze stylem i go damy tu zmieniajac tylko tekst
+            Button button = new Button(this);
+            button.setText(game.getButtonsName().get(game.getButtonsOrder(this).get(i)));
+            button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
+            button.setId(i);
+            linearLayout.addView(button);
+        }
     }
 
     public void ClickPlay(View v){ //TODO: listener żeby dało się więcej przycisków w zależności od gry

@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DB_NAME = "pilkarskiprzybornik";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     Database(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

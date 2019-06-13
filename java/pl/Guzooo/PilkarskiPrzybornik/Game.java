@@ -19,7 +19,7 @@ public class Game extends Model{
     private String lastGame;
     private GameInfo gameInfo;
     private ArrayList<String> buttonsName;
-    private String buttonsOrder;
+    private String buttonsOrder = "";
 
     public static final String databaseName = "GAMES";
     public static final String[] onCursor = {"_id", "NUMBER_GAME", "LAST_GAME", "BUTTONS"};
@@ -38,7 +38,8 @@ public class Game extends Model{
         setId(id);
         setNumberGame(numberGame);
         setLastGame(lastGame);
-        setButtonsOrder(buttons, context);
+        if(context != null)
+            setButtonsOrder(buttons, context);
     }
 
     @Override
@@ -60,7 +61,6 @@ public class Game extends Model{
         setImage(gameInfo.getIcon(context));
         setButtonsName(gameInfo.getButtons(context));
         CheckButtonsOrder(context);
-
     }
 
     @Override
@@ -162,20 +162,29 @@ public class Game extends Model{
         if(buttons == null){
             int count = gameInfo.getButtons(context).size();
             for(int i = 0; i < count; i++){
-                buttons += i + ";";
+                this.buttonsOrder += i + ";";
+                Log.d("GAME", "tu ustawiamy dodaje kolejne");
             }
-        } else
+        } else {
             this.buttonsOrder = buttons;
+            Log.d("GAME", "tu ustawiamy przepisuje");
+        }
         Log.d("GAME", "tu ustawiamy: " + buttonsOrder);
     }
 
     public void CheckButtonsOrder(Context context){
         int count = gameInfo.getButtons(context).size();
         String[] buttons = buttonsOrder.split(";");
-        if(buttons.length > count){
-            for (int i = count-1; i < buttons.length; i++){
+        if(count > buttons.length){
+            for (int i = buttons.length-1; i < count; i++){
                 buttonsOrder += i + ";";
             }
+            Log.d("GAME", "tu sprawdzamy powiekszyło się");
+        } else if (count < buttons.length){
+            for (int i = count; i < buttons.length; i++) {
+                buttonsOrder.replace(i + ";", "");
+            }
+            Log.d("GAME", "tu sprawdzamy zmniejszyło się");
         }
         Log.d("GAME", "tu sprawdzamy: " + buttonsOrder);
     }

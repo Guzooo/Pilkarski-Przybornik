@@ -17,7 +17,7 @@ public class Games {
     }
 
     public static GameInfo getGameInfo(int id){
-        id = 0;
+        id = 0;//TODO:del
         return gamesInfo[id];
     }
 

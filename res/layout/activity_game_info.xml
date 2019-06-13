@@ -72,14 +72,13 @@
                 android:layout_margin="@dimen/standard_margin"
                 android:layout_weight="1"/>
 
-            <Button
+            <LinearLayout
+                android:id="@+id/buttons_box"
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:text="@string/play"
-                android:onClick="ClickPlay"
-                style="@style/AppTheme.Button"/>
+                android:layout_margin="@dimen/standard_margin"/>
         </LinearLayout>
     </ScrollView>
 
