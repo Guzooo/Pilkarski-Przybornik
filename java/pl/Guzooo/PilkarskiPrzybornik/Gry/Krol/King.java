@@ -64,9 +64,13 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         Reset();
         switch (buttonId){
             case 0:
-                Intent intent = new Intent(context, LotteryActivity.class);
-                context.startActivity(intent);
-                Games.currentGame.setLastButton(buttonId);
+                if(getNumberActivePlayers(context) > 1) {
+                    Intent intent = new Intent(context, LotteryActivity.class);
+                    context.startActivity(intent);
+                    Games.currentGame.setLastButton(buttonId);
+                } else {
+                    Toast.makeText(context, "MIN 2 PLAYERS", Toast.LENGTH_LONG).show(); //TODO: STRINg
+                }
                 break;
             case 1:
                 Toast.makeText(context, "COMING SOON", Toast.LENGTH_LONG).show();

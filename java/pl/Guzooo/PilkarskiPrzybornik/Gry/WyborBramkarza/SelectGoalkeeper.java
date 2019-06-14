@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -48,8 +49,12 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     @Override
     public void Play(int buttonId, Context context) {
         Reset();
-        Intent intent = new Intent(context, LotteryActivity.class);
-        context.startActivity(intent);
+        if(getNumberActivePlayers(context) > 1) {
+            Intent intent = new Intent(context, LotteryActivity.class);
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, "MIN 2 PLAYERS", Toast.LENGTH_LONG).show(); //TODO: STRINg
+        }
     }
 
     @Override
