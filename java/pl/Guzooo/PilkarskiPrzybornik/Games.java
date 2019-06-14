@@ -4,19 +4,19 @@ import android.database.sqlite.SQLiteDatabase;
 
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.Krol.King;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza.SelectGoalkeeper;
 
 public class Games {
 
     public static Game currentGame;
 
-    public static final GameInfo[] gamesInfo = new GameInfo[] {new King()};
+    public static final GameInfo[] gamesInfo = new GameInfo[] {new King(), new SelectGoalkeeper()};
 
     public static void setCurrentGame(Game game){
         currentGame = game;
     }
 
     public static GameInfo getGameInfo(int id){
-        id = 0; //TODO:DEL
         return gamesInfo[id];
     }
 

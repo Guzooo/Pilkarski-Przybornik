@@ -1,6 +1,7 @@
 package pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -8,22 +9,53 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
-public class SelectGoalkeeper implements LotteryActivity.Listener {
+public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listener {
 
     private static boolean goalkeeper;
 
-    /*//GENERAL
     @Override
-    public void ClickPlay(int id, Context context) {
-        Log.d("tu jest", "bramkarz " + goalkeeper);
+    public String getName(Context context) {
+        return context.getString(R.string.game_select_goalkeeper);
+    }
+
+    @Override
+    public int getIcon(Context context) {
+        return R.drawable.goalkeeper;
+    }
+
+    @Override
+    public String getDescription(Context context) {
+        return context.getString(R.string.game_select_goalkeeper_description);
+    }
+
+    @Override
+    public String getShortDescription(Context context) {
+        return context.getString(R.string.game_select_goalkeeper_short_description);
+    }
+
+    @Override
+    public ArrayList<String> getButtons(Context context) {
+        ArrayList<String> buttons = new ArrayList<>();
+        buttons.add(context.getString(R.string.random_goalkeeper));
+        return buttons;
+    }
+
+    @Override
+    public void Play(int buttonId, Context context) {
+        Reset();
         Intent intent = new Intent(context, LotteryActivity.class);
-        intent.putExtra(LotteryActivity.EXTRA_ID, id);
         context.startActivity(intent);
-    }*/
+    }
+
+    @Override
+    public void Reset() {
+        goalkeeper = false;
+    }
 
     //LOTTERY
     @Override
@@ -75,7 +107,7 @@ public class SelectGoalkeeper implements LotteryActivity.Listener {
 
     @Override
     public void ClickEnd(Context context) {
-        goalkeeper = false;
+
     }
 
     @Override

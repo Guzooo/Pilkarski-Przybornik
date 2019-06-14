@@ -15,6 +15,7 @@ public class Game extends Model{
     private String name;
     private int image;
     private String description;
+    private String shortDescription;
     private int numberGame;
     private String lastGame;
     private GameInfo gameInfo;
@@ -34,29 +35,28 @@ public class Game extends Model{
         return databaseName;
     }
 
-    private void Template(int id, int numberGame, String lastGame, String buttons, Context context){
+    private void Template(int id, int numberGame, String lastGame, String buttons){
         setId(id);
         setNumberGame(numberGame);
         setLastGame(lastGame);
-        if(context != null)
-            setButtonsOrder(buttons, context);
+        setButtonsOrder(buttons);
     }
 
     @Override
     public void Empty() {
-        Template(0, 0, "", null, null);
+        Template(0, 0, "", null);
     }
 
     @Override
     public void getOfCursor(Cursor cursor, Context context) {
-        setGameInfo(Games.getGameInfo(getId()));
         Template(cursor.getInt(0),
                 cursor.getInt(1),
                 cursor.getString(2),
-                cursor.getString(3),
-                context);
+                cursor.getString(3));
+        setGameInfo(Games.getGameInfo(getId()));
         setName(gameInfo.getName(context));
         setDescription(gameInfo.getDescription(context));
+        setShortDescription(gameInfo.getShortDescription(context));
         setImage(gameInfo.getIcon(context));
         setButtonsName(gameInfo.getButtons(context));
         CheckButtonsOrder(context);
@@ -94,6 +94,14 @@ public class Game extends Model{
 
     private void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public int getNumberGame() {
@@ -157,30 +165,27 @@ public class Game extends Model{
         return buttonsI;
     }
 
-    public void setButtonsOrder(String buttons, Context context) {
-        if(buttons == null){
-            int count = gameInfo.getButtons(context).size();
-            for(int i = 0; i < count; i++){
-                this.buttonsOrder += i + ";";
-                Log.d("GAME", "tu ustawiamy dodaje kolejne");
-            }
-        } else {
-            this.buttonsOrder = buttons;
-            Log.d("GAME", "tu ustawiamy przepisuje");
-        }
+    public void setButtonsOrder(String buttons) {
+        this.buttonsOrder = buttons;
         Log.d("GAME", "tu ustawiamy: " + buttonsOrder);
     }
 
-    public void CheckButtonsOrder(Context context){
+    public void CheckButtonsOrder(Context context) {
         int count = gameInfo.getButtons(context).size();
-        String[] buttons = buttonsOrder.split(";");
-        if(count > buttons.length){
-            for (int i = buttons.length-1; i < count; i++){
+        int buttonsLength = 0;
+        if (buttonsOrder != null) {
+            String[] buttons = buttonsOrder.split(";");
+            buttonsLength = buttons.length;
+        } else {
+            buttonsOrder = "";
+        }
+        if(count > buttonsLength){
+            for (int i = buttonsLength; i < count; i++){
                 buttonsOrder += i + ";";
             }
             Log.d("GAME", "tu sprawdzamy powiekszyło się");
-        } else if (count < buttons.length){
-            for (int i = count; i < buttons.length; i++) {
+        } else if (count < buttonsLength){
+            for (int i = count; i < buttonsLength; i++) {
                 buttonsOrder = buttonsOrder.replace(i + ";", "");
             }
             Log.d("GAME", "tu sprawdzamy zmniejszyło się");

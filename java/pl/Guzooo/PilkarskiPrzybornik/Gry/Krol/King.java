@@ -46,9 +46,14 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
+    public String getShortDescription(Context context) {
+        return context.getString(R.string.game_king_short_description);
+    }
+
+    @Override
     public ArrayList<String> getButtons(Context context) {
         ArrayList<String> buttons = new ArrayList<>();
-        buttons.add(context.getString(R.string.play));
+        buttons.add(context.getString(R.string.normal_game));
         buttons.add("NEW MOOD");
         buttons.add("NEW MOOD");
         return buttons;

@@ -48,8 +48,9 @@ public class AdapterGames extends Adapter{
 
             newHolder.title.setText(game.getName());
             newHolder.icon.setImageResource(game.getImage());
-            newHolder.description.setText(game.getDescription());
+            newHolder.description.setText(game.getShortDescription());
             newHolder.button.setText(game.getButtonsName().get(game.getButtonsOrder().get(0)));
+            newHolder.localInfo.setVisibility(View.GONE);
 
             newHolder.button.setOnClickListener(new View.OnClickListener() {
                 @Override

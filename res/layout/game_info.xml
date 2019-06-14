@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+      <!--  <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
             android:src="@android:drawable/ic_dialog_info"
-            style="@style/AppTheme.Icon"/>
+            style="@style/AppTheme.Icon"/>-->
 
         <TextView
             android:id="@+id/title"
@@ -25,13 +25,15 @@
             android:layout_gravity="center_vertical"
             style="@style/AppTheme.Title"/>
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/button_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
             android:src="@android:drawable/star_off"
-            style="@style/AppTheme.Icon"/>
+            style="@style/AppTheme.Icon"/>-->
+
+        <!--TODO:Ustawienia i info-->
     </LinearLayout>
 
     <LinearLayout
