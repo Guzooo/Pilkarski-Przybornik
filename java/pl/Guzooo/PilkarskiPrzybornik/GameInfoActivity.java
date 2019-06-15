@@ -1,20 +1,17 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class GameInfoActivity extends AppCompatActivity {
-
-    public static final String EXTRA_ID = "id";
+public class GameInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +22,7 @@ public class GameInfoActivity extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         ImageView image = findViewById(R.id.image);
 
-        int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        Game game = new Game();
-        game.getOfId(id, this);
+        Game game = Games.currentGame;
 
         title.setText(game.getName());
         description.setText(game.getDescription());
@@ -42,13 +37,17 @@ public class GameInfoActivity extends AppCompatActivity {
             button.setText(game.getButtonsName().get(game.getButtonsOrder().get(i)));
             button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
             button.setId(i);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Games.currentGame.getGameInfo().Play(view.getId(), GameInfoActivity.this);
-                }
-            });
+            button.setOnClickListener(this);
             linearLayout.addView(button);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Games.currentGame.getGameInfo().Play(view.getId(), this);
+    }
+
+    public void ClickSettings(View view){
+        Toast.makeText(this, "Elo ustawienia", Toast.LENGTH_LONG).show();
     }
 }

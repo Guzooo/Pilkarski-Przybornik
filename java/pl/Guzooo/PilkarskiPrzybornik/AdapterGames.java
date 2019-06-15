@@ -65,7 +65,6 @@ public class AdapterGames extends Adapter{
                 public void onClick(View view) {
                     Games.setCurrentGame(game);
                     Intent intent = new Intent(getContext(), GameInfoActivity.class);
-                    intent.putExtra(GameInfoActivity.EXTRA_ID, game.getId());
                     getContext().startActivity(intent);
                 }
             });
