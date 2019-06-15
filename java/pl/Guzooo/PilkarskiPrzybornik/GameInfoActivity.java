@@ -24,17 +24,17 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
 
         Game game = Games.currentGame;
 
-        title.setText(game.getName());
-        description.setText(game.getDescription());
-        image.setImageResource(game.getImage());
+        title.setText(game.getName(this));
+        description.setText(game.getDescription(this));
+        image.setImageResource(game.getImage(this));
         CreateButtons(game);
     }
 
     private void CreateButtons(Game game) {
         LinearLayout linearLayout = findViewById(R.id.buttons_box);
-        for (int i = 0; i < game.getButtonsName().size(); i++) {
+        for (int i = 0; i < game.getButtonsName(this).size(); i++) {
             Button button = new Button(this);
-            button.setText(game.getButtonsName().get(game.getButtonsOrder().get(i)));
+            button.setText(game.getButtonsName(this).get(game.getButtonsOrder().get(i)));
             button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
             button.setId(i);
             button.setOnClickListener(this);

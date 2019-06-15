@@ -46,10 +46,10 @@ public class AdapterGames extends Adapter{
             final Game game = new Game();
             game.getOfCursor(getCursor(), getContext());
 
-            newHolder.title.setText(game.getName());
-            newHolder.icon.setImageResource(game.getImage());
-            newHolder.description.setText(game.getShortDescription());
-            newHolder.button.setText(game.getButtonsName().get(game.getButtonsOrder().get(0)));
+            newHolder.title.setText(game.getName(getContext()));
+            newHolder.icon.setImageResource(game.getImage(getContext()));
+            newHolder.description.setText(game.getShortDescription(getContext()));
+            newHolder.button.setText(game.getButtonsName(getContext()).get(game.getButtonsOrder().get(0)));
             newHolder.localInfo.setVisibility(View.GONE);
 
             newHolder.button.setOnClickListener(new View.OnClickListener() {
