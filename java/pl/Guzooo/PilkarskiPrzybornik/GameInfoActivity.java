@@ -38,7 +38,6 @@ public class GameInfoActivity extends AppCompatActivity {
     private void CreateButtons(Game game) {
         LinearLayout linearLayout = findViewById(R.id.buttons_box);
         for (int i = 0; i < game.getButtonsName().size(); i++) {
-            //TODO: Button z view taki gotowy ze stylem i go damy tu zmieniajac tylko tekst
             Button button = new Button(this);
             button.setText(game.getButtonsName().get(game.getButtonsOrder().get(i)));
             button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
@@ -46,7 +45,7 @@ public class GameInfoActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Games.currentGame.getGameInfo().Play(view.getId(), getApplicationContext());
+                    Games.currentGame.getGameInfo().Play(view.getId(), GameInfoActivity.this);
                 }
             });
             linearLayout.addView(button);
