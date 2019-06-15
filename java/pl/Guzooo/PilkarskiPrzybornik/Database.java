@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DB_NAME = "pilkarskiprzybornik";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     Database(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -36,7 +36,30 @@ public class Database extends SQLiteOpenHelper {
                     + "GAME_OF_KING INTEGER,"
                     + "WIN_GAME_OF_KING INTEGER,"
                     + "LOST_GAME_OF_KING INTEGER)");
+
+            db.execSQL("CREATE TABLE GAMES (_id INTEGER PRIMARY KEY,"
+                    + "NUMBER_GAME INTEGER,"
+                    + "LAST_GAME TEXT)");
+
+            Games.createGamesInDatabase(db, oldVersion);
         }
+
+        if(oldVersion < 2){
+            db.execSQL("ALTER TABLE GAMES ADD COLUMN BUTTONS TEXT");
+            //Dodać zmienną do GAMES z kolejnością przycisków
+
+            Games.createGamesInDatabase(db, oldVersion);
+        }
+
+        /*if(oldVersion < 2) {
+            db.execSQL("CREATE TABLE KING (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "NAME TEXT,"
+                    + "SHOOTER INTEGER,"
+                    + "GOALKEEPER INTEGER,"
+                    + "PLAYERS TEXT,"
+                    + "STATS TEXT,"
+                    + "DATA TEXT)");
+        }*/
     }
 
     public static SQLiteDatabase getWrite(Context context){

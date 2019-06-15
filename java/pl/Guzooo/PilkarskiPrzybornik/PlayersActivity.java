@@ -45,6 +45,12 @@ public class PlayersActivity extends AppCompatActivity {
         hideFloatMenu();
 
         db = Database.getWrite(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         refreshCursor();
         setAdapter();
     }

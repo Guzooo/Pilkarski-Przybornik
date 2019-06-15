@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 
 public class Player extends Model{
 
+    private String name;
     private boolean active;
     private int shots;
     private int goodShots;
@@ -50,7 +51,7 @@ public class Player extends Model{
     }
 
     @Override
-    public void getOfCursor(Cursor cursor) {
+    public void getOfCursor(Cursor cursor, Context context) {
         Template(cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getInt(2),
@@ -77,7 +78,8 @@ public class Player extends Model{
 
     @Override
     public ContentValues getContentValues() {
-        ContentValues contentValues = super.getContentValues();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
         contentValues.put("ACTIVE", active);
         contentValues.put("SHOTS", shots);
         contentValues.put("GOOD_SHOTS", goodShots);
@@ -103,6 +105,14 @@ public class Player extends Model{
         return string;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -123,12 +133,20 @@ public class Player extends Model{
         this.shots = shots;
     }
 
+    public void addShots(){
+        shots++;
+    }
+
     public int getGoodShots() {
         return goodShots;
     }
 
     public void setGoodShots(int goodShots) {
         this.goodShots = goodShots;
+    }
+
+    public void addGoodShots(){
+        goodShots++;
     }
 
     public int getGoal() {
@@ -139,12 +157,20 @@ public class Player extends Model{
         this.goal = goal;
     }
 
+    public void addGoal(){
+        goal++;
+    }
+
     public int getDefendedGoal() {
         return defendedGoal;
     }
 
     public void setDefendedGoal(int defendedGoal) {
         this.defendedGoal = defendedGoal;
+    }
+
+    public void addDefendedGoal(){
+        defendedGoal++;
     }
 
     public int getUndefendedGoal() {
@@ -155,12 +181,20 @@ public class Player extends Model{
         this.undefendedGoal = undefendedGoal;
     }
 
+    public void addUndefendedGoal(){
+        undefendedGoal++;
+    }
+
     public int getGameOfKing() {
         return gameOfKing;
     }
 
     public void setGameOfKing(int gameOfKing) {
         this.gameOfKing = gameOfKing;
+    }
+
+    public void addGameOfKing(){
+        gameOfKing++;
     }
 
     public int getWinGameOfKing() {
@@ -171,11 +205,19 @@ public class Player extends Model{
         this.winGameOfKing = winGameOfKing;
     }
 
+    public void addWinGameOfKing(){
+        winGameOfKing++;
+    }
+
     public int getLostGameOfKing() {
         return lostGameOfKing;
     }
 
     public void setLostGameOfKing(int lostGameOfKing) {
         this.lostGameOfKing = lostGameOfKing;
+    }
+
+    public void addLostGameOfKing(){
+        lostGameOfKing++;
     }
 }

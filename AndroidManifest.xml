@@ -16,8 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayersActivity"/>
-        <activity android:name=".TransparentActivity" android:theme="@style/AppTheme.Transparent">
+        <activity android:name=".PlayingFieldActivity"/>
+        <activity android:name=".LotteryActivity" />
+        <activity android:name=".GameInfoActivity" />
+        <activity android:name=".PlayersActivity" />
+        <activity
+            android:name=".TransparentActivity"
+            android:theme="@style/AppTheme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -25,8 +30,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
-                    android:host="Guzooo-PiłkarskiPrzybornik" />
+                    android:host="Guzooo-PiłkarskiPrzybornik"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>

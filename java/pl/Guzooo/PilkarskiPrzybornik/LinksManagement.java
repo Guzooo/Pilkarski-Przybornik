@@ -22,30 +22,33 @@ public class LinksManagement {
 
     public static int NUMBER_SEGMENT_ON_PLAYER = 9;
 
-    public static void getPlayers (Uri link, Activity activity, Context context){
-        if(link == null){
+    public static void getPlayers (Uri link, Activity activity, Context context) {
+        if (link == null) {
             activity.finish();
             return;
         }
 
         String strLink = link.toString();
         strLink = strLink.replaceFirst(START_LINK, "");
+        strLink = strLink.replaceAll("_", " ");
         String[] strings = strLink.split(SEPARATOR);
 
         //decode count of players
         strings[1] = decodeV4(strings[1]);
-        if(!isGoodDecode(strings[1], activity, context))
+        if (!isGoodDecode(strings[1], activity, context))
             return;
+
         int numberPlayers = Integer.valueOf(strings[1]);
 
         //decode version
         strings[0] = decodeVersion(strings[0], numberPlayers);
-        if(!isGoodDecode(strings[0], activity, context))
+        if (!isGoodDecode(strings[0], activity, context))
             return; //Bad URL
+
         int version = Integer.valueOf(strings[0]);
 
         String[] stringsOfPlayers = decode(numberPlayers, strings, activity, context);
-        if(stringsOfPlayers == null)
+        if (stringsOfPlayers == null)
             return; //Bad URL
 
         if(NewVersion(version, activity, context, numberPlayers, stringsOfPlayers))
@@ -57,7 +60,7 @@ public class LinksManagement {
     }
 
     public static void sharePlayers (Cursor cursor, Context context){
-        ArrayList<Player> players = getList(cursor);
+        ArrayList<Player> players = getList(cursor, context);
 
         String linkPlayers = getLink(players);
         String link = START_LINK + encode(linkPlayers) + " 🎮" + "\n\n" + APP_PAGE + " 📲";
@@ -65,13 +68,13 @@ public class LinksManagement {
         startIntent(link , context);
     }
 
-    private static ArrayList<Player> getList(Cursor cursor){
+    private static ArrayList<Player> getList(Cursor cursor, Context context){
         ArrayList<Player> players = new ArrayList<>();
 
         if(cursor.moveToFirst()) { //TODO: Jeśli w nazwie będzie separator pomiń;
             do {
                 Player player = new Player();
-                player.getOfCursor(cursor);
+                player.getOfCursor(cursor, context);
                 players.add(player);
             }while (cursor.moveToNext());
         }
@@ -83,7 +86,7 @@ public class LinksManagement {
         String link = "";
 
         for (Player p : players) {
-            link += p.getName() + SEPARATOR;
+            link += removeIllegalCharactersInName(p.getName()) + SEPARATOR;
         }
         for (Player p : players) {
             link += p.getShots() + SEPARATOR;
@@ -113,6 +116,12 @@ public class LinksManagement {
         return link;
     }
 
+    private static String removeIllegalCharactersInName(String string){
+        string = string.replaceAll(" ", "_");
+        string = string.replaceAll("/", "_");
+        return string;
+    }
+
     private static String encode (String link){
         String[] strings = link.split(SEPARATOR);
         int numberPlayers = strings.length/9;
@@ -130,13 +139,12 @@ public class LinksManagement {
                 }
             }
 
-            if (i % 3 == 0) {
+            if (i % 3 == 0)
                 strings[i] = encodeV1(strings[i]);
-            } else if (i % 3 == 1) {
+            else if (i % 3 == 1)
                 strings[i] = encodeV2(strings[i]);
-            } else {
+            else
                 strings[i] = encodeV3(strings[i]);
-            }
 
             if(sameEnd){
                 for(int j = i+1; j < strings.length; j++){
@@ -147,21 +155,19 @@ public class LinksManagement {
         }
 
         String version;
-        if(numberPlayers%4 == 0) {
+        if(numberPlayers%4 == 0)
             version = encodeV1(Integer.toString(VERSION));
-        } else if(numberPlayers%4 == 1){
+        else if(numberPlayers%4 == 1)
             version = encodeV2(Integer.toString(VERSION));
-        } else if(numberPlayers%4 == 2){
+        else if(numberPlayers%4 == 2)
             version = encodeV3(Integer.toString(VERSION));
-        } else {
+        else
             version = encodeV4(Integer.toString(VERSION));
-        }
 
         String encode = version + SEPARATOR + encodeV4(Integer.toString(numberPlayers)) + SEPARATOR;
         for(String s : strings) {
-            if (!s.equals("")) {
+            if (!s.equals(""))
                 encode += s + SEPARATOR;
-            }
         }
         return encode;
     }
@@ -187,15 +193,15 @@ public class LinksManagement {
     }
 
     private static String decodeVersion(String version, int numberPlayers){
-        if(numberPlayers%4 == 0) {
+        if(numberPlayers%4 == 0)
             version = decodeV1(version);
-        } else if(numberPlayers%4 == 1){
+        else if(numberPlayers%4 == 1)
             version = decodeV2(version);
-        } else if(numberPlayers%4 == 2){
+        else if(numberPlayers%4 == 2)
             version = decodeV3(version);
-        } else {
+        else
             version = decodeV4(version);
-        }
+
         return version;
     }
 
@@ -248,18 +254,18 @@ public class LinksManagement {
 
         String end = null;
         for(int i = numberPlayers; i < stringsOfPlayers.length; i++) {
-            if(end != null && stringsOfPlayers[i] == null){
+            if(end != null && stringsOfPlayers[i] == null)
                 stringsOfPlayers[i] = end;
-            } else if (i % 3 == 0) {
+            else if (i % 3 == 0)
                 stringsOfPlayers[i] = decodeV1(stringsOfPlayers[i]);
-            } else if (i % 3 == 1) {
+            else if (i % 3 == 1)
                 stringsOfPlayers[i] = decodeV2(stringsOfPlayers[i]);
-            } else {
+            else
                 stringsOfPlayers[i] = decodeV3(stringsOfPlayers[i]);
-            }
-            if(!isGoodDecode(stringsOfPlayers[i], activity, context)) {
+
+            if(!isGoodDecode(stringsOfPlayers[i], activity, context))
                 return null; //Bad URL
-            }
+
             end = stringsOfPlayers[i];
         }
         return stringsOfPlayers;
@@ -295,6 +301,7 @@ public class LinksManagement {
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.finish();
                         adapter.SaveChanges(context);
                     }
                 })
@@ -394,7 +401,7 @@ public class LinksManagement {
         string = string.replaceAll("hm", "5");
         string = string.replaceAll("bv", "6");
         string = string.replaceAll("cj", "7");
-        string = string.replaceAll("zxk", "8");
+        string = string.replaceAll("zk", "8");
         string = string.replaceAll("xn", "9");
         return string;
     }
