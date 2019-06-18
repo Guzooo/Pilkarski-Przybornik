@@ -7,7 +7,7 @@ import android.widget.EditText;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
-public class KingSettingsFragment extends Settings {
+public class KingSettings extends Settings {
 
     private final String PREFERENCE_NAME = "settingsking";
     private final String PREFERENCE_LIVE = "live";
@@ -20,26 +20,26 @@ public class KingSettingsFragment extends Settings {
     private EditText stake;
 
     @Override
-    public void SetView(View view) {
+    public void SetView(View view, Context context) {
         initializationViews(view);
-        life.setText(getLive() + "");
-        stake.setText(getStake() + "");
+        life.setText(getLive(context) + "");
+        stake.setText(getStake(context) + "");
         life.setHint(DEFAULT_LIVE + "");
         stake.setHint(DEFAULT_STAKE + "");
     }
 
     @Override
-    public void Save(View view) {
+    public void Save(View view, Context context) {
         initializationViews(view);
-        SharedPreferences.Editor editor = getPreferences().edit();
+        SharedPreferences.Editor editor = getPreferences(context).edit();
         Save(editor, life, PREFERENCE_LIVE, DEFAULT_LIVE);
         Save(editor, stake, PREFERENCE_STAKE, DEFAULT_STAKE);
         editor.apply();
     }
 
     @Override
-    public void RestoreDefault() {
-        SharedPreferences.Editor editor = getPreferences().edit();
+    public void RestoreDefault(Context context) {
+        SharedPreferences.Editor editor = getPreferences(context).edit();
         editor.putInt(PREFERENCE_LIVE, DEFAULT_LIVE);
         editor.putInt(PREFERENCE_STAKE, DEFAULT_STAKE);
         editor.apply();
@@ -51,8 +51,8 @@ public class KingSettingsFragment extends Settings {
     }
 
     @Override
-    public SharedPreferences getPreferences() {
-        return getContext().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+    public SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
     private void initializationViews(View view) {
@@ -60,13 +60,13 @@ public class KingSettingsFragment extends Settings {
         stake = view.findViewById(R.id.stake);
     }
 
-    public int getLive() {
-        SharedPreferences sharedPreferences = getPreferences();
+    public int getLive(Context context) {
+        SharedPreferences sharedPreferences = getPreferences(context);
         return sharedPreferences.getInt(PREFERENCE_LIVE, DEFAULT_LIVE);
     }
 
-    public int getStake() {
-        SharedPreferences sharedPreferences = getPreferences();
+    public int getStake(Context context) {
+        SharedPreferences sharedPreferences = getPreferences(context);
         return sharedPreferences.getInt(PREFERENCE_STAKE, DEFAULT_STAKE);
     }
 

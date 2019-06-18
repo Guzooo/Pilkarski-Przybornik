@@ -7,7 +7,7 @@
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
 
-    <string name="game_king_description">Gracze losują numery od 1 do X, każdy ma Y żyć. Gracze strzelają karne, do momentu, aż X-1 straci Y żyć. Aplikacja przeprowadzi was przez rozgrywkę.</string>
+    <string name="game_king_description">Gracze losują numery od 1 do %1$d - kolejność strzelania karnych, każdy ma %2$d żyć, na początku bramkarzem jest gracz z numerem %1$d. Każdy gol to utrata życia bramkarza, nietrafiony lub obroniony strzał powoduje przejście strzelca na pozycje bramkarza, trafienie słupka lub poprzeczki to powtórny strzał, chyba, że strzelec trafił go %3$d raz wtedy zmienia bramkarza. Gdy bramkarz dotknie piłkę, a ona nie wyjdzie poza linie bramki, strzelec może podbiec i przez 3 dotknięcia spróbować strzelić bramke, jeśli bramkarz dotknie znów piłke, strzelec znów ma 3 dotknięcia. Wygrywa ten gracz który zostanie sam na boisku.</string>
     <string name="game_king_short_description">Ustala kolejność graczy oraz kontroluje przebieg rozgrywki</string>
     <string name="game_select_goalkeeper_description">Każdy z graczy losuje liczbe, ten który wysoluje 1 zostaje bramkarzem</string>
     <string name="game_select_goalkeeper_short_description">Wybiera jedną osobe</string>

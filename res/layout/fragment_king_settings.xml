@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Gry.Krol.KingSettingsFragment">
+    tools:context=".Gry.Krol.KingSettings">
 
     <LinearLayout
         android:layout_width="match_parent"

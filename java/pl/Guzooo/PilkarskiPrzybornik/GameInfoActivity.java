@@ -10,7 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
+
 public class GameInfoActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Game game;
+
+    private TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,24 +24,29 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_game_info);
 
         TextView title = findViewById(R.id.title);
-        TextView description = findViewById(R.id.description);
+        description = findViewById(R.id.description);
         ImageView image = findViewById(R.id.image);
 
-        Game game = Games.currentGame;
+        game = Games.currentGame;
+        game.getSettings().setDialogListener(new Settings.DialogListener() {
+            @Override
+            public void Dismiss() {
+                setDescription();
+            }
+        });
 
         title.setText(game.getName(this));
-        description.setText(game.getDescription(this));
+        setDescription();
         image.setImageResource(game.getImage(this));
-        CreateButtons(game);
+        CreateButtons();
 
         if(game.getSettings() == null){
             View button = findViewById(R.id.setting);
             button.setVisibility(View.GONE);
         }
-
     }
 
-    private void CreateButtons(Game game) {
+    private void CreateButtons() {
         LinearLayout linearLayout = findViewById(R.id.buttons_box);
         for (int i = 0; i < game.getButtonsName(this).size(); i++) {
             Button button = new Button(this);
@@ -45,6 +56,10 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
             button.setOnClickListener(this);
             linearLayout.addView(button);
         }
+    }
+
+    private void setDescription(){
+        description.setText(game.getDescription(this));
     }
 
     @Override

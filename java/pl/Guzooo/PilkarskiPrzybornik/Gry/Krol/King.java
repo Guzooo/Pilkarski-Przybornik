@@ -43,7 +43,8 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_king_description); //TODO: zmienne
+        KingSettings settings = (KingSettings) getSettings();
+        return context.getString(R.string.game_king_description, getNumberActivePlayers(context), settings.getLive(context), settings.getStake(context));
     }
 
     @Override
@@ -96,7 +97,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public Settings getSettings() {
-        return new KingSettingsFragment();
+        return new KingSettings();
     }
 
     //LOTTERY
