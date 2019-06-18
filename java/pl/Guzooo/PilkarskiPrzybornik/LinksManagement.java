@@ -325,7 +325,7 @@ public class LinksManagement {
                         activity.finish();
                     }
                 })
-                .show();
+                .show(); //TODO:żeby jeden listener onDismiss prawodopodonie zamykal aktywnosc
     }
 
     private static void startIntent(String link, Context context){

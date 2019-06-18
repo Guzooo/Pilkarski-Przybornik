@@ -11,6 +11,7 @@ import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.R;
@@ -60,6 +61,11 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     @Override
     public void Reset() {
         goalkeeper = false;
+    }
+
+    @Override
+    public Settings getSettings() {
+        return null;
     }
 
     //LOTTERY

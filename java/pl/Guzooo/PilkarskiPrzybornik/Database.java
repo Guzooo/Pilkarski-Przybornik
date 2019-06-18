@@ -46,7 +46,6 @@ public class Database extends SQLiteOpenHelper {
 
         if(oldVersion < 2){
             db.execSQL("ALTER TABLE GAMES ADD COLUMN BUTTONS TEXT");
-            //Dodać zmienną do GAMES z kolejnością przycisków
 
             Games.createGamesInDatabase(db, oldVersion);
         }

@@ -12,6 +12,7 @@ import java.util.Random;
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
@@ -91,6 +92,11 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         order.clear();
         players.clear();
         lives.clear();
+    }
+
+    @Override
+    public Settings getSettings() {
+        return new KingSettingsFragment();
     }
 
     //LOTTERY

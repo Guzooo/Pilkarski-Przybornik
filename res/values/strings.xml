@@ -48,6 +48,10 @@
     <string name="manage_players">Zarządzaj graczami</string>
     <string name="number_active_players">%1$d aktywnych graczy</string> <!--TODO:liczby zmieniają końcówki-->
 
+    <string name="setting">Ustawienia</string>
+    <string name="save">Zapisz</string>
+    <string name="restore_default">Zresetuj</string>
+
     <string name="normal_game">Normalna gra</string>
     <string name="random_goalkeeper">Losuj bramkarza</string>
 
@@ -55,9 +59,13 @@
     <string name="start_game">Zacznij gre</string>
     <string name="back_to_menu">Wróć do menu</string>
 
+    <string name="number_live">Ilość żyć</string>
+    <string name="number_stake">Ilość możliwych powtórzeń strzału po trafieniu w słupek lub poprzeczkę</string>
+
     <string name="goalkeeper">🥅 %1$s 🥅</string>
     <string name="shooter">⚽ %1$s ⚽</string>
     <string name="goal">Gol</string>
     <string name="mishit">Pudło</string>
     <string name="bad_shot">Poza bramke</string>
+
 </resources>

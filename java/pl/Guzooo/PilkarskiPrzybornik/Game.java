@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 
 public class Game extends Model{
 
@@ -167,5 +168,9 @@ public class Game extends Model{
         buttonsOrder = buttonsOrder.replace(i + ";", "");
         buttonsOrder = i + ";" + buttonsOrder;
         Log.d("GAME", "a tu robie takie cyk cyk z ostatnim: " + buttonsOrder);
+    }
+
+    public Settings getSettings(){
+        return gameInfo.getSettings();
     }
 }

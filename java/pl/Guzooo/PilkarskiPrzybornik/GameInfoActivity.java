@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GameInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +27,12 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
         description.setText(game.getDescription(this));
         image.setImageResource(game.getImage(this));
         CreateButtons(game);
+
+        if(game.getSettings() == null){
+            View button = findViewById(R.id.setting);
+            button.setVisibility(View.GONE);
+        }
+
     }
 
     private void CreateButtons(Game game) {
@@ -48,6 +53,6 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void ClickSettings(View view){
-        Toast.makeText(this, "Elo ustawienia", Toast.LENGTH_LONG).show();
+        Games.currentGame.getSettings().show(getSupportFragmentManager(), "settings");
     }
 }

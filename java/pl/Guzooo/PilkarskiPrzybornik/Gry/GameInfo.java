@@ -17,6 +17,7 @@ public abstract class GameInfo {
     public abstract ArrayList<String> getButtons(Context context);
     public abstract void Play(int buttonId, Context context);
     public abstract void Reset();
+    public abstract Settings getSettings();
 
     public int getNumberActivePlayers(Context context){
         SQLiteDatabase db = Database.getRead(context);
