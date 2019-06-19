@@ -28,12 +28,6 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
         ImageView image = findViewById(R.id.image);
 
         game = Games.currentGame;
-        game.getSettings().setDialogListener(new Settings.DialogListener() {
-            @Override
-            public void Dismiss() {
-                setDescription();
-            }
-        });
 
         title.setText(game.getName(this));
         setDescription();
@@ -43,6 +37,13 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
         if(game.getSettings() == null){
             View button = findViewById(R.id.setting);
             button.setVisibility(View.GONE);
+        } else {
+            game.getSettings().setDialogListener(new Settings.DialogListener() {
+                @Override
+                public void Dismiss() {
+                    setDescription();
+                }
+            });
         }
     }
 

@@ -9,8 +9,8 @@ import pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza.SelectGoalkeeper;
 public class Games {
 
     public static Game currentGame;
-
-    public static final GameInfo[] gamesInfo = new GameInfo[] {new King(), new SelectGoalkeeper()};
+//TODO: pierszy king to ma być maszyna losująca
+    public static final GameInfo[] gamesInfo = new GameInfo[] {new King(), new King(), new SelectGoalkeeper()};
 
     public static void setCurrentGame(Game game){
         currentGame = game;

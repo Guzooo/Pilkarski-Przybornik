@@ -42,7 +42,7 @@ public class AdapterGames extends Adapter{
     public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
         ViewHolder newHolder = new ViewHolder(holder.itemView);
 
-        if(getCursor().moveToPosition(position)){
+        if(getCursor().moveToPosition(position+1)){//TODO:po dodaniu maszyny losującej kasujemy "+1"
             final Game game = new Game();
             game.getOfCursor(getCursor(), getContext());
 
