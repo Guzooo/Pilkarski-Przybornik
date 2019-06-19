@@ -12,7 +12,6 @@ import java.util.Random;
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
-import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
@@ -24,6 +23,9 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     private static int goalkeeper;
 
     private static boolean firstDeath;
+
+    private static final int MAX_STAKE = 3;
+    private static int currentStake;
 
     private static ArrayList<Integer> order = new ArrayList<>();
     private static ArrayList<Player> players = new ArrayList<>();
@@ -43,8 +45,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public String getDescription(Context context) {
-        KingSettings settings = (KingSettings) getSettings();
-        return context.getString(R.string.game_king_description, getNumberActivePlayers(context), settings.getLive(context), settings.getStake(context));
+        return context.getString(R.string.game_king_description, getNumberActivePlayers(context), getSettings().getLive(context), getSettings().getStake(context));
     }
 
     @Override
@@ -90,13 +91,15 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
         firstDeath = false;
 
+        currentStake = MAX_STAKE;
+
         order.clear();
         players.clear();
         lives.clear();
     }
 
     @Override
-    public Settings getSettings() {
+    public KingSettings getSettings() {
         return new KingSettings();
     }
 
@@ -160,7 +163,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
             for(int j = 0; j < playersNoOrder.size(); j++){
                 if(order.get(j) == i){
                     players.add(playersNoOrder.get(j));
-                    lives.add(5); //TODO:liczba żyć
+                    lives.add(getSettings().getLive(context));
                     break;
                 }
             }
@@ -171,7 +174,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         context.startActivity(intent);
     }
 
-    //TO IDZIE NA DWA NA RAZIE
+    //TO IDZIE NA DWA NA RAZIE // odydwie metody 100% pewne
     @Override
     public boolean onBackPressed() {
 //TODO: wyskakujące oknoooooooooo z pytaniem czy wychodzimy czy zostajemy
@@ -194,6 +197,16 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
+    public void Crossbar() {
+        NormalStake();
+    }
+
+    @Override
+    public void Stake() {
+        NormalStake();
+    }
+
+    @Override
     public void BadShot() {
         players.get(shooter).addShots();
         goalkeeper = shooter;
@@ -210,31 +223,34 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public void Gol(Context context) {
+    public boolean Gol(Context context) {
         players.get(shooter).addShots();
         players.get(shooter).addGoal();
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
         if(lives.get(goalkeeper) == 0){
-            Toast.makeText(context, players.get(goalkeeper).getName() + " został skończony 🥅⚽", Toast.LENGTH_SHORT).show();//TODO: stringi
+            Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();//TODO: stringi
             if(!firstDeath){
                 players.get(goalkeeper).addLostGameOfKing();
                 firstDeath = true;
             }
-            goalkeeper = shooter;
             if(numberAlivePlayers() == 1){
                 players.get(shooter).addWinGameOfKing();
-                Toast.makeText(context, players.get(shooter).getName() + " wygrał 🏆\nCofnij, aby wyjść z gry", Toast.LENGTH_LONG).show();//TODO: stringi
+                Toast.makeText(context, context.getString(R.string.player_win, players.get(shooter).getName()), Toast.LENGTH_LONG).show();//TODO: stringi
                 for(Player player : players){
                     player.addGameOfKing();
                     player.update(context);
                 }
+                return true;
             }
+            goalkeeper = shooter;
         }
         setShooter();
+        return false;
     }
 
     private void setShooter(){
+        currentStake = MAX_STAKE;
         for(int i = shooter + 1; i < players.size(); i++){
             if(i != goalkeeper && lives.get(i) > 0){
                 shooter = i;
@@ -259,10 +275,18 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         return players;
     }
 
+    private void NormalStake(){
+        currentStake--;
+        if(currentStake == 0){
+            goalkeeper = shooter;
+            setShooter();
+        }
+    }
+
     @Override
-    public String getPlayersSegregatedByLives() {
-        String string = "Życia\n"; //TODO: żyćka
-        for(int i = 5; i > 0; i--){
+    public String getPlayersSegregatedByLives(Context context) {
+        String string = context.getString(R.string.life);
+        for(int i = getSettings().getLive(context); i > 0; i--){
             for(int j = 0; j < players.size(); j++){
                 if(lives.get(j) == i){
                     string += "\n" + players.get(j).getName() + " " + lives.get(j);
@@ -273,8 +297,8 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public String getPlayersSegregatedByOrder() {
-        String string = "Kolejność\n"; //TODO: kolejność
+    public String getPlayersSegregatedByOrder(Context context) {
+        String string = context.getString(R.string.order);
         for(int i = shooter; i < players.size(); i++) {
             if (lives.get(i) > 0) {
                 string += "\n" + players.get(i).getName() + MarkOfOrder(i);

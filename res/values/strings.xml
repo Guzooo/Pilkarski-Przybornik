@@ -64,8 +64,14 @@
 
     <string name="goalkeeper">🥅 %1$s 🥅</string>
     <string name="shooter">⚽ %1$s ⚽</string>
+    <string name="winner">🏆 %1$s 🏆</string>
     <string name="goal">Gol</string>
     <string name="mishit">Pudło</string>
     <string name="bad_shot">Poza bramke</string>
-
+    <string name="stake">Słupek</string>
+    <string name="crossbar">Poprzeczka</string>
+    <string name="life">Życia\n</string>
+    <string name="order">Kolejność\n</string>
+    <string name="player_elimination">%1$s został skończony 🥅⚽</string>
+    <string name="player_win">%1$s wygrał 🏆🏆🏆\nCofnij, aby wyjść z gry ⬅</string>
 </resources>
