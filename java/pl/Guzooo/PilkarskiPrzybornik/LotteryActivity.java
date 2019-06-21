@@ -21,7 +21,7 @@ public class LotteryActivity extends AppCompatActivity {
 
     public interface Listener{
         boolean onBackPressed();
-        ArrayList<String> setTitles(Context context);
+        ArrayList<String> getTitles(Context context);
         String ClickRandom(int allPlayers);
         boolean ClickNextPlayer(int currentPlayer, int allPlayers);
         int setButtonText(int allPlayer);
@@ -36,7 +36,7 @@ public class LotteryActivity extends AppCompatActivity {
         setListener((Listener) Games.currentGame.getGameInfo());
         HideLottery();
 
-        titles = listener.setTitles(this);
+        titles = listener.getTitles(this);
         setTitle();
     }
 

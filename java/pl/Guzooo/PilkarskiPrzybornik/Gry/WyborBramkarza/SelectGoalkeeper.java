@@ -70,7 +70,7 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     //LOTTERY
     @Override
-    public ArrayList<String> setTitles(Context context) {
+    public ArrayList<String> getTitles(Context context) {
         SQLiteDatabase db = Database.getWrite(context);
         Cursor cursor = db.query(Player.databaseName,
                 Player.onCursor,

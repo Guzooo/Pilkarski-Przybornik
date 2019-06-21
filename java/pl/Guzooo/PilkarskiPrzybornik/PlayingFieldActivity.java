@@ -13,7 +13,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
 
     private final Boolean DEFAULT_BUTTONS_GATE_VISIBILITY = true;
 
-    private boolean win = false;
+    private boolean win;
 
     private Listener listener;
 
@@ -21,10 +21,10 @@ public class PlayingFieldActivity extends AppCompatActivity {
         boolean onBackPressed();
         String getGoalkeeper();
         String getShooter();
-        void Crossbar();
-        void Stake();
-        void BadShot();
-        void Mishit();
+        void Crossbar(Context context);
+        void Stake(Context context);
+        void BadShot(Context context);
+        void Mishit(Context context);
         boolean Gol(Context context);
         String getPlayersSegregatedByLives(Context context);
         String getPlayersSegregatedByOrder(Context context);
@@ -51,7 +51,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
     private void RefreshInfo(){
         setGoalkeeper();
         setShooter();
-        setHeart();
+        setLife();
         setOrder();
     }
 
@@ -88,22 +88,22 @@ public class PlayingFieldActivity extends AppCompatActivity {
     }
 
     public void ClickCrossbar(View v){
-        listener.Crossbar();
+        listener.Crossbar(this);
         RefreshInfo();
     }
 
     public void ClickStake(View v){
-        listener.Stake();
+        listener.Stake(this);
         RefreshInfo();
     }
 
     public void ClickBadShot(View v){
-        listener.BadShot();
+        listener.BadShot(this);
         RefreshInfo();
     }
 
     public void ClickMishit(View v){
-        listener.Mishit();
+        listener.Mishit(this);
         RefreshInfo();
     }
 
@@ -118,7 +118,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
         }
     }
 
-    private void setHeart(){
+    private void setLife(){
         TextView textView = findViewById(R.id.life);
         textView.setText(listener.getPlayersSegregatedByLives(this));
     }

@@ -52,9 +52,12 @@
     <string name="save">Zapisz</string>
     <string name="restore_default">Zresetuj</string>
 
-    <string name="normal_game">Normalna gra</string>
+    <string name="normal_mode">Normalna</string>
+    <string name="randomizing_mode">Samorandomizująca</string>
     <string name="random_goalkeeper">Losuj bramkarza</string>
 
+    <string name="need_more_players">Potrzebujesz %1$d graczy</string>
+    
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
     <string name="back_to_menu">Wróć do menu</string>
