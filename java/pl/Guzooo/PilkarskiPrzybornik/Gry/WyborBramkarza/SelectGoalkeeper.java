@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
+import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
-import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
+import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
 public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listener {
@@ -32,7 +33,7 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_select_goalkeeper_description);
+        return context.getString(R.string.game_select_goalkeeper_description, getSettings().getSavedProbability(context));
     }
 
     @Override
@@ -49,23 +50,30 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     @Override
     public void Play(int buttonId, Context context) {
-        Reset();
-        if(getNumberActivePlayers(context) > 1) {
-            Intent intent = new Intent(context, LotteryActivity.class);
-            context.startActivity(intent);
+        if(PlayersActivity.getNumberActivePlayers(context) > 1) {
+            switch (buttonId) {
+                case 0:
+                    Intent intent = new Intent(context, LotteryActivity.class);
+                    context.startActivity(intent);
+                    break;
+            }
+            Games.currentGame.setLastButton(buttonId);
+            Games.currentGame.setLastGame();
+            Games.currentGame.addNumberGame();
+            Games.currentGame.update(context);
         } else {
-            Toast.makeText(context, "MIN 2 PLAYERS", Toast.LENGTH_LONG).show(); //TODO: STRINg
+            Toast.makeText(context, context.getString(R.string.need_more_players, 2), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
-    public void Reset() {
+    public void Reset(Context context) {
         goalkeeper = false;
     }
 
     @Override
-    public Settings getSettings() {
-        return null;
+    public SelectGoalkeeperSettings getSettings() {
+        return new SelectGoalkeeperSettings();
     }
 
     //LOTTERY
@@ -92,13 +100,48 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     }
 
     @Override
-    public String ClickRandom(int allPlayers) {
-        int result = new Random().nextInt(allPlayers);
+    public String ClickRandom(int allPlayers, Context context) {
+        int result = new Random().nextInt(getSettings().getSavedProbability(context));
         if(result > 0){
-            return "0";
+            return getEmoticon();
         }
         goalkeeper = true;
-        return "1";
+        return context.getString(R.string.goalkeeper) + " \uD83E\uDDE4\uD83E\uDD45";
+    }
+
+    private String getEmoticon(){
+        int emoticon = new Random().nextInt(15);
+        switch (emoticon){
+            case 0:
+                return "😎";
+            case 1:
+                return "🏆";
+            case 2:
+                return "⚽";
+            case 3:
+                return "🐳";
+            case 4:
+                return "💖";
+            case 5:
+                return "🙃";
+            case 6:
+                return "😉";
+            case 7:
+                return "😁";
+            case 8:
+                return "😘";
+            case 9:
+                return "😍";
+            case 10:
+                return "👌";
+            case 11:
+                return "🎉";
+            case 12:
+                return "😇";
+            case 13:
+                return "😜";
+        }
+        return "😻";
     }
 
     @Override
@@ -119,11 +162,5 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     @Override
     public void ClickEnd(Context context) {
 
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        goalkeeper = false;
-        return true;
     }
 }

@@ -20,9 +20,8 @@ public class LotteryActivity extends AppCompatActivity {
     private Listener listener;
 
     public interface Listener{
-        boolean onBackPressed();
         ArrayList<String> getTitles(Context context);
-        String ClickRandom(int allPlayers);
+        String ClickRandom(int allPlayers, Context context);
         boolean ClickNextPlayer(int currentPlayer, int allPlayers);
         int setButtonText(int allPlayer);
         void ClickEnd(Context context);
@@ -40,13 +39,6 @@ public class LotteryActivity extends AppCompatActivity {
         setTitle();
     }
 
-    @Override
-    public void onBackPressed() {
-        if(listener.onBackPressed()) {
-            super.onBackPressed();
-        }
-    }
-
     public void setTitle(){
         TextView textTitle = findViewById(R.id.title);
         textTitle.setText(titles.get(currentPlayer));
@@ -59,24 +51,18 @@ public class LotteryActivity extends AppCompatActivity {
 
     public void ClickButton(View v){
         if(buttonLotteryText) {
-            setResultOfLottery(listener.ClickRandom(titles.size()));
+            setResultOfLottery(listener.ClickRandom(titles.size(), this));
             ShowLottery();
             setButtonText(listener.setButtonText(titles.size()));
         } else {
             if(listener.ClickNextPlayer(currentPlayer, titles.size())){
-                currentPlayer++;
-                if(currentPlayer == titles.size()){
-                    currentPlayer = 0;
-                }
+                addCurrentPlayer();
                 setTitle();
                 HideLottery();
                 setButtonText(R.string.random);
             } else {
                 v.setClickable(false);
                 listener.ClickEnd(this);
-                Games.currentGame.addNumberGame();
-                Games.currentGame.setLastGame();
-                Games.currentGame.update(this);
                 finish();
             }
         }
@@ -86,6 +72,13 @@ public class LotteryActivity extends AppCompatActivity {
     private void setButtonText(int resource){
         Button button = findViewById(R.id.button);
         button.setText(resource);
+    }
+
+    private void addCurrentPlayer(){
+        currentPlayer++;
+        if(currentPlayer == titles.size()){
+            currentPlayer = 0;
+        }
     }
 
     public void HideLottery(){

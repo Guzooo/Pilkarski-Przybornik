@@ -56,7 +56,9 @@ public class AdapterGames extends Adapter{
                 @Override
                 public void onClick(View view) {
                     Games.setCurrentGame(game);
+                    game.getGameInfo().Reset(getContext());
                     game.getGameInfo().Play(game.getButtonsOrder().get(0), getContext());
+                    game.update(getContext());
                 }
             });
 

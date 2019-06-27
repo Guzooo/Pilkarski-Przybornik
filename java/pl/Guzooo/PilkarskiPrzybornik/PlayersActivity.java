@@ -2,8 +2,10 @@ package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -299,5 +301,23 @@ public class PlayersActivity extends AppCompatActivity {
         floatingActionButtonShare.show();
         floatingActionButtonDel.show();
         openMenu = true;
+    }
+
+    public static int getNumberActivePlayers(Context context){
+        try {
+            SQLiteDatabase db = Database.getRead(context);
+            Cursor cursor = db.query(Player.databaseName,
+                    null,
+                    "ACTIVE = ?",
+                    new String[]{Integer.toString(1)},
+                    null, null, null);
+            int activePlayers = cursor.getCount();
+            cursor.close();
+            db.close();
+            return activePlayers;
+        } catch (SQLException e){
+            Database.ShowError(context);
+            return 0;
+        }
     }
 }

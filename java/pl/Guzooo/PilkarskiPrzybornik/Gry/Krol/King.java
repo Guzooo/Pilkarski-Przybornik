@@ -14,6 +14,7 @@ import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
+import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 
@@ -24,12 +25,10 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     private static boolean firstDeath;
 
-    private static final int MAX_STAKE = 3;
     private static int currentStake;
 
     private static ArrayList<Integer> order = new ArrayList<>();
     private static ArrayList<Player> players = new ArrayList<>();
-    private static ArrayList<Player> playersOrganic = new ArrayList<>();
     private static ArrayList<Integer> lives = new ArrayList<>();
 
     //GENERAL
@@ -45,7 +44,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_king_description, getNumberActivePlayers(context), getSettings().getLive(context), getSettings().getStake(context));
+        return context.getString(R.string.game_king_description, PlayersActivity.getNumberActivePlayers(context), getSettings().getLive(context), getSettings().getStake(context));
     }
 
     @Override
@@ -63,8 +62,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public void Play(int buttonId, Context context) {
-        Reset();
-        if (getNumberActivePlayers(context) > 1) {
+        if (PlayersActivity.getNumberActivePlayers(context) > 1) {
             switch (buttonId) {
                 case 0:
                     Intent intent = new Intent(context, LotteryActivity.class);
@@ -78,13 +76,13 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public void Reset() {
+    public void Reset(Context context) {
         goalkeeper = -1;
         shooter = -1;
 
         firstDeath = false;
 
-        currentStake = MAX_STAKE;
+        currentStake = getSettings().getStake(context);
 
         order.clear();
         players.clear();
@@ -121,11 +119,11 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public String ClickRandom(int allPlayers) {
+    public String ClickRandom(int allPlayers, Context context) {
         int result = new Random().nextInt(allPlayers);
         for(int i = 0; i < order.size(); i++){
             if(result == order.get(i)){
-                return ClickRandom(allPlayers);
+                return ClickRandom(allPlayers, context);
             }
         }
         order.add(result);
@@ -151,6 +149,9 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     public void ClickEnd(Context context) {
         SegregatePlayersByOrder();
         SetPlayersLife(context);
+        Games.currentGame.setLastGame();
+        Games.currentGame.addNumberGame();
+        Games.currentGame.update(context);
         Intent intent = new Intent(context, PlayingFieldActivity.class);
         context.startActivity(intent);
     }
@@ -210,28 +211,47 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
         if(lives.get(goalkeeper) == 0){
-            Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
-            if(!firstDeath){
-                players.get(goalkeeper).addLostGameOfKing();
-                firstDeath = true;
-            }
-            if(numberAlivePlayers() == 1){
-                players.get(shooter).addWinGameOfKing();
-                Toast.makeText(context, context.getString(R.string.player_win, players.get(shooter).getName()), Toast.LENGTH_LONG).show();
-                for(Player player : players){
-                    player.addGameOfKing();
-                    player.update(context);
-                }
+            boolean onePlayer = GoalkeeperLiquidated(context);
+            if (onePlayer)
                 return true;
-            }
-            goalkeeper = shooter;
         }
         setShooter(context);
         return false;
     }
 
+    private boolean GoalkeeperLiquidated(Context context){
+        Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
+        if(!firstDeath){
+            FirstDeath();
+        }
+        if(numberAlivePlayers() == 1){
+            Win(context);
+            SavePlayers(context);
+            return true;
+        }
+        goalkeeper = shooter;
+        return false;
+    }
+
+    private void FirstDeath(){
+        players.get(goalkeeper).addLostGameOfKing();
+        firstDeath = true;
+    }
+
+    private void Win(Context context){
+        players.get(shooter).addWinGameOfKing();
+        Toast.makeText(context, context.getString(R.string.player_win, players.get(shooter).getName()), Toast.LENGTH_LONG).show();
+    }
+
+    private void SavePlayers(Context context){
+        for(Player player : players){
+            player.addGameOfKing();
+            player.update(context);
+        }
+    }
+
     private void setShooter(Context context){
-        currentStake = MAX_STAKE;
+        currentStake = getSettings().getStake(context);
         for(int i = shooter + 1; i < players.size(); i++){
             if(i != goalkeeper && lives.get(i) > 0){
                 shooter = i;
@@ -258,7 +278,6 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
                 }
             }
         }
-        playersOrganic.addAll(players);
     }
 
     private void SetPlayersLife(Context context){

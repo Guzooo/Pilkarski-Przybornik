@@ -64,15 +64,15 @@ public class PlayingFieldActivity extends AppCompatActivity {
 
     private void setGoalkeeper(){
         TextView textView = findViewById(R.id.goalkeeper);
-        textView.setText(getString(R.string.goalkeeper, listener.getGoalkeeper()));
+        textView.setText(getString(R.string.goalkeeper_emoticon, listener.getGoalkeeper()));
     }
 
     private void setShooter(){
         TextView textView = findViewById(R.id.shooter);
         if(!win)
-            textView.setText(getString(R.string.shooter, listener.getShooter()));
+            textView.setText(getString(R.string.shooter_emoticon, listener.getShooter()));
         else
-            textView.setText(getString(R.string.winner, listener.getShooter()));
+            textView.setText(getString(R.string.winner_emoticon, listener.getShooter()));
     }
 
     public void ClickShowButtonsGate(View v){
@@ -111,11 +111,15 @@ public class PlayingFieldActivity extends AppCompatActivity {
         win = listener.Gol(this);
         RefreshInfo();
         if(win){
-            findViewById(R.id.buttons_gate).setVisibility(View.GONE);
-            findViewById(R.id.buttons).setVisibility(View.GONE);
-            findViewById(R.id.goalkeeper).setVisibility(View.GONE);
-            findViewById(R.id.scroll_view).setVisibility(View.GONE);
+            LayoutForWinner();
         }
+    }
+
+    private void LayoutForWinner(){
+        findViewById(R.id.buttons_gate).setVisibility(View.GONE);
+        findViewById(R.id.buttons).setVisibility(View.GONE);
+        findViewById(R.id.goalkeeper).setVisibility(View.GONE);
+        findViewById(R.id.scroll_view).setVisibility(View.GONE);
     }
 
     private void setLife(){

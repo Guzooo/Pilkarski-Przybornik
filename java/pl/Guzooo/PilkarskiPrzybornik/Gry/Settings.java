@@ -20,6 +20,7 @@ public abstract class Settings extends DialogFragment {
     public abstract int getLayout();
     public abstract SharedPreferences getPreferences(Context context);
 
+    private static AlertDialog alertDialog;
     private static DialogListener dialogListener;
 
     public interface DialogListener{
@@ -30,11 +31,15 @@ public abstract class Settings extends DialogFragment {
         Settings.dialogListener = dialogListener;
     }
 
+    public AlertDialog getAlertDialog(){
+        return alertDialog;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View layout = getActivity().getLayoutInflater().inflate(getLayout(), null);
         SetView(layout, getContext());
-        return new AlertDialog.Builder(getContext(), R.style.AppTheme_AlertDialog)
+        alertDialog = new AlertDialog.Builder(getContext(), R.style.AppTheme_AlertDialog)
                 .setTitle(R.string.setting)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
@@ -51,6 +56,7 @@ public abstract class Settings extends DialogFragment {
                 })
                 .setView(layout)
                 .create();
+        return alertDialog;
     }
 
     @Override

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Gry.Krol.KingSettings">
 
     <LinearLayout
@@ -22,8 +21,7 @@
                 android:layout_margin="@dimen/standard_margin"
                 android:layout_weight="1"
                 android:text="@string/number_live"
-                android:layout_gravity="center_vertical"
-                app:layout_constraintBottom_toBottomOf="@id/life"/>
+                android:layout_gravity="center_vertical"/>
 
             <EditText
                 android:id="@+id/life"

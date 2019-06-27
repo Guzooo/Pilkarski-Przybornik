@@ -16,35 +16,20 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
 
     private Game game;
 
+    private TextView title;
     private TextView description;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_info);
 
-        TextView title = findViewById(R.id.title);
-        description = findViewById(R.id.description);
-        ImageView image = findViewById(R.id.image);
-
-        game = Games.currentGame;
-
-        title.setText(game.getName(this));
-        setDescription();
-        image.setImageResource(game.getImage(this));
+        Initialization();
+        SetInfoGame();
         CreateButtons();
 
-        if(game.getSettings() == null){
-            View button = findViewById(R.id.setting);
-            button.setVisibility(View.GONE);
-        } else {
-            game.getSettings().setDialogListener(new Settings.DialogListener() {
-                @Override
-                public void Dismiss() {
-                    setDescription();
-                }
-            });
-        }
+        IfSetting();
     }
 
     private void CreateButtons() {
@@ -59,13 +44,38 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void setDescription(){
+    private void Initialization(){
+        title = findViewById(R.id.title);
+        description = findViewById(R.id.description);
+        image = findViewById(R.id.image);
+        game = Games.currentGame;
+    }
+
+    private void SetInfoGame(){
+        title.setText(game.getName(this));
         description.setText(game.getDescription(this));
+        image.setImageResource(game.getImage(this));
+    }
+
+    private void IfSetting(){
+        if(game.getSettings() == null) {
+            View button = findViewById(R.id.setting);
+            button.setVisibility(View.GONE);
+        } else {
+            game.getSettings().setDialogListener(new Settings.DialogListener() {
+                @Override
+                public void Dismiss() {
+                    SetInfoGame();
+                }
+            });
+        }
     }
 
     @Override
     public void onClick(View view) {
+        Games.currentGame.getGameInfo().Reset(this);
         Games.currentGame.getGameInfo().Play(view.getId(), this);
+        Games.currentGame.update(this);
     }
 
     public void ClickSettings(View view){
