@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class AdapterGames extends Adapter{
         private TextView title;
         private ImageView icon;
         private TextView description;
+        private ImageView settings;
         private Button button;
         private TextView localInfo;
 
@@ -35,13 +37,14 @@ public class AdapterGames extends Adapter{
             title = v.findViewById(R.id.title);
             icon = v.findViewById(R.id.icon);
             description = v.findViewById(R.id.description);
+            settings = v.findViewById(R.id.setting);
             button = v.findViewById(R.id.button);
             localInfo = v.findViewById(R.id.local_info);
         }
     }
 
     @Override
-    public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final Adapter.ViewHolder holder, int position) {
         final ViewHolder newHolder = new ViewHolder(holder.itemView);
 
         if(getCursor().moveToPosition(position+1)){//TODO:po dodaniu maszyny losującej kasujemy "+1"
@@ -54,6 +57,15 @@ public class AdapterGames extends Adapter{
             newHolder.button.setText(game.getButtonsName(getContext()).get(game.getButtonsOrder().get(0)));
             newHolder.localInfo.setVisibility(View.GONE);
 
+            newHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { Games.setCurrentGame(game);
+                    Intent intent = new Intent(getContext(), GameInfoActivity.class);
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) getContext(), newHolder.icon, "gameimage");
+                    getContext().startActivity(intent, optionsCompat.toBundle());
+                }
+            });
+
             newHolder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -64,13 +76,10 @@ public class AdapterGames extends Adapter{
                 }
             });
 
-            newHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            newHolder.settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Games.setCurrentGame(game);
-                    Intent intent = new Intent(getContext(), GameInfoActivity.class);
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) getContext(), newHolder.icon, "gameimage");
-                    getContext().startActivity(intent, optionsCompat.toBundle());
+                    game.getSettings().show(((AppCompatActivity) getContext()).getSupportFragmentManager(), "settings");
                 }
             });
         }
