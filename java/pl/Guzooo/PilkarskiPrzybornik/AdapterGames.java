@@ -1,8 +1,10 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,7 @@ public class AdapterGames extends Adapter{
 
     @Override
     public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
-        ViewHolder newHolder = new ViewHolder(holder.itemView);
+        final ViewHolder newHolder = new ViewHolder(holder.itemView);
 
         if(getCursor().moveToPosition(position+1)){//TODO:po dodaniu maszyny losującej kasujemy "+1"
             final Game game = new Game();
@@ -67,7 +69,8 @@ public class AdapterGames extends Adapter{
                 public void onClick(View view) {
                     Games.setCurrentGame(game);
                     Intent intent = new Intent(getContext(), GameInfoActivity.class);
-                    getContext().startActivity(intent);
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) getContext(), newHolder.icon, "gameimage");
+                    getContext().startActivity(intent, optionsCompat.toBundle());
                 }
             });
         }
