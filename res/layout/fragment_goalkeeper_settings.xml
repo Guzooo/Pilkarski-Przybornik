@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/standard_margin"
+                android:inputType="number"
                 style="@style/AppTheme.EditTextSettings"/>
         </LinearLayout>
 
