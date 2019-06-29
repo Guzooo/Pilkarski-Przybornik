@@ -2,8 +2,10 @@ package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,12 +26,15 @@ public class PlayersActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
     private FloatingActionButton floatingActionButtonMenuDel;
+    private FloatingActionButton floatingActionButtonMenuEdit;
     private FloatingActionButton floatingActionButtonAdd;
+    private FloatingActionButton floatingActionButtonEdit;
     private FloatingActionButton floatingActionButtonShare;
     private FloatingActionButton floatingActionButtonDel;
 
     private boolean openMenu;
     private boolean deleteMenu;
+    private boolean editMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +42,12 @@ public class PlayersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_players);
 
         floatingActionButton = findViewById(R.id.floating_action_button);
+        floatingActionButtonMenuDel = findViewById(R.id.floating_action_button_menu_del);
+        floatingActionButtonMenuEdit = findViewById(R.id.floating_action_button_menu_edit);
         floatingActionButtonAdd = findViewById(R.id.floating_action_button_add);
+        floatingActionButtonEdit = findViewById(R.id.floating_action_button_edit);
         floatingActionButtonShare = findViewById(R.id.floating_action_button_share);
         floatingActionButtonDel = findViewById(R.id.floating_action_button_del);
-        floatingActionButtonMenuDel = findViewById(R.id.floating_action_button_menu_del);
 
         hideFloatMenu();
 
@@ -99,8 +106,10 @@ public class PlayersActivity extends AppCompatActivity {
 
             @Override
             public void onClick(Model model, Adapter.ViewHolder holder, int id) {
-                if(deleteMenu){
+                if(deleteMenu) {
                     DelPlayer(holder, id);
+                } else if (editMenu){
+                    EditPlayer(id);
                 } else {
                     hideAllMenu();
                     AdapterPlayers.ViewHolder newHolder = new AdapterPlayers.ViewHolder(holder.itemView);
@@ -141,9 +150,18 @@ public class PlayersActivity extends AppCompatActivity {
         hideDelMenu();
     }
 
+    public void ClickMenuEdit(View v){
+        hideEditMenu();
+    }
+
     public void ClickAdd(View v){
         AnimFloatingButtonRotate();
         AddPlayerWindow();
+    }
+
+    public void ClickEdit(View v){
+        AnimFloatingButtonRotate();
+        showEditMenu();
     }
 
     public void ClickShare(View v){
@@ -226,6 +244,32 @@ public class PlayersActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void EditPlayer (int id){
+        final Player player = new Player();
+        player.getOfId(id, this);
+        final EditText editText = CreateEditText(); //TODO jakieś marginesy, opcjonalnie zrobić layout i tu wstawić 🤷‍♂️
+        editText.setText(player.getName());
+        editText.setHint(player.getName());
+        new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog)
+                .setTitle(R.string.enter_player_name)
+                .setView(editText)
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updatePlayer(player, editText);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void updatePlayer(Player player, EditText editText){
+        player.setName(editText.getText().toString().trim());
+        player.update(this);
+        refreshCursor();
+        adapter.notifyDataSetChanged(); //TODO: moze juz w tym refreshu w adapterze;
+    }
+
     private void AnimFloatingButtonSeeMe(){
         ObjectAnimator animY = ObjectAnimator.ofFloat(floatingActionButton, "scaleY", 1, 1.5f, 0.75f, 1.25f, 1);
         ObjectAnimator animX = ObjectAnimator.ofFloat(floatingActionButton, "scaleX", 1, 1.5f, 0.75f, 1.25f, 1);
@@ -262,6 +306,11 @@ public class PlayersActivity extends AppCompatActivity {
             return true;
         }
 
+        if(editMenu){
+            hideEditMenu();
+            return true;
+        }
+
         return false;
     }
 
@@ -287,8 +336,31 @@ public class PlayersActivity extends AppCompatActivity {
         deleteMenu = true;
     }
 
+    private void hideEditMenu(){
+        floatingActionButtonMenuEdit.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                super.onHidden(fab);
+                floatingActionButton.show();
+            }
+        });
+        editMenu = false;
+    }
+
+    private void showEditMenu(){
+        floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+            @Override
+            public void onHidden(FloatingActionButton fab) {
+                super.onHidden(fab);
+                floatingActionButtonMenuEdit.show();
+            }
+        });
+        editMenu = true;
+    }
+
     private void hideFloatMenu() {
         floatingActionButtonAdd.hide();
+        floatingActionButtonEdit.hide();
         floatingActionButtonShare.hide();
         floatingActionButtonDel.hide();
         openMenu = false;
@@ -296,8 +368,27 @@ public class PlayersActivity extends AppCompatActivity {
 
     private void showFloatMenu() {
         floatingActionButtonAdd.show();
+        floatingActionButtonEdit.show();
         floatingActionButtonShare.show();
         floatingActionButtonDel.show();
         openMenu = true;
+    }
+
+    public static int getNumberActivePlayers(Context context){
+        try {
+            SQLiteDatabase db = Database.getRead(context);
+            Cursor cursor = db.query(Player.databaseName,
+                    null,
+                    "ACTIVE = ?",
+                    new String[]{Integer.toString(1)},
+                    null, null, null);
+            int activePlayers = cursor.getCount();
+            cursor.close();
+            db.close();
+            return activePlayers;
+        } catch (SQLException e){
+            Database.ShowError(context);
+            return 0;
+        }
     }
 }

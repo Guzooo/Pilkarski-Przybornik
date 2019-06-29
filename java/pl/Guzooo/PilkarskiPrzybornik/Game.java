@@ -9,17 +9,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 
 public class Game extends Model{
 
-    private String name;
-    private int image;
-    private String description;
-    private String shortDescription;
     private int numberGame;
     private String lastGame;
     private GameInfo gameInfo;
-    private ArrayList<String> buttonsName;
     private String buttonsOrder = "";
 
     public static final String databaseName = "GAMES";
@@ -54,11 +50,6 @@ public class Game extends Model{
                 cursor.getString(2),
                 cursor.getString(3));
         setGameInfo(Games.getGameInfo(getId()));
-        setName(gameInfo.getName(context));
-        setDescription(gameInfo.getDescription(context));
-        setShortDescription(gameInfo.getShortDescription(context));
-        setImage(gameInfo.getIcon(context));
-        setButtonsName(gameInfo.getButtons(context));
         CheckButtonsOrder(context);
     }
 
@@ -72,36 +63,20 @@ public class Game extends Model{
         return contentValues;
     }
 
-    public String getName(){
-        return name;
+    public String getName(Context context){
+        return gameInfo.getName(context);
     }
 
-    private void setName(String name){
-        this.name = name;
+    public int getImage(Context context) {
+        return gameInfo.getIcon(context);
     }
 
-    public int getImage() {
-        return image;
+    public String getDescription(Context context) {
+        return gameInfo.getDescription(context);
     }
 
-    private void setImage(int image) {
-        this.image = image;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    private void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public String getShortDescription(Context context) {
+        return gameInfo.getShortDescription(context);
     }
 
     public int getNumberGame() {
@@ -148,12 +123,8 @@ public class Game extends Model{
         this.gameInfo = gameInfo;
     }
 
-    public ArrayList<String> getButtonsName() {
-        return buttonsName;
-    }
-
-    public void setButtonsName(ArrayList<String> buttonsName) {
-        this.buttonsName = buttonsName;
+    public ArrayList<String> getButtonsName(Context context) {
+        return gameInfo.getButtons(context);
     }
 
     public ArrayList<Integer> getButtonsOrder() {
@@ -197,5 +168,9 @@ public class Game extends Model{
         buttonsOrder = buttonsOrder.replace(i + ";", "");
         buttonsOrder = i + ";" + buttonsOrder;
         Log.d("GAME", "a tu robie takie cyk cyk z ostatnim: " + buttonsOrder);
+    }
+
+    public Settings getSettings(){
+        return gameInfo.getSettings();
     }
 }

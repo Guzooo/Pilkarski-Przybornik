@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-      <!--  <ImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
-            android:src="@android:drawable/ic_dialog_info"
-            style="@style/AppTheme.Icon"/>-->
+            android:visibility="invisible"
+            style="@style/AppTheme.Icon"/>
 
         <TextView
             android:id="@+id/title"
@@ -25,13 +25,13 @@
             android:layout_gravity="center_vertical"
             style="@style/AppTheme.Title"/>
 
-        <!--<ImageView
-            android:id="@+id/button_setting"
+        <ImageView
+            android:id="@+id/setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
-            android:src="@android:drawable/star_off"
-            style="@style/AppTheme.Icon"/>-->
+            android:src="@drawable/settings"
+            style="@style/AppTheme.Icon"/>
 
         <!--TODO:Ustawienia i info-->
     </LinearLayout>
@@ -42,6 +42,7 @@
 
         <ImageView
             android:id="@+id/icon"
+            android:transitionName="gameimage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

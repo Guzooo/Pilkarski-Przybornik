@@ -14,6 +14,8 @@
         <item name="colorPrimaryDark">@color/colorSecondary</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:windowContentTransitions">true</item>
+
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
@@ -45,9 +47,7 @@
         <item name="android:scaleType">fitCenter</item>
     </style>
 
-    <style name="AppTheme.Icon">
-        <item name="android:minHeight">@dimen/minimal_length</item>
-        <item name="android:minWidth">@dimen/minimal_length</item>
+    <style name="AppTheme.Icon" parent="AppTheme.AllClickable">
         <item name="tint">@color/primaryIcon</item>
     </style>
 
@@ -61,6 +61,16 @@
     <style name="AppTheme.AllClickable">
         <item name="android:minHeight">@dimen/minimal_length</item>
         <item name="android:minWidth">@dimen/minimal_length</item>
+    </style>
+
+    <style name="AppTheme.EditText" parent="AppTheme.AllClickable">
+        <item name="android:backgroundTint">@color/colorAccentSecondary</item>
+        <item name="android:textColorHint">@color/secondaryText</item>
+    </style>
+
+    <style name="AppTheme.EditTextSettings" parent="AppTheme.EditText">
+        <item name="android:maxWidth">@dimen/minimal_length</item>
+
     </style>
 
     <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Dialog.Alert">
