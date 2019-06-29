@@ -73,7 +73,7 @@
     <string name="shooter_emoticon">⚽ %1$s ⚽</string>
     <string name="winner_emoticon">🏆 %1$s 🏆</string>
     <string name="goal">Gol</string>
-    <string name="mishit">Pudło</string>
+    <string name="mishit">Obroniony</string>
     <string name="bad_shot">Poza bramke</string>
     <string name="stake">Słupek</string>
     <string name="crossbar">Poprzeczka</string>
