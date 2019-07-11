@@ -1,0 +1,2 @@
+﻿{"languagecode":"pl","numer":"2"}
+{"languagecode":"en","numer":"1"}
