@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pl.Guzooo.PilkarskiPrzybornik.Powiadomienia.NotificationsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private int activePlayers;
@@ -74,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             descriptionManagePlayers.setText(getString(R.string.number_active_players, activePlayers));
         }
+    }
+
+    public void ClickNotifications(View v){
+        Intent intent = new Intent(this, NotificationsActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickSetting(View v){
+
     }
 
     public void ClickPlayersControl(View v){
