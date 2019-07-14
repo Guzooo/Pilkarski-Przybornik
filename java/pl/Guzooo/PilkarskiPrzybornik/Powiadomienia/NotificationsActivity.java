@@ -21,9 +21,9 @@ import pl.Guzooo.PilkarskiPrzybornik.ReadJSON;
 
 public class NotificationsActivity extends AppCompatActivity implements ReadJSON.ReadJSONListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String NOTIFICATIONS_PAGE = "https://docs.google.com/document/d/1dikNs0eGZm5rIk-SI23VFKlEaKBhD1zU_xblYzWzED0/edit?usp=sharing";
-    private final String CODE_NOTIFICATION = "news";
-    private static final String EXTRA_NEWS = "news";
+    private static final String NOTIFICATIONS_PAGE = "https://raw.githubusercontent.com/Guzooo/Pilkarski-Przybornik/info/Notificationspl.txt";
+
+    private static final String PREFERENCES_NUMBER_NOTIFICATIONS = "numbernotifications";
 
     private AdapterNotifications adapter;
     private RecyclerView recyclerView;
@@ -42,17 +42,7 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         setAdapter();
         getAppInfo();
 
-        if(getIntent().getStringExtra(EXTRA_NEWS) == null){
-            onRefresh();
-        } else {
-            try {
-                JSONObject object = new JSONObject(getIntent().getStringExtra(EXTRA_NEWS));
-                JSONArray array = object.getJSONArray(CODE_NOTIFICATION);
-                refreshAdapter(getNotification(array));
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
+        onRefresh();
     }
 
     private void getAppInfo(){
@@ -93,20 +83,12 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         return false;
     }
 
-    private ArrayList<Notification> getNotification(JSONArray array){
-        ArrayList<Notification> notifications = new ArrayList<>();
-        try {
-            for (int i = 0; i < array.length(); i++) {
-                Notification notification = new Notification(array.getJSONObject(i), this);
-                if (checkLanguage(notification.getLanguage()) && checkVersion(notification.getVersion())) {
-                    notifications.add(notification);
-                    Log.d("noActi", "dodaje");
-                }
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+    private Notification getNotification(JSONObject object){
+        Notification notification = new Notification(object, this);
+        if (checkVersion(notification.getVersion())) {
+            return notification;
         }
-        return notifications;
+        return null;
     }
 
     private void setRefreshLayout(){
@@ -126,8 +108,9 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         recyclerView.setAdapter(adapter);
     }
 
-    private void refreshAdapter(ArrayList<Notification> notifications){
-        adapter.addNotifications(notifications);
+    private void addNotificationAdapter(Notification notification){
+        if(notification != null)
+            adapter.addNotification(notification);
     }
 
     @Override
@@ -149,18 +132,17 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
     }
 
     @Override
-    public void onPositivePostRead(ArrayList<String> strings) {
-        try {
-            JSONObject object = new JSONObject(strings.get(1));
-            JSONArray array = object.getJSONArray(CODE_NOTIFICATION);
-            refreshAdapter(getNotification(array));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void onProgressRead(JSONObject object) {
+        addNotificationAdapter(getNotification(object));
+    }
+
+    @Override
+    public void onPositivePostRead() {
+
     }
 
     @Override
     public void onNegativePostRead() {
-        Toast.makeText(this, "NOT FIND NEWS, PLIS TRY AGAIN", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "NOT FIND NEWS, PLEASE TRY AGAIN", Toast.LENGTH_SHORT).show();
     }
 }

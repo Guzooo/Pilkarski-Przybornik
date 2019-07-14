@@ -56,7 +56,6 @@ public class AdapterNotifications extends RecyclerView.Adapter<AdapterNotificati
 
     @Override
     public int getItemCount() {
-        Log.d("adap",notifications.size() +"");
         return notifications.size();
     }
 
@@ -67,10 +66,8 @@ public class AdapterNotifications extends RecyclerView.Adapter<AdapterNotificati
 
     }
 
-    public void addNotifications(ArrayList<Notification> notifications){
-        int from = this.notifications.size();
-        this.notifications.addAll(notifications);
-        int to = this.notifications.size();
-        notifyItemRangeInserted(from, to);
+    public void addNotification(Notification notification){
+        notifications.add(notification);
+        notifyItemInserted(notifications.size() -1);
     }
 }

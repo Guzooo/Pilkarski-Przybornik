@@ -22,14 +22,12 @@ public class Notification {
     private String info;
     private String data;
     private String version;
-    private String language;
     private ArrayList<Button> buttons = new ArrayList<>();
 
     private final static String CODE_TITLE = "title";
     private final static String CODE_INFO = "info";
     private final static String CODE_DATA = "data";
     private final static String CODE_VERSION = "version";
-    private final static String CODE_LANGUAGE = "language";
     private final static String CODE_BUTTONS = "buttons";
     private final static String CODE_BUTTON_TITLE = "label";
     private final static String CODE_BUTTON_LINK = "www";
@@ -40,7 +38,6 @@ public class Notification {
             setInfo(object.getString(CODE_INFO));
             setData(object.getString(CODE_DATA));
             setVersion(object.getString(CODE_VERSION));
-            setLanguage(object.getString(CODE_LANGUAGE));
             setButtons(object.getJSONArray(CODE_BUTTONS), context);
         } catch (JSONException e){
             e.printStackTrace();
@@ -77,14 +74,6 @@ public class Notification {
 
     private void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    private void setLanguage(String language) {
-        this.language = language;
     }
 
     public ArrayList<Button> getButtons() {
