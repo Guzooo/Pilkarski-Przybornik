@@ -1,2 +1,2 @@
-﻿{"languagecode":"pl","versionnumber":[{"number":"2", "version":"all"}]}
+﻿{"languagecode":"pl","versionnumber":[{"number":"3", "version":"all"}]}
 {"languagecode":"en","versionnumber":[{"number":"1", "version":"all"}]}
