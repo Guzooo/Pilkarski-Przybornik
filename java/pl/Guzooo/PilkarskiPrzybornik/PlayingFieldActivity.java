@@ -38,7 +38,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
         setListener((Listener) Games.currentGame.getGameInfo());
 
         RefreshInfo();
-        SetButtonsGateVisible();
+        SetButtonsGateVisibleOnStart();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PlayingFieldActivity extends AppCompatActivity {
         setOrder();
     }
 
-    private void SetButtonsGateVisible(){
+    private void SetButtonsGateVisibleOnStart(){
         boolean visible = getPreferences(MODE_PRIVATE).getBoolean(PREFERENCE_BUTTONS_GATE_VISIBILITY, DEFAULT_BUTTONS_GATE_VISIBILITY);
         if(!visible){
             ClickHideButtonsGate(null);

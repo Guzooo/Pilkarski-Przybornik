@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Powiadomienia.NotificationsActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/alert_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/cellular_data_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+                android:gravity="center"
+                android:text="❗ Korzystasz z danych komórkowych ❗\n\nJeśli chcesz sprawdzić najnowsze powiadomienia przeciągnij palcem w dół\n\n⬇⬇⬇"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/internet_disconnect_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+                android:gravity="center"
+                android:text="🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/download_failed_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+                android:gravity="center"
+                android:text="🔕😥 Nie udało się odczytać powiadomień 😥🔕\n\nSpróbój ponownie przeiągają palem w dół\n\n⬇⬇⬇\n\nJeśli problem się powtarza napisz"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <HorizontalScrollView
+                android:id="@+id/buttons_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/standard_margin"
+                    android:paddingEnd="@dimen/standard_margin">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Messenger"
+                        android:onClick="ClickMsg"
+                        style="@style/AppTheme.Button"/>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

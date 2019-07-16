@@ -9,15 +9,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 
 public class ReadJSON extends AsyncTask<String, JSONObject, Boolean> {
 
     private ReadJSONListener readJSONListener;
 
+    private int firstSaveInt;
+
     public interface ReadJSONListener{
         void onPreRead();
-        void onPostRead();
         void onProgressRead(JSONObject object);
+        void onPostRead();
         void onPositivePostRead();
         void onNegativePostRead();
     }
@@ -40,10 +43,12 @@ public class ReadJSON extends AsyncTask<String, JSONObject, Boolean> {
             String pageLine;
             BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(strings[0]).openStream()));
             while ((pageLine = reader.readLine()) != null) {
+                if(isCancelled())
+                    break;
                 JSONObject object = new JSONObject(pageLine);
                 publishProgress(object);
-                wait();
             }
+
             reader.close();
             return true;
         } catch (Exception e){
@@ -73,5 +78,26 @@ public class ReadJSON extends AsyncTask<String, JSONObject, Boolean> {
             else
                 readJSONListener.onNegativePostRead();
         }
+    }
+
+    @Override
+    protected void onCancelled(Boolean bool) {
+        super.onCancelled(bool);
+
+        if(readJSONListener != null){
+            readJSONListener.onPostRead();
+            if(bool)
+                readJSONListener.onPositivePostRead();
+            else
+                readJSONListener.onNegativePostRead();
+        }
+    }
+
+    public void setFirstSaveInt(int firstSaveInt) {
+        this.firstSaveInt = firstSaveInt;
+    }
+
+    public int getFirstSaveInt() {
+        return firstSaveInt;
     }
 }

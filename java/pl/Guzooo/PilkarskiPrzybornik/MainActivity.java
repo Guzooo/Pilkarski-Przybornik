@@ -3,14 +3,15 @@ package pl.Guzooo.PilkarskiPrzybornik;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pl.Guzooo.PilkarskiPrzybornik.Powiadomienia.NotificationsActivity;
 
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
     private AdapterGames adapter;
+
+    private ReadJSON readJSONNumberNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setCursor();
         setRecyclerViewLayout();
         setAdapter();
+
+        checkNewNotifications();
 
         setNumberActivePlayers();
         setTextOnDownActionBar();
@@ -69,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void checkNewNotifications() {
+        ImageView notificationIcon = findViewById(R.id.notifications);
+        if (!NotificationsActivity.getPreferencesNewNotification(this)) {
+            DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.primaryIcon));
+            readJSONNumberNotification = NotificationsActivity.getOnlineNotificationNumber(notificationIcon, false, this);
+        } else {
+            DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.colorAlert));
+        }
+    }
+
     private void setTextOnDownActionBar(){
         TextView descriptionManagePlayers = findViewById(R.id.description_manage_players);
         if (activePlayers == 0){
@@ -80,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void ClickNotifications(View v){
         Intent intent = new Intent(this, NotificationsActivity.class);
+        intent.getIntExtra(NotificationsActivity.EXTRA_NUMBER_NOTIFICATIONS, readJSONNumberNotification.getFirstSaveInt());
         startActivity(intent);
     }
 
