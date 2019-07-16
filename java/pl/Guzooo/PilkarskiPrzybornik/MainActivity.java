@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void ClickNotifications(View v){
         Intent intent = new Intent(this, NotificationsActivity.class);
-        intent.getIntExtra(NotificationsActivity.EXTRA_NUMBER_NOTIFICATIONS, readJSONNumberNotification.getFirstSaveInt());
+        if(readJSONNumberNotification != null)
+            intent.getIntExtra(NotificationsActivity.EXTRA_NUMBER_NOTIFICATIONS, readJSONNumberNotification.getFirstSaveInt());
         startActivity(intent);
     }
 
