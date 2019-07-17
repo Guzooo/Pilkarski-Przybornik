@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
                 android:gravity="center"
-                android:text="❗ Korzystasz z danych komórkowych ❗\n\nJeśli chcesz sprawdzić najnowsze powiadomienia przeciągnij palcem w dół\n\n⬇⬇⬇"
+                android:text="@string/using_cellular_data_alert"
                 android:textStyle="bold"
                 android:visibility="gone"/>
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
                 android:gravity="center"
-                android:text="🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇"
+                android:text="@string/internet_disconnect_alert"
                 android:textStyle="bold"
                 android:visibility="gone"/>
 
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
                 android:gravity="center"
-                android:text="🔕😥 Nie udało się odczytać powiadomień 😥🔕\n\nSpróbój ponownie przeiągają palem w dół\n\n⬇⬇⬇\n\nJeśli problem się powtarza napisz"
+                android:text="@string/download_failed_alert"
                 android:textStyle="bold"
                 android:visibility="gone"/>
 
