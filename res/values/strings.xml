@@ -80,4 +80,15 @@
     <string name="order">Kolejność\n</string>
     <string name="player_elimination">%1$s został skończony 🥅⚽</string>
     <string name="player_win">%1$s wygrał 🏆🏆🏆\nCofnij, aby wyjść z gry ⬅</string>
+
+    <string name="facebook">Sprawdź fanpage - Facebook</string>
+    <string name="messenger">Zaproponuj zmiany - Messenger</string>
+
+    <string name="internet">Internet:</string>
+    <string name="check_info_online">Kiedy automatycznie sprawdzać informacje online:</string>
+    <string-array name="internet_connect">
+        <item>Tylko przez Wi-Fi</item>
+        <item>Zawsze</item>
+        <item>Nigdy</item>
+    </string-array>
 </resources>

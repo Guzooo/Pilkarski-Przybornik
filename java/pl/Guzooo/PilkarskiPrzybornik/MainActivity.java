@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ClickSetting(View v){
-
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     public void ClickPlayersControl(View v){
