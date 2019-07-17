@@ -4,55 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:id="@+id/action_barII"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/standard_margin"
-                android:src= "@drawable/notifications"
-                android:onClick="ClickNotifications"
-                style="@style/AppTheme.Icon"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/app_G"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin"
-                android:src="@drawable/settings_applications"
-                android:onClick="ClickSetting"
-                style="@style/AppTheme.Icon"/>
-        </LinearLayout>
-
-        <ImageView
-            android:layout_margin="0dp"
-            android:layout_marginTop="@dimen/standard_margin"
-            style="@style/AppTheme.Separator.Horizontal" />
-    </LinearLayout>
+    tools:context=".MainActivity"
+    android:clipChildren="false">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/action_barII"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/action_bar">
 
 
@@ -63,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:clipChildren="false">
 
         <ImageView
             android:layout_margin="0dp"
@@ -72,29 +32,42 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/settings_applications"
+                android:onClick="ClickSetting"
+                style="@style/AppTheme.Icon"/>
+
+            <ImageView
+                android:id="@+id/notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src= "@drawable/notifications"
+                android:onClick="ClickNotifications"
+                style="@style/AppTheme.Icon"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/group"
                 android:onClick="ClickPlayersControl"
                 style="@style/AppTheme.Icon"/>
+
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/description_active_players"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/description_manage_players"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/manage_players"
-                android:onClick="ClickPlayersControl"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            android:gravity="center"
+            android:onClick="ClickPlayersControl"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

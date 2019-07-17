@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
+import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 import pl.Guzooo.PilkarskiPrzybornik.ReadJSON;
 
@@ -182,7 +181,6 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
             public void onPreRead() {
                 appVersion = getAppVersion(context);
                 appLanguage = getAppLanguage();
-                Log.d("pm", "zaczynamy");
             }
 
             @Override
@@ -190,7 +188,6 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
                 try {
                     if (object.getString(CODE_LANGUAGE).equals(appLanguage)){
                         correctObject = object;
-                        Log.d("pm", "juz chyba ogarniam");
                         readJSON.cancel(true);
                     }
                 } catch (Exception e){
@@ -210,12 +207,13 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
                     for(int i = 0; i < array.length(); i++){
                         JSONObject object = array.getJSONObject(i);
                         int onlineNotificationNumber = object.getInt(CODE_NUMBER);
-                        Log.d("pm", onlineNotificationNumber + " ooonline, " + getPreferencesNotificationNumber(context));
                         if(checkVersion(appVersion, object.getString(CODE_VERSION)) && onlineNotificationNumber != getPreferencesNotificationNumber(context)) {
-                            if(imageView != null)
+                            if(imageView != null) {
                                 DrawableCompat.setTint(imageView.getDrawable(), ContextCompat.getColor(context, R.color.colorAlert));
+                                MainActivity.AnimLookMe(imageView);
+                                SavePreferencesNewNotification(true, context);
+                            }
                             readJSON.setFirstSaveInt(onlineNotificationNumber);
-                            SavePreferencesNewNotification(true, context);
                             if(save)
                                 SavePreferencesNotificationNumber(onlineNotificationNumber, context);
                         }

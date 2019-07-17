@@ -45,7 +45,6 @@
     <string name="update_recommended">Aktualizacja zalecana</string>
     <string name="update">Aktualizuj</string>
 
-    <string name="manage_players">Zarządzaj graczami</string>
     <string name="number_active_players">%1$d aktywnych graczy</string> <!--TODO:liczby zmieniają końcówki-->
 
     <string name="setting">Ustawienia</string>

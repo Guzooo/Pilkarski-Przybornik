@@ -1,5 +1,7 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkNewNotifications();
         recyclerView = findViewById(R.id.recycler_view);
     }
 
@@ -43,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setRecyclerViewLayout();
         setAdapter();
 
-        checkNewNotifications();
-
         setNumberActivePlayers();
-        setTextOnDownActionBar();
+        setActivePlayerText();
+        setNotificationColor();
     }
 
     @Override
@@ -75,20 +77,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkNewNotifications() {
+        if (!NotificationsActivity.getPreferencesNewNotification(this))
+            readJSONNumberNotification = NotificationsActivity.getOnlineNotificationNumber((ImageView) findViewById(R.id.notifications), false, this);
+    }
+
+    private void setNotificationColor(){
         ImageView notificationIcon = findViewById(R.id.notifications);
-        if (!NotificationsActivity.getPreferencesNewNotification(this)) {
-            DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.primaryIcon));
-            readJSONNumberNotification = NotificationsActivity.getOnlineNotificationNumber(notificationIcon, false, this);
-        } else {
+        if(NotificationsActivity.getPreferencesNewNotification(this)){
             DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.colorAlert));
+            AnimLookMe(notificationIcon);
+        } else {
+            DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.primaryIcon));
         }
     }
 
-    private void setTextOnDownActionBar(){
-        TextView descriptionManagePlayers = findViewById(R.id.description_manage_players);
+    private void setActivePlayerText(){
+        TextView descriptionManagePlayers = findViewById(R.id.description_active_players);
         if (activePlayers == 0){
-            descriptionManagePlayers.setText(R.string.manage_players);
+            descriptionManagePlayers.setVisibility(View.GONE);
         } else {
+            descriptionManagePlayers.setVisibility(View.VISIBLE);
             descriptionManagePlayers.setText(getString(R.string.number_active_players, activePlayers));
         }
     }
@@ -119,5 +127,17 @@ public class MainActivity extends AppCompatActivity {
         activePlayers = cursor.getCount();
         cursor.close();
         db.close();
+    }
+
+    public static void AnimLookMe(View animView){
+        ObjectAnimator animRotation = ObjectAnimator.ofFloat(animView, "rotation", 0, 0, 25, 0, -25, 25, 0, -25, 0, 0);
+        ObjectAnimator animTransform = ObjectAnimator.ofFloat(animView, "translationY", 0, -75, -75, -75, 0);
+        ObjectAnimator animScaleX = ObjectAnimator.ofFloat(animView, "scaleX", 1, 2, 2, 2, 1);
+        ObjectAnimator animScaleY = ObjectAnimator.ofFloat(animView, "scaleY", 1, 2, 2, 2, 1);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animRotation, animTransform, animScaleX,  animScaleY);
+        animatorSet.setDuration(1000);
+        animatorSet.setStartDelay(2000);
+        animatorSet.start();
     }
 }
