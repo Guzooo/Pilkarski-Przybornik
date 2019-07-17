@@ -82,6 +82,8 @@
     <string name="player_elimination">%1$s został skończony 🥅⚽</string>
     <string name="player_win">%1$s wygrał 🏆🏆🏆</string>
 
+    <string name="notification_language">pl</string>
+
     <string name="using_cellular_data_alert">❗ Korzystasz z danych komórkowych ❗\n\nJeśli chcesz sprawdzić najnowsze powiadomienia przeciągnij palcem w dół\n\n⬇⬇⬇</string>
     <string name="internet_disconnect_alert">🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇</string>
     <string name="download_failed_alert">🔕😥 Nie udało się odczytać powiadomień 😥🔕\n\nSpróbuj ponownie przeciągając palcem w dół\n\n⬇⬇⬇\n\nJeśli problem się powtarza napisz</string>
