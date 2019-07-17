@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,6 +28,7 @@ import java.util.Locale;
 import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
 import pl.Guzooo.PilkarskiPrzybornik.ReadJSON;
+import pl.Guzooo.PilkarskiPrzybornik.SettingsActivity;
 
 public class NotificationsActivity extends AppCompatActivity implements ReadJSON.ReadJSONListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -52,7 +57,8 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         setAdapter();
         appVersion = getAppVersion(this);
 
-        onRefresh();
+        if(canDownload())
+            onRefresh();
     }
 
     private static int getAppVersion(Context context){
@@ -122,6 +128,21 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
             adapter.addNotification(notification);
     }
 
+    private boolean canDownload(){
+        int preferenceInternetDownload = SettingsActivity.getPreferencesInternetDownload(this);
+        int internetConnect = InternetConnection(this);
+
+        if(internetConnect == INTERNET_DISCONNECT){
+            VisibleInternetDisconnectAlert();
+            return false;
+        }
+        if((preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_NEVER || preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_ONLY_WIFI) && internetConnect == INTERNET_CELLULAR ) {
+            VisibleCellularDataAlert();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onRefresh() {
         GoneAllAlert();
@@ -159,7 +180,11 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
 
     @Override
     public void onNegativePostRead() {
-        VisibleDownloadFailedAlert();
+        if(InternetConnection(this) == INTERNET_DISCONNECT) {
+            VisibleInternetDisconnectAlert();
+        } else {
+            VisibleDownloadFailedAlert();
+        }
     }
 
     public static ReadJSON getOnlineNotificationNumber(final ImageView imageView, final boolean save, final Context context){
@@ -280,5 +305,31 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         Uri uri = Uri.parse("https://www.messenger.com/t/GuzoooApps");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    public static final int INTERNET_DISCONNECT = 0;
+    public static final int INTERNET_CELLULAR = 1;
+    public static final int INTERNET_WIFI = 2;
+
+    public static int InternetConnection(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+            if(capabilities == null)
+                return INTERNET_DISCONNECT;
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
+                return INTERNET_WIFI;
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                return INTERNET_CELLULAR;
+        } else {
+            NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo cellular = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if(wifi.isConnectedOrConnecting())
+                return INTERNET_WIFI;
+            if(cellular.isConnectedOrConnecting())
+                return INTERNET_CELLULAR;
+        }
+        return INTERNET_DISCONNECT;
     }
 }

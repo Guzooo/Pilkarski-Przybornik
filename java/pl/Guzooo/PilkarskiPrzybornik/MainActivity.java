@@ -77,8 +77,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkNewNotifications() {
-        if (!NotificationsActivity.getPreferencesNewNotification(this))
+        if (canDownload())
             readJSONNumberNotification = NotificationsActivity.getOnlineNotificationNumber((ImageView) findViewById(R.id.notifications), false, this);
+    }
+
+    private boolean canDownload(){
+        int preferenceInternetDownload = SettingsActivity.getPreferencesInternetDownload(this);
+        int internetConnect = NotificationsActivity.InternetConnection(this);
+
+        if(internetConnect == NotificationsActivity.INTERNET_DISCONNECT)
+            return false;
+        if(preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_NEVER)
+            return false;
+        if(preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_ONLY_WIFI && internetConnect == NotificationsActivity.INTERNET_CELLULAR)
+            return false;
+        if(NotificationsActivity.getPreferencesNewNotification(this))
+            return false;
+        return true;
     }
 
     private void setNotificationColor(){

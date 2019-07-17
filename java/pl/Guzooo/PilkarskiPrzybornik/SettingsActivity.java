@@ -17,7 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static final int INTERNET_DOWNLOAD_ONLY_WIFI = 0;
     public static final int INTERNET_DOWNLOAD_ALWAYS = 1;
-    public static final int INTERNET_DOWNLOAD_NEWVER = 2;
+    public static final int INTERNET_DOWNLOAD_NEVER = 2;
 
     private Spinner spinnerInternetDownload;
 
