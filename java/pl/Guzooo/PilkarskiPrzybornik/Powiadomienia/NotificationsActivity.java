@@ -136,7 +136,7 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
             VisibleInternetDisconnectAlert();
             return false;
         }
-        if((preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_NEVER || preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_ONLY_WIFI) && internetConnect == INTERNET_CELLULAR ) {
+        if(preferenceInternetDownload != SettingsActivity.INTERNET_DOWNLOAD_ALWAYS && internetConnect == INTERNET_CELLULAR ) {
             VisibleCellularDataAlert();
             return false;
         }

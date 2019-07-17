@@ -95,7 +95,7 @@
                     android:entries="@array/internet_connect"/>
             </LinearLayout>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standard_margin"
@@ -104,7 +104,7 @@
                 android:text="Gry:"
                 style="@style/AppTheme.PlayerTitle"/>
 
-            <ImageView  style="@style/AppTheme.Separator.Horizontal" />
+            <ImageView  style="@style/AppTheme.Separator.Horizontal" />-->
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
