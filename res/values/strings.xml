@@ -71,6 +71,7 @@
     <string name="goalkeeper_emoticon">🥅 %1$s 🥅</string>
     <string name="shooter_emoticon">⚽ %1$s ⚽</string>
     <string name="winner_emoticon">🏆 %1$s 🏆</string>
+    <string name="action">Akcja!</string>
     <string name="goal">Gol</string>
     <string name="mishit">Obroniony</string>
     <string name="bad_shot">Poza bramke</string>
@@ -79,7 +80,7 @@
     <string name="life">Życia\n</string>
     <string name="order">Kolejność\n</string>
     <string name="player_elimination">%1$s został skończony 🥅⚽</string>
-    <string name="player_win">%1$s wygrał 🏆🏆🏆\nCofnij, aby wyjść z gry ⬅</string>
+    <string name="player_win">%1$s wygrał 🏆🏆🏆</string>
 
     <string name="using_cellular_data_alert">❗ Korzystasz z danych komórkowych ❗\n\nJeśli chcesz sprawdzić najnowsze powiadomienia przeciągnij palcem w dół\n\n⬇⬇⬇</string>
     <string name="internet_disconnect_alert">🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇</string>

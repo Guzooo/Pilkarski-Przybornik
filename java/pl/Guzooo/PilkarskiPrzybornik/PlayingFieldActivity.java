@@ -1,10 +1,15 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class PlayingFieldActivity extends AppCompatActivity {
@@ -88,26 +93,31 @@ public class PlayingFieldActivity extends AppCompatActivity {
     }
 
     public void ClickCrossbar(View v){
+        ShowAction();
         listener.Crossbar(this);
         RefreshInfo();
     }
 
     public void ClickStake(View v){
+        ShowAction();
         listener.Stake(this);
         RefreshInfo();
     }
 
     public void ClickBadShot(View v){
+        ShowAction();
         listener.BadShot(this);
         RefreshInfo();
     }
 
     public void ClickMishit(View v){
+        ShowAction();
         listener.Mishit(this);
         RefreshInfo();
     }
 
     public void ClickGoal(View v){
+        ShowAction();
         win = listener.Gol(this);
         RefreshInfo();
         if(win){
@@ -115,9 +125,13 @@ public class PlayingFieldActivity extends AppCompatActivity {
         }
     }
 
+    public void ClickAction(View v){
+        HideAction();
+    }
+
     private void LayoutForWinner(){
-        findViewById(R.id.buttons_gate).setVisibility(View.GONE);
-        findViewById(R.id.buttons).setVisibility(View.GONE);
+        Button action = findViewById(R.id.action);
+        action.setText(R.string.back_to_menu);
         findViewById(R.id.goalkeeper).setVisibility(View.GONE);
         findViewById(R.id.scroll_view).setVisibility(View.GONE);
     }
@@ -140,5 +154,43 @@ public class PlayingFieldActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
         editor.putBoolean(PREFERENCE_BUTTONS_GATE_VISIBILITY, visible);
         editor.apply();
+    }
+
+    private void ShowAction(){
+        View actionBox = findViewById(R.id.action_box);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            int x = actionBox.getWidth()/2;
+            int y = actionBox.getHeight()/2;
+            float radius = (float) Math.hypot(x, y);
+            ViewAnimationUtils.createCircularReveal(actionBox, x, y, 0, radius).start();
+        }
+        actionBox.setVisibility(View.VISIBLE);
+    }
+
+    private void HideAction(){
+        if(win){
+            finish();
+        } else {
+            final View actionBox = findViewById(R.id.action_box);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                int x = actionBox.getWidth() / 2;
+                int y = actionBox.getHeight() / 2;
+                float radius = (float) Math.hypot(x, y);
+                Animator anim = ViewAnimationUtils.createCircularReveal(actionBox, x, y, radius, 0);
+                anim.addListener(new AnimatorListenerAdapter() {
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        actionBox.setVisibility(View.INVISIBLE);
+                    }
+                });
+                anim.start();
+            } else {
+                actionBox.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }
