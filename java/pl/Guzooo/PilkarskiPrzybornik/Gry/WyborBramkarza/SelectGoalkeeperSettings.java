@@ -28,6 +28,7 @@ public class SelectGoalkeeperSettings extends Settings {
     private TextView probability;
     private EditText probabilityEdit;
     private View buttons;
+    private TextView textProduct;
     private Button minus;
     private Button plus;
 
@@ -40,6 +41,7 @@ public class SelectGoalkeeperSettings extends Settings {
         probability.setText(getProbabilityProduct(context) * PlayersActivity.getNumberActivePlayers(context) + "");
         probabilityEdit.setText(getProbability(context) + "");
         probabilityEdit.setHint(DEFAULT_PROBABILITY + "");
+        textProduct.setText(getProbabilityProduct(context) + "x");
 
         ShowHideButtons();
 
@@ -103,6 +105,7 @@ public class SelectGoalkeeperSettings extends Settings {
             probability = view.findViewById(R.id.probability);
             probabilityEdit = view.findViewById(R.id.probability_edit);
             buttons = view.findViewById(R.id.buttons);
+            textProduct = view.findViewById(R.id.product);
             minus = view.findViewById(R.id.minus);
             plus = view.findViewById(R.id.plus);
         } else {
@@ -110,6 +113,7 @@ public class SelectGoalkeeperSettings extends Settings {
             probability = getAlertDialog().findViewById(R.id.probability);
             probabilityEdit = getAlertDialog().findViewById(R.id.probability_edit);
             buttons = getAlertDialog().findViewById(R.id.buttons);
+            textProduct = getAlertDialog().findViewById(R.id.product);
             minus = getAlertDialog().findViewById(R.id.minus);
             plus = getAlertDialog().findViewById(R.id.plus);
         }
@@ -119,6 +123,7 @@ public class SelectGoalkeeperSettings extends Settings {
     public void ClickPlus(View v){
         product++;
         probability.setText(product * PlayersActivity.getNumberActivePlayers(v.getContext()) + "");
+        textProduct.setText(product + "x");
     }
 
     public void ClickMinus(View v){
@@ -126,6 +131,7 @@ public class SelectGoalkeeperSettings extends Settings {
             product--;
         }
         probability.setText(product * PlayersActivity.getNumberActivePlayers(v.getContext()) + "");
+        textProduct.setText(product + "x");
     }
 
     private boolean getProbabilityFromPlayer(Context context){

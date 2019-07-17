@@ -57,6 +57,12 @@ public class AdapterGames extends Adapter{
             newHolder.button.setText(game.getButtonsName(getContext()).get(game.getButtonsOrder().get(0)));
             newHolder.localInfo.setVisibility(View.GONE);
 
+            if(game.getSettings() == null){
+                newHolder.settings.setVisibility(View.INVISIBLE);
+            } else {
+                newHolder.settings.setVisibility(View.VISIBLE);
+            }
+
             newHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { Games.setCurrentGame(game);
