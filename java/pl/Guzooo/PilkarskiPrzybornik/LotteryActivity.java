@@ -39,6 +39,15 @@ public class LotteryActivity extends AppCompatActivity {
         setTitle();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(UtilsForActivity.DoubleTab()) {
+            super.onBackPressed();
+        } else {
+            UtilsForActivity.ToastDoubleTabExit(this);
+        }
+    }
+
     public void setTitle(){
         TextView textTitle = findViewById(R.id.title);
         textTitle.setText(titles.get(currentPlayer));

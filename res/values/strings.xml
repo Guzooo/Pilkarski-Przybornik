@@ -12,6 +12,8 @@
     <string name="game_select_goalkeeper_description">Każdy z graczy przyciska losuj dopóki któryś z nich nie wylosuje napisu "Bramkarz". Losowanie może służyć nie tylko jako wyłonienie bramkarza, ale też do rozwiązywania niektórych sporów, takich jak: kto idzie po piłkę.\nSzansa na zostanie bramkarzem: 1/%1$d</string>
     <string name="game_select_goalkeeper_short_description">Wybiera jedną osobe</string>
 
+    <string name="double_tab_exit">Dotknij ponownie, aby wyjść</string>
+
     <string name="error_database">Błąd bazy danych</string>
     <string name="error_empty_name">Wpisz imię</string>
 

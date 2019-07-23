@@ -48,9 +48,11 @@ public class PlayingFieldActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(listener.onBackPressed()) {
-            super.onBackPressed();
-        }
+       if(UtilsForActivity.DoubleTab()) {
+           super.onBackPressed();
+       } else {
+            UtilsForActivity.ToastDoubleTabExit(this);
+       }
     }
 
     private void RefreshInfo(){
