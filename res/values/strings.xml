@@ -7,7 +7,7 @@
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
 
-    <string name="game_king_description">Gracze losują numery od 1 do %1$d - kolejność strzelania karnych, każdy ma %2$d żyć, na początku bramkarzem jest gracz z numerem %1$d. Każdy gol to utrata życia bramkarza, nietrafiony lub obroniony strzał powoduje przejście strzelca na pozycje bramkarza, trafienie słupka lub poprzeczki to powtórny strzał, chyba, że strzelec trafił go %3$d raz wtedy zmienia bramkarza. Gdy bramkarz dotknie piłkę, a ona nie wyjdzie poza linie bramki, strzelec może podbiec i przez 3 dotknięcia spróbować strzelić bramke, jeśli bramkarz dotknie znów piłke, strzelec znów ma 3 dotknięcia. Wygrywa ten gracz który zostanie sam na boisku.</string>
+    <string name="game_king_description">Gracze losują numery od 1 do %1$d - kolejność strzelania karnych, każdy ma %2$d żyć, na początku bramkarzem jest gracz z numerem %1$d. Każdy gol to utrata życia bramkarza, nietrafiony lub obroniony strzał powoduje przejście strzelca na pozycje bramkarza, trafienie słupka lub poprzeczki to powtórny strzał, chyba, że strzelec trafił go %3$d raz z rzędu, wtedy zmienia bramkarza. Gdy bramkarz dotknie piłkę, a ona nie wyjdzie poza linie bramki, strzelec może podbiec i przez 3 dotknięcia spróbować strzelić bramke, jeśli bramkarz dotknie znów piłke, strzelec znów ma 3 dotknięcia. Wygrywa ten gracz który zostanie sam na boisku.</string>
     <string name="game_king_short_description">Ustala kolejność graczy oraz kontroluje przebieg rozgrywki</string>
     <string name="game_select_goalkeeper_description">Każdy z graczy przyciska losuj dopóki któryś z nich nie wylosuje napisu "Bramkarz". Losowanie może służyć nie tylko jako wyłonienie bramkarza, ale też do rozwiązywania niektórych sporów, takich jak: kto idzie po piłkę.\nSzansa na zostanie bramkarzem: 1/%1$d</string>
     <string name="game_select_goalkeeper_short_description">Wybiera jedną osobe</string>
@@ -33,6 +33,12 @@
     <string name="player_game_of_king">Gry w Króla: %1$d</string>
     <string name="player_win_game_of_king">Wygrane w Króla: %1$d</string>
     <string name="player_lost_game_of_king">Przegrane w Króla: %1$d</string>
+
+    <string name="player_good_shots_percent">Celność strzałów: %1$.1f%%</string>
+    <string name="player_goal_percent">Skuteczność strzałów: %1$.1f%%</string>
+    <string name="player_defended_goal_percent">Skuteczność obrony: %1$.1f%%</string>
+    <string name="player_win_game_of_king_percent">Wygrane w Króla: %1$.1f%%</string>
+    <string name="player_lost_game_of_king_percent">Przegrane w Króla: %1$.1f%%</string>
 
     <string name="share">Udostępnij do:</string>
     <string name="bad_url">Błędny link</string>

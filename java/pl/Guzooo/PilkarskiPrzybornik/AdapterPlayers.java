@@ -28,12 +28,14 @@ public class AdapterPlayers extends Adapter {
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView name;
         private TextView description;
+        private TextView descriptionPercent;
         private Switch active;
 
         public ViewHolder(View v) {
             super(v);
             name = v.findViewById(R.id.name);
             description = v.findViewById(R.id.description);
+            descriptionPercent = v.findViewById(R.id.description_percent);
             active = v.findViewById(R.id.active);
         }
 
@@ -48,8 +50,10 @@ public class AdapterPlayers extends Adapter {
         public void OpenClose(){
             if(description.getVisibility() == View.VISIBLE){
                 description.setVisibility(View.GONE);
+                descriptionPercent.setVisibility(View.GONE);
             } else {
                 description.setVisibility(View.VISIBLE);
+                descriptionPercent.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -79,6 +83,7 @@ public class AdapterPlayers extends Adapter {
 
             newHolder.name.setText(player.getName());
             newHolder.description.setText(player.getDescription(getContext()));
+            newHolder.descriptionPercent.setText(player.getDescriptionPercent(getContext()));
             newHolder.active.setChecked(player.isActive());
             newHolder.setActive(player.isActive());
 

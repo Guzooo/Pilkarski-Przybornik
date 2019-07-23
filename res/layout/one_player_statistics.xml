@@ -26,14 +26,27 @@
             style="@style/AppTheme.AllClickable" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/description"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:visibility="gone"
-        style="@style/AppTheme.PlayerDescription"/>
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/standard_margin"
+            android:visibility="gone"
+            style="@style/AppTheme.PlayerDescription"/>
+
+        <TextView
+            android:id="@+id/description_percent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/standard_margin"
+            android:visibility="gone"
+            style="@style/AppTheme.PlayerDescription"/>
+    </LinearLayout>
     <ImageView style="@style/AppTheme.Separator.Horizontal"/>
-
 </LinearLayout>

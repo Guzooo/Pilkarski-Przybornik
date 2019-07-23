@@ -105,6 +105,16 @@ public class Player extends Model{
         return string;
     }
 
+    public String getDescriptionPercent(Context context){
+        String string;
+        string = context.getString(R.string.player_good_shots_percent, getGoodShotsPercent()) + "\n";
+        string += context.getString(R.string.player_goal_percent, getGoalPercent()) + "\n";
+        string += context.getString(R.string.player_defended_goal_percent, getDefendedGoalPercent()) + "\n";
+        string += context.getString(R.string.player_win_game_of_king_percent, getWinGameOfKingPercent()) + "\n";
+        string += context.getString(R.string.player_lost_game_of_king_percent, getLostGameOfKingPercent());
+        return string;
+    }
+
     public String getName() {
         return name;
     }
@@ -219,5 +229,31 @@ public class Player extends Model{
 
     public void addLostGameOfKing(){
         lostGameOfKing++;
+    }
+
+    public float getGoodShotsPercent(){
+        return getPercentIntOfInt((getGoodShots() + getGoal()), getShots());
+    }
+
+    public float getGoalPercent(){
+        return getPercentIntOfInt(getGoal(), getGoodShots());
+    }
+
+    public float getDefendedGoalPercent(){
+        return getPercentIntOfInt(getDefendedGoal(), (getDefendedGoal() + getUndefendedGoal()));
+    }
+
+    public float getWinGameOfKingPercent(){
+        return getPercentIntOfInt(getWinGameOfKing(), getGameOfKing());
+    }
+
+    public float getLostGameOfKingPercent(){
+        return getPercentIntOfInt(getLostGameOfKing(), getGameOfKing());
+    }
+
+    private float getPercentIntOfInt(int part, int whole){
+        if(whole == 0)
+            return 0;
+        return (float) part * 100 / (float) whole;
     }
 }
