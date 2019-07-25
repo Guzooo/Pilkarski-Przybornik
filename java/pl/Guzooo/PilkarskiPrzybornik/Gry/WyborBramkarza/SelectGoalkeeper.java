@@ -73,7 +73,7 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     @Override
     public SelectGoalkeeperSettings getSettings() {
-        return new SelectGoalkeeperSettings();
+        return null;
     }
 
     //LOTTERY

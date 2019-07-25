@@ -53,9 +53,9 @@
         <item name="android:padding">@dimen/padding_clickable_image</item>
     </style>
 
-    <style name="AppTheme.Button">
+    <style name="AppTheme.Button" parent="AppTheme.AllClickable">
         <item name="android:textColor">@color/primaryText</item>
-        <item name="backgroundTint">@color/colorSecondary</item>]
+        <item name="backgroundTint">@color/colorSecondary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15dp</item>
     </style>
@@ -72,7 +72,6 @@
 
     <style name="AppTheme.EditTextSettings" parent="AppTheme.EditText">
         <item name="android:maxWidth">@dimen/minimal_length</item>
-
     </style>
 
     <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Dialog.Alert">

@@ -66,7 +66,7 @@ public class SelectGoalkeeperSettings extends Settings {
                 ClickPlus(view);
             }
         });
-       
+
         product = getProbabilityProduct(context);
     }
 
@@ -117,20 +117,21 @@ public class SelectGoalkeeperSettings extends Settings {
             minus = getAlertDialog().findViewById(R.id.minus);
             plus = getAlertDialog().findViewById(R.id.plus);
         }
-
     }
 
     public void ClickPlus(View v){
         product++;
-        probability.setText(product * PlayersActivity.getNumberActivePlayers(v.getContext()) + "");
-        textProduct.setText(product + "x");
+        refreshProbabilityView(v.getContext());
     }
 
     public void ClickMinus(View v){
-        if (product > 1){
+        if (product > 1)
             product--;
-        }
-        probability.setText(product * PlayersActivity.getNumberActivePlayers(v.getContext()) + "");
+        refreshProbabilityView(v.getContext());
+    }
+
+    private void refreshProbabilityView(Context context){
+        probability.setText(product * PlayersActivity.getNumberActivePlayers(context) + "");
         textProduct.setText(product + "x");
     }
 

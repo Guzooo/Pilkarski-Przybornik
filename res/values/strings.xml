@@ -55,26 +55,16 @@
 
     <string name="number_active_players">%1$d aktywnych graczy</string> <!--TODO:liczby zmieniają końcówki-->
 
-    <string name="setting">Ustawienia</string>
-    <string name="save">Zapisz</string>
-    <string name="restore_default">Zresetuj</string>
+    <string name="need_more_players">Potrzebujesz %1$d graczy</string>
 
     <string name="normal_mode">Normalna</string>
     <string name="randomizing_mode">Samorandomizująca</string>
     <string name="random_goalkeeper">Losuj bramkarza</string>
 
-    <string name="need_more_players">Potrzebujesz %1$d graczy</string>
-
-    <string name="probability">Prawdopodobieństwo</string>
-    <string name="probability_from_players">Prawdopodobieństwo wielokrotnością graczy</string>
-
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
     <string name="back_to_menu">Wróć do menu</string>
     <string name="goalkeeper">Bramkarz</string>
-
-    <string name="number_live">Ilość żyć</string>
-    <string name="number_stake">Ilość możliwych powtórzeń strzału po trafieniu w słupek lub poprzeczkę</string>
 
     <string name="goalkeeper_emoticon">🥅 %1$s 🥅</string>
     <string name="shooter_emoticon">⚽ %1$s ⚽</string>
@@ -96,14 +86,24 @@
     <string name="internet_disconnect_alert">🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇</string>
     <string name="download_failed_alert">🔕😥 Nie udało się odczytać powiadomień 😥🔕\n\nSpróbuj ponownie przeciągając palcem w dół\n\n⬇⬇⬇\n\nJeśli problem się powtarza napisz</string>
 
+    <string name="setting">Ustawienia</string>
+    <string name="save">Zapisz</string>
+    <string name="restore_default">Zresetuj</string>
+
+    <string name="number_live">Ilość żyć</string>
+    <string name="number_stake">Ilość możliwych powtórzeń strzału po trafieniu w słupek lub poprzeczkę</string>
+    <string name="random_numbers">Losowanie liczb od 1 do</string>
+    <string name="random_numbers_from_players">Losowe liczby wielokrotnością graczy</string>
+
     <string name="facebook">Sprawdź fanpage - Facebook</string>
     <string name="messenger">Zaproponuj zmiany - Messenger</string>
 
-    <string name="internet">Internet:</string>
+    <string name="internet">Internet</string>
     <string name="check_info_online">Kiedy automatycznie sprawdzać informacje online:</string>
     <string-array name="internet_connect">
         <item>Tylko przez Wi-Fi</item>
         <item>Zawsze</item>
         <item>Nigdy</item>
     </string-array>
+    <string name="games">Gry</string>
 </resources>

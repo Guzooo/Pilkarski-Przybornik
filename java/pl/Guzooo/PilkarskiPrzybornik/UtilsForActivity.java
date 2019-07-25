@@ -1,7 +1,6 @@
 package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class UtilsForActivity {
@@ -15,7 +14,6 @@ public class UtilsForActivity {
             return true;
         } else {
             tabTime = System.currentTimeMillis();
-            Log.d("czas", tabTime + "");
             return false;
         }
     }

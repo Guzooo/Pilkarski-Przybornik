@@ -13,7 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
             <TextView
                 android:layout_width="match_parent"
@@ -89,22 +90,105 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:minHeight="@dimen/minimal_length"
                     android:layout_margin="@dimen/standard_margin"
-                    android:entries="@array/internet_connect"/>
+                    android:layout_gravity="center"
+                    android:entries="@array/internet_connect"
+                    style="@style/AppTheme.AllClickable"/>
             </LinearLayout>
 
-            <!--<TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
-                android:text="Gry:"
+                android:text="@string/games"
                 style="@style/AppTheme.PlayerTitle"/>
 
-            <ImageView  style="@style/AppTheme.Separator.Horizontal" />-->
+            <ImageView  style="@style/AppTheme.Separator.Horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_weight="1"
+                    android:text="@string/random_numbers_from_players"
+                    android:layout_gravity="center_vertical"/>
+
+                <Switch
+                    android:id="@+id/random_numbers_from_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/minimal_length"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_gravity="center_vertical"
+                    style="@style/AppTheme.AllClickable"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/random_numbers"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/random_numbers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:gravity="end"
+                    android:layout_gravity="center_vertical"/>
+
+                <EditText
+                    android:id="@+id/random_numbers_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:inputType="number"
+                    style="@style/AppTheme.EditTextSettings"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/random_numbers_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <TextView
+                    android:id="@+id/random_numbers_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:onClick="ClickRandomNumbersMinus"
+                    android:layout_gravity="center_vertical"
+                    style="@style/AppTheme.Button"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:text="+"
+                    android:onClick="ClickRandomNumbersPlus"
+                    style="@style/AppTheme.Button" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
