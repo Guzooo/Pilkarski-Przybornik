@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza.SelectGoalkeeperSettings;
 import pl.Guzooo.PilkarskiPrzybornik.Powiadomienia.NotificationsActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SelectGoalkeeperSettings.DelPreferences(this);
 
         checkNewNotifications();
         recyclerView = findViewById(R.id.recycler_view);

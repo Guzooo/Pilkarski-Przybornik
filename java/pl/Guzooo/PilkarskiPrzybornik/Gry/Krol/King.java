@@ -17,6 +17,7 @@ import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
+import pl.Guzooo.PilkarskiPrzybornik.SettingsActivity;
 
 public class King extends GameInfo implements LotteryActivity.Listener, PlayingFieldActivity.Listener {
 
@@ -44,7 +45,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_king_description, PlayersActivity.getNumberActivePlayers(context), getSettings().getLive(context), getSettings().getStake(context));
+        return context.getString(R.string.game_king_description, SettingsActivity.getPreferencesFinalRandomNumber(context), getSettings().getLive(context), getSettings().getStake(context));
     }
 
     @Override
@@ -119,11 +120,11 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public String ClickRandom(int allPlayers, Context context) {
-        int result = new Random().nextInt(allPlayers);
+    public String ClickRandom(Context context) {
+        int result = LotteryActivity.getRandomResult(context);
         for(int i = 0; i < order.size(); i++){
             if(result == order.get(i)){
-                return ClickRandom(allPlayers, context);
+                return ClickRandom(context);
             }
         }
         order.add(result);
@@ -147,7 +148,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public void ClickEnd(Context context) {
-        SegregatePlayersByOrder();
+        SegregatePlayersByOrder(context);
         SetPlayersLife(context);
         Games.currentGame.setLastGame();
         Games.currentGame.addNumberGame();
@@ -266,11 +267,11 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         }
     }
 
-    private void SegregatePlayersByOrder(){
+    private void SegregatePlayersByOrder(Context context){
         ArrayList<Player> playersNoOrder = new ArrayList<>();
         playersNoOrder.addAll(players);
         players.removeAll(players);
-        for(int i = 0; i < order.size(); i++){
+        for(int i = 0; i < SettingsActivity.getPreferencesFinalRandomNumber(context); i++){
             for(int j = 0; j < playersNoOrder.size(); j++){
                 if(order.get(j) == i){
                     players.add(playersNoOrder.get(j));

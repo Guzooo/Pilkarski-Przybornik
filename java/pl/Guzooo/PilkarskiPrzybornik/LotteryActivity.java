@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class LotteryActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class LotteryActivity extends AppCompatActivity {
 
     public interface Listener{
         ArrayList<String> getTitles(Context context);
-        String ClickRandom(int allPlayers, Context context);
+        String ClickRandom(Context context);
         boolean ClickNextPlayer(int currentPlayer, int allPlayers);
         int setButtonText(int allPlayer);
         void ClickEnd(Context context);
@@ -60,7 +61,7 @@ public class LotteryActivity extends AppCompatActivity {
 
     public void ClickButton(View v){
         if(buttonLotteryText) {
-            setResultOfLottery(listener.ClickRandom(titles.size(), this));
+            setResultOfLottery(listener.ClickRandom(this));
             ShowLottery();
             setButtonText(listener.setButtonText(titles.size()));
         } else {
@@ -76,6 +77,10 @@ public class LotteryActivity extends AppCompatActivity {
             }
         }
         buttonLotteryText = !buttonLotteryText;
+    }
+
+    public static int getRandomResult(Context context){
+        return new Random().nextInt(SettingsActivity.getPreferencesFinalRandomNumber(context));
     }
 
     private void setButtonText(int resource){
