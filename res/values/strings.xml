@@ -61,6 +61,8 @@
     <string name="randomizing_mode">Samorandomizująca</string>
     <string name="random_goalkeeper">Losuj bramkarza</string>
 
+    <string name="continue_game">Kontynuuj</string>
+
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
     <string name="back_to_menu">Wróć do menu</string>
@@ -78,7 +80,6 @@
     <string name="life">Życia\n</string>
     <string name="order">Kolejność\n</string>
     <string name="player_elimination">%1$s został skończony 🥅⚽</string>
-    <string name="player_win">%1$s wygrał 🏆🏆🏆</string>
 
     <string name="notification_language">pl</string>
 

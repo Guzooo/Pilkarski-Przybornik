@@ -175,7 +175,7 @@ public class Game extends Model{
         return gameInfo.getSettings();
     }
 
-    public View getSpecialView(Context context){
-        return gameInfo.getSpecialView(context);
+    public boolean getSpecialView(){
+        return gameInfo.getSpecialView();
     }
 }

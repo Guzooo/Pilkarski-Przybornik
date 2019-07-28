@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
+import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
@@ -97,10 +99,10 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     }
 
     @Override
-    public View getSpecialView(Context context) {
-        TextView te = new TextView(context);
-        te.setText(context.getString(R.string.winner_emoticon, "Adam"));
-        return te;
+    public boolean getSpecialView() {
+        if (numberAlivePlayers() > 1)
+            return true;
+       return false;
     }
 
     //LOTTERY
@@ -225,25 +227,22 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         players.get(shooter).addGoal();
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
-        if(lives.get(goalkeeper) == 0){
-            boolean onePlayer = GoalkeeperLiquidated(context);
-            if (onePlayer)
-                return true;
-        }
+        if(lives.get(goalkeeper) == 0 && GoalkeeperLiquidated(context))
+            return true;
         setShooter(context);
         return false;
     }
 
     private boolean GoalkeeperLiquidated(Context context){
-        Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
         if(!firstDeath){
             FirstDeath();
         }
         if(numberAlivePlayers() == 1){
-            Win(context);
+            players.get(shooter).addWinGameOfKing();
             SavePlayers(context);
             return true;
         }
+        Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
         goalkeeper = shooter;
         return false;
     }
@@ -251,11 +250,6 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     private void FirstDeath(){
         players.get(goalkeeper).addLostGameOfKing();
         firstDeath = true;
-    }
-
-    private void Win(Context context){
-        players.get(shooter).addWinGameOfKing();
-        Toast.makeText(context, context.getString(R.string.player_win, players.get(shooter).getName()), Toast.LENGTH_LONG).show();
     }
 
     private void SavePlayers(Context context){

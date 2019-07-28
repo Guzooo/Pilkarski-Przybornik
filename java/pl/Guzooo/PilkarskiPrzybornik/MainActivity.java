@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setNumberActivePlayers();
         setActivePlayerText();
         setNotificationColor();
+        SetLastGame();
     }
 
     @Override
@@ -62,19 +64,19 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
-    private void setCursor(){
+    private void setCursor() {
         db = Database.getRead(this);
         cursor = db.query(Game.databaseName,
                 Game.onCursor,
                 null, null, null, null, null);
     }
 
-    private void setRecyclerViewLayout(){
+    private void setRecyclerViewLayout() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setAdapter(){
+    private void setAdapter() {
         adapter = new AdapterGames(cursor, this);
         recyclerView.setAdapter(adapter);
     }
@@ -84,24 +86,24 @@ public class MainActivity extends AppCompatActivity {
             readJSONNumberNotification = NotificationsActivity.getOnlineNotificationNumber((ImageView) findViewById(R.id.notifications), false, this);
     }
 
-    private boolean canDownload(){
+    private boolean canDownload() {
         int preferenceInternetDownload = SettingsActivity.getPreferencesInternetDownload(this);
         int internetConnect = NotificationsActivity.InternetConnection(this);
 
-        if(internetConnect == NotificationsActivity.INTERNET_DISCONNECT)
+        if (internetConnect == NotificationsActivity.INTERNET_DISCONNECT)
             return false;
-        if(preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_NEVER)
+        if (preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_NEVER)
             return false;
-        if(preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_ONLY_WIFI && internetConnect == NotificationsActivity.INTERNET_CELLULAR)
+        if (preferenceInternetDownload == SettingsActivity.INTERNET_DOWNLOAD_ONLY_WIFI && internetConnect == NotificationsActivity.INTERNET_CELLULAR)
             return false;
-        if(NotificationsActivity.getPreferencesNewNotification(this))
+        if (NotificationsActivity.getPreferencesNewNotification(this))
             return false;
         return true;
     }
 
-    private void setNotificationColor(){
+    private void setNotificationColor() {
         ImageView notificationIcon = findViewById(R.id.notifications);
-        if(NotificationsActivity.getPreferencesNewNotification(this)){
+        if (NotificationsActivity.getPreferencesNewNotification(this)) {
             DrawableCompat.setTint(notificationIcon.getDrawable(), ContextCompat.getColor(this, R.color.colorAlert));
             AnimLookMe(notificationIcon);
         } else {
@@ -109,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setActivePlayerText(){
+    private void setActivePlayerText() {
         TextView descriptionManagePlayers = findViewById(R.id.description_active_players);
-        if (activePlayers == 0){
+        if (activePlayers == 0) {
             descriptionManagePlayers.setVisibility(View.GONE);
         } else {
             descriptionManagePlayers.setVisibility(View.VISIBLE);
@@ -119,24 +121,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ClickNotifications(View v){
+    public void ClickNotifications(View v) {
         Intent intent = new Intent(this, NotificationsActivity.class);
-        if(readJSONNumberNotification != null)
+        if (readJSONNumberNotification != null)
             intent.getIntExtra(NotificationsActivity.EXTRA_NUMBER_NOTIFICATIONS, readJSONNumberNotification.getFirstSaveInt());
         startActivity(intent);
     }
 
-    public void ClickSetting(View v){
+    public void ClickSetting(View v) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
-    public void ClickPlayersControl(View v){
+    public void ClickPlayersControl(View v) {
         Intent intent = new Intent(this, PlayersActivity.class);
         startActivity(intent);
     }
 
-    private void setNumberActivePlayers(){
+    private void setNumberActivePlayers() {
         SQLiteDatabase db = Database.getRead(this);
         Cursor cursor = db.query(Player.databaseName,
                 null,
@@ -148,15 +150,34 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
-    public static void AnimLookMe(View animView){
+    public static void AnimLookMe(View animView) {
         ObjectAnimator animRotation = ObjectAnimator.ofFloat(animView, "rotation", 0, 0, 25, 0, -25, 25, 0, -25, 0, 0);
         ObjectAnimator animTransform = ObjectAnimator.ofFloat(animView, "translationY", 0, -75, -75, -75, 0);
         ObjectAnimator animScaleX = ObjectAnimator.ofFloat(animView, "scaleX", 1, 2, 2, 2, 1);
         ObjectAnimator animScaleY = ObjectAnimator.ofFloat(animView, "scaleY", 1, 2, 2, 2, 1);
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animRotation, animTransform, animScaleX,  animScaleY);
+        animatorSet.playTogether(animRotation, animTransform, animScaleX, animScaleY);
         animatorSet.setDuration(1000);
         animatorSet.setStartDelay(2000);
         animatorSet.start();
+    }
+
+    private void SetLastGame() {
+        if (Games.currentGame == null || !Games.currentGame.getSpecialView()) {
+            findViewById(R.id.last_game).setVisibility(View.GONE);
+            findViewById(R.id.last_game_separator).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.last_game).setVisibility(View.VISIBLE);
+            findViewById(R.id.last_game_separator).setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.last_game_icon)).setImageResource(Games.currentGame.getImage(this));
+            Button button = findViewById(R.id.last_game_button);
+            final Intent intent = new Intent(getApplicationContext(), PlayingFieldActivity.class);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

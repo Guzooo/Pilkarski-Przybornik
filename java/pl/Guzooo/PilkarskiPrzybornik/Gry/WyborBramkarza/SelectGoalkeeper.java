@@ -15,6 +15,7 @@ import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
+import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
@@ -80,8 +81,8 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     }
 
     @Override
-    public View getSpecialView(Context context) {
-        return null;
+    public boolean getSpecialView() {
+        return false;
     }
 
     //LOTTERY

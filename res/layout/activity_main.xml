@@ -7,15 +7,51 @@
     tools:context=".MainActivity"
     android:clipChildren="false">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/action_bar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:id="@+id/last_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <ImageView
+                    android:id="@+id/last_game_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_gravity="center"
+                    style="@style/AppTheme.Icon"/>
+
+                <Button
+                    android:id="@+id/last_game_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continue_game"
+                    android:layout_margin="@dimen/standard_margin"
+                    android:layout_gravity="center"
+                    style="@style/AppTheme.Button" />
+            </LinearLayout>
+
+            <ImageView android:id="@+id/last_game_separator"
+                style="@style/AppTheme.Separator.Horizontal"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/action_bar"

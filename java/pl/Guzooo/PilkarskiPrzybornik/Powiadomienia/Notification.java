@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import pl.Guzooo.PilkarskiPrzybornik.R;
+import pl.Guzooo.PilkarskiPrzybornik.UtilsForUI;
 
 public class Notification {
 
@@ -83,10 +84,9 @@ public class Notification {
     private void setButtons(final JSONArray array, final Context context) {
         for(int i = 0; i < array.length(); i++){
             try {
-                Button button = new Button(context);
+                Button button = UtilsForUI.getButton(context);
                 final JSONObject object = array.getJSONObject(i);
                 button.setText(object.getString(CODE_BUTTON_TITLE));
-                button.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

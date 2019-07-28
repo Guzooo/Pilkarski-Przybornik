@@ -35,9 +35,8 @@ public class GameInfoActivity extends AppCompatActivity implements View.OnClickL
     private void CreateButtons() {
         LinearLayout linearLayout = findViewById(R.id.buttons_box);
         for (int i = 0; i < game.getButtonsName(this).size(); i++) {
-            Button button = new Button(this);
+            Button button = UtilsForUI.getButton(this);
             button.setText(game.getButtonsName(this).get(game.getButtonsOrder().get(i)));
-            button.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), PorterDuff.Mode.MULTIPLY);
             button.setId(i);
             button.setOnClickListener(this);
             linearLayout.addView(button);
