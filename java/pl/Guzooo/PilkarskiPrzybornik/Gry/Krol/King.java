@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
@@ -107,24 +106,30 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     //LOTTERY
     @Override
     public ArrayList<String> getTitles(Context context) {
-        SQLiteDatabase db = Database.getWrite(context);
-        Cursor cursor = db.query(Player.databaseName,
-                Player.onCursor,
-                "ACTIVE = ?",
-                new String[]{Integer.toString(1)},
-                null, null,
-                "NAME");
         ArrayList<String> titles = new ArrayList<>();
-        if(cursor.moveToFirst()){
-            do {
-                Player player = new Player();
-                player.getOfCursor(cursor, context);
+        if(players.size() == 0) {
+            SQLiteDatabase db = Database.getWrite(context);
+            Cursor cursor = db.query(Player.databaseName,
+                    Player.onCursor,
+                    "ACTIVE = ?",
+                    new String[]{Integer.toString(1)},
+                    null, null,
+                    "NAME");
+            if (cursor.moveToFirst()) {
+                do {
+                    Player player = new Player();
+                    player.getOfCursor(cursor, context);
+                    titles.add(player.getName());
+                    players.add(player);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } else {
+            for(Player player : players){
                 titles.add(player.getName());
-                players.add(player);
-            } while (cursor.moveToNext());
+            }
         }
-        cursor.close();
-        db.close();
         return titles;
     }
 

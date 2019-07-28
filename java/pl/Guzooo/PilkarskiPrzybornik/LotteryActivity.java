@@ -14,6 +14,10 @@ import java.util.Random;
 
 public class LotteryActivity extends AppCompatActivity {
 
+    private final String BUNDLE_CURRENT_PLAYER = "currentplayer";
+    private final String BUNDLE_BUTTON_LOTTERY_TEXT = "buttonlotterytext";
+    private final String BUNDLE_RESULT = "result";
+
     private int currentPlayer;
     private boolean buttonLotteryText = true;
     private ArrayList<String> titles;
@@ -34,19 +38,40 @@ public class LotteryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lottery);
 
         setListener((Listener) Games.currentGame.getGameInfo());
-        HideLottery();
+        onLoadInstanceState(savedInstanceState);
 
         titles = listener.getTitles(this);
         setTitle();
+
+        if(buttonLotteryText) {
+            HideLottery();
+        } else {
+            setResultOfLottery(savedInstanceState.getString(BUNDLE_RESULT));
+            setButtonText(listener.setButtonText(titles.size()));
+        }
+    }
+
+    private void onLoadInstanceState(Bundle save){
+        if(save != null){
+            currentPlayer = save.getInt(BUNDLE_CURRENT_PLAYER);
+            buttonLotteryText = save.getBoolean(BUNDLE_BUTTON_LOTTERY_TEXT);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(BUNDLE_CURRENT_PLAYER, currentPlayer);
+        outState.putBoolean(BUNDLE_BUTTON_LOTTERY_TEXT, buttonLotteryText);
+        outState.putString(BUNDLE_RESULT, ((TextView) findViewById(R.id.result_of_lottery)).getText().toString());
     }
 
     @Override
     public void onBackPressed() {
-        if(UtilsForActivity.DoubleTab()) {
+        if(UtilsForActivity.DoubleTab())
             super.onBackPressed();
-        } else {
+        else
             UtilsForActivity.ToastDoubleTabExit(this);
-        }
     }
 
     public void setTitle(){
