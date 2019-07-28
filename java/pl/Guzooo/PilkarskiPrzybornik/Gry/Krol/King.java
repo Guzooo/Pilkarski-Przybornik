@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -93,6 +95,13 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     @Override
     public KingSettings getSettings() {
         return new KingSettings();
+    }
+
+    @Override
+    public View getSpecialView(Context context) {
+        TextView te = new TextView(context);
+        te.setText(context.getString(R.string.winner_emoticon, "Adam"));
+        return te;
     }
 
     //LOTTERY

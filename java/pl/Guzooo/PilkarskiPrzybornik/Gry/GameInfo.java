@@ -1,6 +1,7 @@
 package pl.Guzooo.PilkarskiPrzybornik.Gry;
 
 import android.content.Context;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -13,4 +14,5 @@ public abstract class GameInfo {
     public abstract void Play(int buttonId, Context context);
     public abstract void Reset(Context context);
     public abstract Settings getSettings();
+    public abstract View getSpecialView(Context context);
 }

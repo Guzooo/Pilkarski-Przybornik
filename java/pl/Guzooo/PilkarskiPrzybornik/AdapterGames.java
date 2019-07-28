@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class AdapterGames extends Adapter{
         private TextView title;
         private ImageView icon;
         private TextView description;
+        private FrameLayout specialViewContainer;
         private ImageView settings;
         private Button button;
         private TextView localInfo;
@@ -37,6 +39,7 @@ public class AdapterGames extends Adapter{
             title = v.findViewById(R.id.title);
             icon = v.findViewById(R.id.icon);
             description = v.findViewById(R.id.description);
+            specialViewContainer = v.findViewById(R.id.special_view);
             settings = v.findViewById(R.id.setting);
             button = v.findViewById(R.id.button);
             localInfo = v.findViewById(R.id.local_info);
@@ -56,6 +59,10 @@ public class AdapterGames extends Adapter{
             newHolder.description.setText(game.getShortDescription(getContext()));
             newHolder.button.setText(game.getButtonsName(getContext()).get(game.getButtonsOrder().get(0)));
             newHolder.localInfo.setVisibility(View.GONE);
+
+            if(game.getSpecialView(getContext()) != null) {
+                newHolder.specialViewContainer.addView(game.getSpecialView(getContext()));
+            }
 
             if(game.getSettings() == null){
                 newHolder.settings.setVisibility(View.INVISIBLE);
@@ -89,7 +96,6 @@ public class AdapterGames extends Adapter{
                 }
             });
         }
-
     }
 
     @Override

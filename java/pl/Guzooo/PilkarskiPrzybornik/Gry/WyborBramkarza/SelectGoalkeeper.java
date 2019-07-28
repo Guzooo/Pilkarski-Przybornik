@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -75,6 +76,11 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     @Override
     public Settings getSettings() {
+        return null;
+    }
+
+    @Override
+    public View getSpecialView(Context context) {
         return null;
     }
 
