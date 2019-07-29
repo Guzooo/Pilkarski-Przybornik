@@ -22,7 +22,7 @@ public class AdapterPlayers extends Adapter {
     }
 
     public interface Listener{
-        public void onClickActive(int id, boolean active, ViewHolder holder);
+        void onClickActive(int id, boolean active, ViewHolder holder);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

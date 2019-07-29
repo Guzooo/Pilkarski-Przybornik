@@ -58,13 +58,8 @@ public class AdapterAddSharePlayers extends RecyclerView.Adapter<AdapterAddShare
         viewHolder.name.setText(players.get(position).getName());
         viewHolder.position = viewHolder.getAdapterPosition();
 
-        int i = adapterSpinner.getPosition(players.get(position).getName());
         int j = positions.get(position);
-        if(j == -3 && i >= 0){
-            viewHolder.spinner.setSelection(i);
-        } else if (j > -3){
-            viewHolder.spinner.setSelection(j + 2);
-        }
+        viewHolder.spinner.setSelection(j + 2);
     }
 
     @Override
@@ -90,8 +85,12 @@ public class AdapterAddSharePlayers extends RecyclerView.Adapter<AdapterAddShare
         }
 
         positions.clear();
-        for (Player player : players){
-            positions.add(-3);
+        for (int i = 0; i < players.size(); i++){
+            int j = adapterSpinner.getPosition(players.get(i).getName());
+            if(j >= 0)
+                positions.add(j-2);
+            else
+                positions.add(-2);
         }
     }
 
