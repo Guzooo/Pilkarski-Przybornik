@@ -18,9 +18,10 @@ import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
+import pl.Guzooo.PilkarskiPrzybornik.ResultActivity;
 import pl.Guzooo.PilkarskiPrzybornik.SettingsActivity;
 
-public class Red extends GameInfo implements LotteryActivity.Listener{
+public class Red extends GameInfo implements LotteryActivity.Listener, ResultActivity.Listener {
 
     private ArrayList<String> players = new ArrayList<>();
     private ArrayList<Integer> order = new ArrayList<>();
@@ -165,7 +166,8 @@ public class Red extends GameInfo implements LotteryActivity.Listener{
     public void ClickEnd(Context context) {
         SegregatePlayersByOrder(context);
         AddPlayersToTeams();
-        DisplayTeams(context);
+        Intent intent = new Intent(context, ResultActivity.class);
+        context.startActivity(intent);
     }
 
     private void SegregatePlayersByOrder(Context context){
@@ -195,7 +197,9 @@ public class Red extends GameInfo implements LotteryActivity.Listener{
         }
     }
 
-    private void DisplayTeams(Context context){
+    //RESULT
+    @Override
+    public String getResult(Context context) {
         String message = goalkeeper + " \uD83E\uDDE4\uD83E\uDD45\n";
         for(int i = 0; i < teams.size(); i++){
             message += "\n" + context.getString(R.string.team, i) + "\n";
@@ -203,10 +207,6 @@ public class Red extends GameInfo implements LotteryActivity.Listener{
                 message += teams.get(i).get(j) + "\n";
             }
         }
-
-        new AlertDialog.Builder(context, R.style.AppTheme_AlertDialog)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+        return message;
     }
 }
