@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
-            android:visibility="invisible"
+            android:src="@drawable/info"
             style="@style/AppTheme.Icon"/>
 
         <TextView
@@ -32,8 +32,6 @@
             android:layout_margin="@dimen/standard_margin"
             android:src="@drawable/settings"
             style="@style/AppTheme.Icon"/>
-
-        <!--TODO:Ustawienia i info-->
     </LinearLayout>
 
     <LinearLayout
@@ -74,7 +72,8 @@
         android:id="@+id/local_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"/>
+        android:layout_margin="@dimen/standard_margin"
+        style="@style/AppTheme.PlayerDescription"/>
 
     <ImageView style="@style/AppTheme.Separator.Horizontal" />
 </LinearLayout>

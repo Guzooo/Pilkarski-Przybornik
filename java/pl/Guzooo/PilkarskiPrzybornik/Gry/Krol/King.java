@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
@@ -17,6 +16,7 @@ import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
+import pl.Guzooo.PilkarskiPrzybornik.SettingsActivity;
 
 public class King extends GameInfo implements LotteryActivity.Listener, PlayingFieldActivity.Listener {
 
@@ -44,7 +44,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_king_description, PlayersActivity.getNumberActivePlayers(context), getSettings().getLive(context), getSettings().getStake(context));
+        return context.getString(R.string.game_king_description, SettingsActivity.getPreferencesFinalRandomNumber(context), getSettings().getLive(context), getSettings().getStake(context));
     }
 
     @Override
@@ -94,36 +94,49 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         return new KingSettings();
     }
 
+    @Override
+    public boolean getSpecialView() {
+        if (numberAlivePlayers() > 1)
+            return true;
+       return false;
+    }
+
     //LOTTERY
     @Override
     public ArrayList<String> getTitles(Context context) {
-        SQLiteDatabase db = Database.getWrite(context);
-        Cursor cursor = db.query(Player.databaseName,
-                Player.onCursor,
-                "ACTIVE = ?",
-                new String[]{Integer.toString(1)},
-                null, null,
-                "NAME");
         ArrayList<String> titles = new ArrayList<>();
-        if(cursor.moveToFirst()){
-            do {
-                Player player = new Player();
-                player.getOfCursor(cursor, context);
+        if(players.size() == 0) {
+            SQLiteDatabase db = Database.getWrite(context);
+            Cursor cursor = db.query(Player.databaseName,
+                    Player.onCursor,
+                    "ACTIVE = ?",
+                    new String[]{Integer.toString(1)},
+                    null, null,
+                    "NAME");
+            if (cursor.moveToFirst()) {
+                do {
+                    Player player = new Player();
+                    player.getOfCursor(cursor, context);
+                    titles.add(player.getName());
+                    players.add(player);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } else {
+            for(Player player : players){
                 titles.add(player.getName());
-                players.add(player);
-            } while (cursor.moveToNext());
+            }
         }
-        cursor.close();
-        db.close();
         return titles;
     }
 
     @Override
-    public String ClickRandom(int allPlayers, Context context) {
-        int result = new Random().nextInt(allPlayers);
+    public String ClickRandom(Context context) {
+        int result = LotteryActivity.getRandomResult(context);
         for(int i = 0; i < order.size(); i++){
             if(result == order.get(i)){
-                return ClickRandom(allPlayers, context);
+                return ClickRandom(context);
             }
         }
         order.add(result);
@@ -134,8 +147,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     public boolean ClickNextPlayer(int currentPlayer, int allPlayers) {
         if(currentPlayer+1 < allPlayers)
             return true;
-        else
-            return false;
+        return false;
     }
 
     @Override
@@ -147,7 +159,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
 
     @Override
     public void ClickEnd(Context context) {
-        SegregatePlayersByOrder();
+        SegregatePlayersByOrder(context);
         SetPlayersLife(context);
         Games.currentGame.setLastGame();
         Games.currentGame.addNumberGame();
@@ -210,25 +222,22 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         players.get(shooter).addGoal();
         players.get(goalkeeper).addUndefendedGoal();
         lives.set(goalkeeper, lives.get(goalkeeper) -1);
-        if(lives.get(goalkeeper) == 0){
-            boolean onePlayer = GoalkeeperLiquidated(context);
-            if (onePlayer)
-                return true;
-        }
+        if(lives.get(goalkeeper) == 0 && GoalkeeperLiquidated(context))
+            return true;
         setShooter(context);
         return false;
     }
 
     private boolean GoalkeeperLiquidated(Context context){
-        Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
         if(!firstDeath){
             FirstDeath();
         }
         if(numberAlivePlayers() == 1){
-            Win(context);
+            players.get(shooter).addWinGameOfKing();
             SavePlayers(context);
             return true;
         }
+        Toast.makeText(context, context.getString(R.string.player_elimination, players.get(goalkeeper).getName()), Toast.LENGTH_SHORT).show();
         goalkeeper = shooter;
         return false;
     }
@@ -236,11 +245,6 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     private void FirstDeath(){
         players.get(goalkeeper).addLostGameOfKing();
         firstDeath = true;
-    }
-
-    private void Win(Context context){
-        players.get(shooter).addWinGameOfKing();
-        Toast.makeText(context, context.getString(R.string.player_win, players.get(shooter).getName()), Toast.LENGTH_LONG).show();
     }
 
     private void SavePlayers(Context context){
@@ -266,11 +270,11 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
         }
     }
 
-    private void SegregatePlayersByOrder(){
+    private void SegregatePlayersByOrder(Context context){
         ArrayList<Player> playersNoOrder = new ArrayList<>();
         playersNoOrder.addAll(players);
         players.removeAll(players);
-        for(int i = 0; i < order.size(); i++){
+        for(int i = 0; i < SettingsActivity.getPreferencesFinalRandomNumber(context); i++){
             for(int j = 0; j < playersNoOrder.size(); j++){
                 if(order.get(j) == i){
                     players.add(playersNoOrder.get(j));

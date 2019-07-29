@@ -71,8 +71,8 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         return 0;
     }
 
-    private static String getAppLanguage(){
-        return Locale.getDefault().getLanguage();
+    private static String getAppLanguage(Context context){
+        return context.getString(R.string.notification_language);
     }
 
     private static boolean checkVersion(int appVersion, String version){
@@ -149,7 +149,7 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
         adapter.delAllNotifications();
         ReadJSON readJSON = new ReadJSON();
         readJSON.setReadJSONListener(this);
-        readJSON.execute(NOTIFICATIONS_PAGE + getAppLanguage() + NOTIFICATION_PAGE_END);
+        readJSON.execute(NOTIFICATIONS_PAGE + getAppLanguage(this) + NOTIFICATION_PAGE_END);
     }
 
     @Override
@@ -205,7 +205,7 @@ public class NotificationsActivity extends AppCompatActivity implements ReadJSON
             @Override
             public void onPreRead() {
                 appVersion = getAppVersion(context);
-                appLanguage = getAppLanguage();
+                appLanguage = getAppLanguage(context);
             }
 
             @Override

@@ -73,7 +73,7 @@ public class KingSettings extends Settings {
     private void Save(SharedPreferences.Editor editor, EditText editText, String PREFERENCE, int DEFAULT){
         String string = editText.getText().toString().trim();
         int save = DEFAULT;
-        if(!string.equals(""))
+        if(!string.equals("") && Integer.valueOf(string) != 0)
             save = Integer.valueOf(string);
         editor.putInt(PREFERENCE, save);
     }

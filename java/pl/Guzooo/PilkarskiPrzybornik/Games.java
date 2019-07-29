@@ -2,6 +2,7 @@ package pl.Guzooo.PilkarskiPrzybornik;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Czerwone.Red;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.Krol.King;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.WyborBramkarza.SelectGoalkeeper;
@@ -10,7 +11,7 @@ public class Games {
 
     public static Game currentGame;
 //TODO: pierszy king to ma być maszyna losująca
-    public static final GameInfo[] gamesInfo = new GameInfo[] {new King(), new King(), new SelectGoalkeeper()};
+    public static final GameInfo[] gamesInfo = new GameInfo[] {new King(), new King(), new SelectGoalkeeper(), new Red()};
 
     public static void setCurrentGame(Game game){
         currentGame = game;

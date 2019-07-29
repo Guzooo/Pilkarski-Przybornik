@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -172,5 +173,9 @@ public class Game extends Model{
 
     public Settings getSettings(){
         return gameInfo.getSettings();
+    }
+
+    public boolean getSpecialView(){
+        return gameInfo.getSpecialView();
     }
 }

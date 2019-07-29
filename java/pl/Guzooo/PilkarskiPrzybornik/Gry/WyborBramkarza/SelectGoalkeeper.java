@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -12,10 +13,13 @@ import java.util.Random;
 import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
+import pl.Guzooo.PilkarskiPrzybornik.Gry.Settings;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
+import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.R;
+import pl.Guzooo.PilkarskiPrzybornik.SettingsActivity;
 
 public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listener {
 
@@ -33,7 +37,7 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
 
     @Override
     public String getDescription(Context context) {
-        return context.getString(R.string.game_select_goalkeeper_description, getSettings().getSavedProbability(context));
+        return context.getString(R.string.game_select_goalkeeper_description, SettingsActivity.getPreferencesFinalRandomNumber(context));
     }
 
     @Override
@@ -72,8 +76,13 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     }
 
     @Override
-    public SelectGoalkeeperSettings getSettings() {
-        return new SelectGoalkeeperSettings();
+    public Settings getSettings() {
+        return null;
+    }
+
+    @Override
+    public boolean getSpecialView() {
+        return false;
     }
 
     //LOTTERY
@@ -100,8 +109,8 @@ public class SelectGoalkeeper extends GameInfo implements LotteryActivity.Listen
     }
 
     @Override
-    public String ClickRandom(int allPlayers, Context context) {
-        int result = new Random().nextInt(getSettings().getSavedProbability(context));
+    public String ClickRandom(Context context) {
+        int result = LotteryActivity.getRandomResult(context);
         if(result > 0){
             return getEmoticon();
         }

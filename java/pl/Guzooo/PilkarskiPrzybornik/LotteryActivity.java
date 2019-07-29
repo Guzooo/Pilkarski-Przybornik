@@ -10,8 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class LotteryActivity extends AppCompatActivity {
+
+    private final String BUNDLE_CURRENT_PLAYER = "currentplayer";
+    private final String BUNDLE_BUTTON_LOTTERY_TEXT = "buttonlotterytext";
+    private final String BUNDLE_RESULT = "result";
 
     private int currentPlayer;
     private boolean buttonLotteryText = true;
@@ -21,7 +26,7 @@ public class LotteryActivity extends AppCompatActivity {
 
     public interface Listener{
         ArrayList<String> getTitles(Context context);
-        String ClickRandom(int allPlayers, Context context);
+        String ClickRandom(Context context);
         boolean ClickNextPlayer(int currentPlayer, int allPlayers);
         int setButtonText(int allPlayer);
         void ClickEnd(Context context);
@@ -33,10 +38,40 @@ public class LotteryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lottery);
 
         setListener((Listener) Games.currentGame.getGameInfo());
-        HideLottery();
+        onLoadInstanceState(savedInstanceState);
 
         titles = listener.getTitles(this);
         setTitle();
+
+        if(buttonLotteryText) {
+            HideLottery();
+        } else {
+            setResultOfLottery(savedInstanceState.getString(BUNDLE_RESULT));
+            setButtonText(listener.setButtonText(titles.size()));
+        }
+    }
+
+    private void onLoadInstanceState(Bundle save){
+        if(save != null){
+            currentPlayer = save.getInt(BUNDLE_CURRENT_PLAYER);
+            buttonLotteryText = save.getBoolean(BUNDLE_BUTTON_LOTTERY_TEXT);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(BUNDLE_CURRENT_PLAYER, currentPlayer);
+        outState.putBoolean(BUNDLE_BUTTON_LOTTERY_TEXT, buttonLotteryText);
+        outState.putString(BUNDLE_RESULT, ((TextView) findViewById(R.id.result_of_lottery)).getText().toString());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(UtilsForActivity.DoubleTab())
+            super.onBackPressed();
+        else
+            UtilsForActivity.ToastDoubleTabExit(this);
     }
 
     public void setTitle(){
@@ -51,7 +86,7 @@ public class LotteryActivity extends AppCompatActivity {
 
     public void ClickButton(View v){
         if(buttonLotteryText) {
-            setResultOfLottery(listener.ClickRandom(titles.size(), this));
+            setResultOfLottery(listener.ClickRandom(this));
             ShowLottery();
             setButtonText(listener.setButtonText(titles.size()));
         } else {
@@ -67,6 +102,10 @@ public class LotteryActivity extends AppCompatActivity {
             }
         }
         buttonLotteryText = !buttonLotteryText;
+    }
+
+    public static int getRandomResult(Context context){
+        return new Random().nextInt(SettingsActivity.getPreferencesFinalRandomNumber(context));
     }
 
     private void setButtonText(int resource){

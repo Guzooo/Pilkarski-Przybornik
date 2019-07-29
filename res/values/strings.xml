@@ -7,10 +7,14 @@
     <string name="game_red">Czerwone</string>
     <string name="game_select_players">Wybierz Graczy</string>
 
-    <string name="game_king_description">Gracze losują numery od 1 do %1$d - kolejność strzelania karnych, każdy ma %2$d żyć, na początku bramkarzem jest gracz z numerem %1$d. Każdy gol to utrata życia bramkarza, nietrafiony lub obroniony strzał powoduje przejście strzelca na pozycje bramkarza, trafienie słupka lub poprzeczki to powtórny strzał, chyba, że strzelec trafił go %3$d raz wtedy zmienia bramkarza. Gdy bramkarz dotknie piłkę, a ona nie wyjdzie poza linie bramki, strzelec może podbiec i przez 3 dotknięcia spróbować strzelić bramke, jeśli bramkarz dotknie znów piłke, strzelec znów ma 3 dotknięcia. Wygrywa ten gracz który zostanie sam na boisku.</string>
+    <string name="game_king_description">Gracze losują numery od 1 do %1$d - kolejność strzelania karnych, każdy ma %2$d żyć, na początku bramkarzem zostaje gracz z największym numerem. Każdy gol to utrata życia bramkarza, nietrafiony lub obroniony strzał powoduje przejście strzelca na pozycje bramkarza, trafienie słupka lub poprzeczki to powtórny strzał, chyba, że strzelec trafił go %3$d raz z rzędu, wtedy zmienia bramkarza. Gdy bramkarz dotknie piłkę, a ona nie wyjdzie poza linie bramki, strzelec może podbiec i przez 3 dotknięcia spróbować strzelić bramke, jeśli bramkarz dotknie znów piłke, strzelec znów ma 3 dotknięcia. Wygrywa ten gracz który zostanie sam na boisku.</string>
     <string name="game_king_short_description">Ustala kolejność graczy oraz kontroluje przebieg rozgrywki</string>
-    <string name="game_select_goalkeeper_description">Każdy z graczy przyciska losuj dopóki któryś z nich nie wylosuje napisu "Bramkarz". Losowanie może służyć nie tylko jako wyłonienie bramkarza, ale też do rozwiązywania niektórych sporów, takich jak: kto idzie po piłkę.\nSzansa na zostanie bramkarzem: 1/%1$d</string>
+    <string name="game_select_goalkeeper_description">Każdy z graczy przyciska losuj dopóki któryś z nich nie wylosuje napisu "Bramkarz".\n\nLosowanie może służyć nie tylko jako wyłonienie bramkarza, ale też do rozwiązywania niektórych sporów, takich jak kto idzie po piłkę.\n\nSzansa na zostanie bramkarzem: 1/%1$d</string>
     <string name="game_select_goalkeeper_short_description">Wybiera jedną osobe</string>
+    <string name="game_red_description">Każdy z graczy losuje liczby od 1 do %1$d. Gracz z najniższą liczbą zostaje bramkarzem, reszta jest przydzielana do drużyn, wpisujecie ilość grup, następnie gracze są dodawani według numerów, pojedynczo.</string>
+    <string name="game_red_short_description">Wybiera bramkarza oraz ustala drużyny</string>
+
+    <string name="double_tab_exit">Dotknij ponownie, aby wyjść</string>
 
     <string name="error_database">Błąd bazy danych</string>
     <string name="error_empty_name">Wpisz imię</string>
@@ -34,6 +38,12 @@
     <string name="player_win_game_of_king">Wygrane w Króla: %1$d</string>
     <string name="player_lost_game_of_king">Przegrane w Króla: %1$d</string>
 
+    <string name="player_good_shots_percent">Celność strzałów: %1$.1f%%</string>
+    <string name="player_goal_percent">Skuteczność strzałów: %1$.1f%%</string>
+    <string name="player_defended_goal_percent">Skuteczność obrony: %1$.1f%%</string>
+    <string name="player_win_game_of_king_percent">Wygrane w Króla: %1$.1f%%</string>
+    <string name="player_lost_game_of_king_percent">Przegrane w Króla: %1$.1f%%</string>
+
     <string name="share">Udostępnij do:</string>
     <string name="bad_url">Błędny link</string>
     <string name="bad_url_description">Link został uszkodzony lub nieopowiednio zmodyfkowany</string>
@@ -47,26 +57,20 @@
 
     <string name="number_active_players">%1$d aktywnych graczy</string> <!--TODO:liczby zmieniają końcówki-->
 
-    <string name="setting">Ustawienia</string>
-    <string name="save">Zapisz</string>
-    <string name="restore_default">Zresetuj</string>
+    <string name="need_more_players">Potrzebujesz %1$d graczy</string>
 
     <string name="normal_mode">Normalna</string>
     <string name="randomizing_mode">Samorandomizująca</string>
     <string name="random_goalkeeper">Losuj bramkarza</string>
+    <string name="random_teams">Losuj drużyny</string>
 
-    <string name="need_more_players">Potrzebujesz %1$d graczy</string>
-
-    <string name="probability">Prawdopodobieństwo</string>
-    <string name="probability_from_players">Prawdopodobieństwo wielokrotnością graczy</string>
+    <string name="continue_game">Kontynuuj</string>
 
     <string name="random">Losuj</string>
     <string name="start_game">Zacznij gre</string>
+    <string name="see_teams">Pokaż drużyny</string>
     <string name="back_to_menu">Wróć do menu</string>
     <string name="goalkeeper">Bramkarz</string>
-
-    <string name="number_live">Ilość żyć</string>
-    <string name="number_stake">Ilość możliwych powtórzeń strzału po trafieniu w słupek lub poprzeczkę</string>
 
     <string name="goalkeeper_emoticon">🥅 %1$s 🥅</string>
     <string name="shooter_emoticon">⚽ %1$s ⚽</string>
@@ -80,20 +84,34 @@
     <string name="life">Życia\n</string>
     <string name="order">Kolejność\n</string>
     <string name="player_elimination">%1$s został skończony 🥅⚽</string>
-    <string name="player_win">%1$s wygrał 🏆🏆🏆</string>
+
+    <string name="set_number_team">Wybierz ilość drużyn</string>
+    <string name="team">Drużyna %1$d</string>
+
+    <string name="notification_language">pl</string>
 
     <string name="using_cellular_data_alert">❗ Korzystasz z danych komórkowych ❗\n\nJeśli chcesz sprawdzić najnowsze powiadomienia przeciągnij palcem w dół\n\n⬇⬇⬇</string>
     <string name="internet_disconnect_alert">🌐❌ Aktualnie nie masz połączenia z internetem ❌🌐\n\nPrzeciągnij palcem w dół, aby spróbować ponownie\n\n⬇⬇⬇</string>
     <string name="download_failed_alert">🔕😥 Nie udało się odczytać powiadomień 😥🔕\n\nSpróbuj ponownie przeciągając palcem w dół\n\n⬇⬇⬇\n\nJeśli problem się powtarza napisz</string>
 
+    <string name="setting">Ustawienia</string>
+    <string name="save">Zapisz</string>
+    <string name="restore_default">Zresetuj</string>
+
+    <string name="number_live">Ilość żyć</string>
+    <string name="number_stake">Ilość możliwych powtórzeń strzału po trafieniu w słupek lub poprzeczkę</string>
+    <string name="random_numbers">Losowanie liczb od 1 do</string>
+    <string name="random_numbers_from_players">Losowe liczby wielokrotnością graczy</string>
+
     <string name="facebook">Sprawdź fanpage - Facebook</string>
     <string name="messenger">Zaproponuj zmiany - Messenger</string>
 
-    <string name="internet">Internet:</string>
+    <string name="internet">Internet</string>
     <string name="check_info_online">Kiedy automatycznie sprawdzać informacje online:</string>
     <string-array name="internet_connect">
         <item>Tylko przez Wi-Fi</item>
         <item>Zawsze</item>
         <item>Nigdy</item>
     </string-array>
+    <string name="games">Gry</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class PlayingFieldActivity extends AppCompatActivity {
 
     private final String PREFERENCE_BUTTONS_GATE_VISIBILITY = "buttonsgatevisibility";
+    private final String BUNDLE_WIN = "win";
 
     private final Boolean DEFAULT_BUTTONS_GATE_VISIBILITY = true;
 
@@ -41,19 +42,35 @@ public class PlayingFieldActivity extends AppCompatActivity {
         setContentView(R.layout.activity_playing_field);
 
         setListener((Listener) Games.currentGame.getGameInfo());
+        onLoadInstanceState(savedInstanceState);
 
         RefreshInfo();
         SetButtonsGateVisibleOnStart();
     }
 
-    @Override
-    public void onBackPressed() {
-        if(listener.onBackPressed()) {
-            super.onBackPressed();
-        }
+    private void onLoadInstanceState(Bundle save){
+        if(save != null)
+            win = save.getBoolean(BUNDLE_WIN);
     }
 
-    private void RefreshInfo(){
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(BUNDLE_WIN, win);
+    }
+
+    @Override
+    public void onBackPressed() {
+       if(UtilsForActivity.DoubleTab()) {
+           super.onBackPressed();
+       } else {
+            UtilsForActivity.ToastDoubleTabExit(this);
+       }
+    }
+
+    private void RefreshInfo() {
+        if (win)
+            LayoutForWinner();
         setGoalkeeper();
         setShooter();
         setLife();
@@ -120,13 +137,13 @@ public class PlayingFieldActivity extends AppCompatActivity {
         ShowAction();
         win = listener.Gol(this);
         RefreshInfo();
-        if(win){
-            LayoutForWinner();
-        }
     }
 
-    public void ClickAction(View v){
-        HideAction();
+    public void ClickAction(View v) {
+        if (win)
+            finish();
+        else
+            HideAction();
     }
 
     private void LayoutForWinner(){
@@ -168,29 +185,26 @@ public class PlayingFieldActivity extends AppCompatActivity {
         actionBox.setVisibility(View.VISIBLE);
     }
 
-    private void HideAction(){
-        if(win){
-            finish();
+    private void HideAction() {
+        final View actionBox = findViewById(R.id.action_box);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int x = actionBox.getWidth() / 2;
+            int y = actionBox.getHeight() / 2;
+            float radius = (float) Math.hypot(x, y);
+            Animator anim = ViewAnimationUtils.createCircularReveal(actionBox, x, y, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    actionBox.setVisibility(View.INVISIBLE);
+                }
+            });
+            anim.start();
         } else {
-            final View actionBox = findViewById(R.id.action_box);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                int x = actionBox.getWidth() / 2;
-                int y = actionBox.getHeight() / 2;
-                float radius = (float) Math.hypot(x, y);
-                Animator anim = ViewAnimationUtils.createCircularReveal(actionBox, x, y, radius, 0);
-                anim.addListener(new AnimatorListenerAdapter() {
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        actionBox.setVisibility(View.INVISIBLE);
-                    }
-                });
-                anim.start();
-            } else {
-                actionBox.setVisibility(View.INVISIBLE);
-            }
+            actionBox.setVisibility(View.INVISIBLE);
         }
+
     }
 }
