@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -15,7 +12,6 @@ import pl.Guzooo.PilkarskiPrzybornik.Database;
 import pl.Guzooo.PilkarskiPrzybornik.Games;
 import pl.Guzooo.PilkarskiPrzybornik.Gry.GameInfo;
 import pl.Guzooo.PilkarskiPrzybornik.LotteryActivity;
-import pl.Guzooo.PilkarskiPrzybornik.MainActivity;
 import pl.Guzooo.PilkarskiPrzybornik.Player;
 import pl.Guzooo.PilkarskiPrzybornik.PlayersActivity;
 import pl.Guzooo.PilkarskiPrzybornik.PlayingFieldActivity;
@@ -151,8 +147,7 @@ public class King extends GameInfo implements LotteryActivity.Listener, PlayingF
     public boolean ClickNextPlayer(int currentPlayer, int allPlayers) {
         if(currentPlayer+1 < allPlayers)
             return true;
-        else
-            return false;
+        return false;
     }
 
     @Override
